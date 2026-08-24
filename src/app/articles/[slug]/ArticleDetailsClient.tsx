@@ -398,55 +398,64 @@ export default function ArticleDetailsClient({ slug, initialJob, initialAllJobs 
         {/* Sidebar Column: Categories, Latest Jobs, Jobs by Qualification */}
         <aside className="sarkari-sidebar">
           {/* 1. Explore Categories */}
-          <div className="sidebar-card">
-            <h4 className="sidebar-title">
-              <Layers size={16} className="sidebar-title-icon" /> Categories
-            </h4>
+          <div className="sidebar-card sidebar-card-categories">
+            <div className="sidebar-header-banner banner-blue">
+              <Layers size={16} />
+              <h4>Explore Categories</h4>
+            </div>
             <ul className="sidebar-cat-list">
               <li>
-                <Link href="/latest-jobs" className="sidebar-cat-item">
+                <Link href="/latest-jobs" className="sidebar-cat-item cat-item-jobs">
+                  <span className="cat-bullet bullet-blue"></span>
                   <span className="cat-name">Latest Jobs</span>
                   <ChevronRight size={14} className="cat-arrow" />
                 </Link>
               </li>
               <li>
-                <Link href="/admit-card" className="sidebar-cat-item">
+                <Link href="/admit-card" className="sidebar-cat-item cat-item-admit">
+                  <span className="cat-bullet bullet-amber"></span>
                   <span className="cat-name">Admit Cards</span>
                   <ChevronRight size={14} className="cat-arrow" />
                 </Link>
               </li>
               <li>
-                <Link href="/answer-key" className="sidebar-cat-item">
+                <Link href="/answer-key" className="sidebar-cat-item cat-item-key">
+                  <span className="cat-bullet bullet-purple"></span>
                   <span className="cat-name">Answer Keys</span>
                   <ChevronRight size={14} className="cat-arrow" />
                 </Link>
               </li>
               <li>
-                <Link href="/result" className="sidebar-cat-item">
+                <Link href="/result" className="sidebar-cat-item cat-item-result">
+                  <span className="cat-bullet bullet-green"></span>
                   <span className="cat-name">Results &amp; Merit Lists</span>
                   <ChevronRight size={14} className="cat-arrow" />
                 </Link>
               </li>
               <li>
-                <Link href="/syllabus" className="sidebar-cat-item">
+                <Link href="/syllabus" className="sidebar-cat-item cat-item-syllabus">
+                  <span className="cat-bullet bullet-teal"></span>
                   <span className="cat-name">Exam Syllabus</span>
                   <ChevronRight size={14} className="cat-arrow" />
                 </Link>
               </li>
               <li>
-                <Link href="/pyq" className="sidebar-cat-item">
+                <Link href="/pyq" className="sidebar-cat-item cat-item-pyq">
+                  <span className="cat-bullet bullet-rose"></span>
                   <span className="cat-name">Previous Year Papers</span>
                   <ChevronRight size={14} className="cat-arrow" />
                 </Link>
               </li>
               <li>
-                <Link href="/notes" className="sidebar-cat-item">
+                <Link href="/notes" className="sidebar-cat-item cat-item-notes">
+                  <span className="cat-bullet bullet-indigo"></span>
                   <span className="cat-name">Study Notes</span>
                   <ChevronRight size={14} className="cat-arrow" />
                 </Link>
               </li>
               <li>
-                <Link href="/test-player" className="sidebar-cat-item">
+                <Link href="/test-player" className="sidebar-cat-item cat-item-mock">
+                  <span className="cat-bullet bullet-red"></span>
                   <span className="cat-name">Online Mock Tests</span>
                   <span className="cat-badge-new">CBT</span>
                 </Link>
@@ -455,17 +464,18 @@ export default function ArticleDetailsClient({ slug, initialJob, initialAllJobs 
           </div>
 
           {/* 2. Latest Jobs */}
-          <div className="sidebar-card">
-            <h4 className="sidebar-title">
-              <Briefcase size={16} className="sidebar-title-icon" /> Latest Jobs
-            </h4>
+          <div className="sidebar-card sidebar-card-latest">
+            <div className="sidebar-header-banner banner-green">
+              <Briefcase size={16} />
+              <h4>Latest Jobs</h4>
+            </div>
             <ul className="sidebar-jobs-list">
               {latestVacancies.length > 0 ? (
                 latestVacancies.map((item) => (
                   <li key={item.id}>
                     <Link href={`/articles/${getJobSlug(item)}`} className="sidebar-job-card">
                       <div className="sidebar-job-badge-row">
-                        <span className="sidebar-job-board">{item.board}</span>
+                        <span className={`sidebar-job-board board-${(item.board || '').toLowerCase().replace(/[^a-z0-9]/g, '')}`}>{item.board}</span>
                         <span className="sidebar-job-date">{item.publishDate}</span>
                       </div>
                       <div className="sidebar-job-name">{item.title}</div>
@@ -477,52 +487,53 @@ export default function ArticleDetailsClient({ slug, initialJob, initialAllJobs 
               )}
             </ul>
             <div className="sidebar-more-link-wrap">
-              <Link href="/latest-jobs" className="sidebar-view-more">
+              <Link href="/latest-jobs" className="sidebar-view-more link-green">
                 View All Latest Jobs &rarr;
               </Link>
             </div>
           </div>
 
           {/* 3. Jobs by Qualification */}
-          <div className="sidebar-card">
-            <h4 className="sidebar-title">
-              <GraduationCap size={16} className="sidebar-title-icon" /> Jobs by Qualification
-            </h4>
+          <div className="sidebar-card sidebar-card-qual">
+            <div className="sidebar-header-banner banner-purple">
+              <GraduationCap size={16} />
+              <h4>Jobs by Qualification</h4>
+            </div>
             <ul className="sidebar-qual-list">
               <li>
-                <Link href="/latest-jobs" className="sidebar-qual-item">
-                  <span>10th Pass / Matric Jobs</span>
-                  <span className="qual-tag">10th</span>
+                <Link href="/latest-jobs" className="sidebar-qual-item item-10th">
+                  <span className="qual-name">10th Pass / Matric Jobs</span>
+                  <span className="qual-tag qual-10th">10th</span>
                 </Link>
               </li>
               <li>
-                <Link href="/latest-jobs" className="sidebar-qual-item">
-                  <span>12th / +2 Pass Jobs</span>
-                  <span className="qual-tag">+2 / 12th</span>
+                <Link href="/latest-jobs" className="sidebar-qual-item item-12th">
+                  <span className="qual-name">12th / +2 Pass Jobs</span>
+                  <span className="qual-tag qual-12th">+2 / 12th</span>
                 </Link>
               </li>
               <li>
-                <Link href="/latest-jobs" className="sidebar-qual-item">
-                  <span>Any Graduate Degree Jobs</span>
-                  <span className="qual-tag">Graduate</span>
+                <Link href="/latest-jobs" className="sidebar-qual-item item-grad">
+                  <span className="qual-name">Any Graduate Degree Jobs</span>
+                  <span className="qual-tag qual-grad">Graduate</span>
                 </Link>
               </li>
               <li>
-                <Link href="/latest-jobs" className="sidebar-qual-item">
-                  <span>Diploma / Engineering Jobs</span>
-                  <span className="qual-tag">Diploma</span>
+                <Link href="/latest-jobs" className="sidebar-qual-item item-dip">
+                  <span className="qual-name">Diploma / Engineering Jobs</span>
+                  <span className="qual-tag qual-dip">Diploma</span>
                 </Link>
               </li>
               <li>
-                <Link href="/latest-jobs" className="sidebar-qual-item">
-                  <span>B.Sc / Medical / Nursing Jobs</span>
-                  <span className="qual-tag">Medical</span>
+                <Link href="/latest-jobs" className="sidebar-qual-item item-med">
+                  <span className="qual-name">B.Sc / Medical / Nursing Jobs</span>
+                  <span className="qual-tag qual-med">Medical</span>
                 </Link>
               </li>
               <li>
-                <Link href="/latest-jobs" className="sidebar-qual-item">
-                  <span>Post Graduate (PG) Jobs</span>
-                  <span className="qual-tag">PG</span>
+                <Link href="/latest-jobs" className="sidebar-qual-item item-pg">
+                  <span className="qual-name">Post Graduate (PG) Jobs</span>
+                  <span className="qual-tag qual-pg">PG</span>
                 </Link>
               </li>
             </ul>
