@@ -1599,6 +1599,107 @@ h1, h2, h3, h4, h5, h6, .poppins-font {
   color: #cbd5e1;
 }
 
+/* Social Media Share Bar */
+.sarkari-share-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 1rem;
+  padding-top: 0.85rem;
+  border-top: 1px dashed #e2e8f0;
+  flex-wrap: wrap;
+}
+
+.share-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #475569;
+}
+
+.share-buttons-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+  color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.share-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12);
+}
+
+.share-whatsapp {
+  background: #25d366;
+  color: #ffffff !important;
+}
+
+.share-whatsapp:hover {
+  background: #20ba5a;
+}
+
+.share-telegram {
+  background: #0088cc;
+  color: #ffffff !important;
+}
+
+.share-telegram:hover {
+  background: #0077b5;
+}
+
+.share-facebook {
+  background: #1877f2;
+  color: #ffffff !important;
+}
+
+.share-facebook:hover {
+  background: #0d65d9;
+}
+
+.share-twitter {
+  background: #0f172a;
+  color: #ffffff !important;
+}
+
+.share-twitter:hover {
+  background: #000000;
+}
+
+.share-copy {
+  background: #f1f5f9;
+  color: #334155 !important;
+  border: 1px solid #cbd5e1;
+}
+
+.share-copy:hover {
+  background: #e2e8f0;
+  color: #0f172a !important;
+}
+
+.share-copy.copied {
+  background: #dcfce7;
+  color: #15803d !important;
+  border-color: #86efac;
+}
+
 /* Short Info Section */
 .sarkari-short-info-section {
   background: #f8fafc;
