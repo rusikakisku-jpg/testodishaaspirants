@@ -7,6 +7,15 @@ import ScrollToTop from '@/components/ScrollToTop';
 export const metadata: Metadata = {
   title: 'Odisha Aspirants - Government Recruitment & CBT Mock Test Portal',
   description: 'Explore latest Odisha government job vacancies (OSSSC, OPSC, OSSC, RRB), download admit cards, answer keys, results, previous year question papers, and practice online CBT tests.',
+  icons: {
+    icon: [
+      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
+    apple: [
+      { url: '/icon.svg', type: 'image/svg+xml' },
+    ],
+  },
 };
 
 export default function RootLayout({
@@ -17,6 +26,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/icon.svg" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
