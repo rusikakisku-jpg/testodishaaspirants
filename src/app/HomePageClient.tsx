@@ -63,15 +63,6 @@ export default function HomePageClient({
 
   return (
     <>
-      {/* Alert Notice Ticker matching odishaaspirants.com */}
-      <div className="alert-ticker-wrap">
-        <div className="ticker-container">
-          <span className="ticker-badge">UPDATES</span>
-          <div className="ticker-text">
-            <strong>Notice:</strong> OPSC Civil Services Exam Date rescheduled to July 12, 2026. Keep practicing!
-          </div>
-        </div>
-      </div>
 
       {/* 6-Card Grid Section matching odishaaspirants.com */}
       <section className="cards-matrix-section">
