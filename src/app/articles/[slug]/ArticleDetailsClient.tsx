@@ -70,29 +70,14 @@ export default function ArticleDetailsClient({ slug, initialJob, initialAllJobs 
         <main className="sarkari-main-content">
           {/* Post Title & Quick Meta Box */}
           <div className="sarkari-title-box">
-            <div className="sarkari-board-badge-row">
-              <span className="sarkari-board-badge">{job.board}</span>
-              <span className="sarkari-status-badge">{job.status || 'Active Now'}</span>
-            </div>
             <h1 className="sarkari-post-title">
               {job.board} {job.title} Recruitment 2026 – Apply Online for {job.vacancies} Posts
             </h1>
             <div className="sarkari-post-date-row">
-              <span><strong>Post Date:</strong> {job.publishDate}</span>
+              <span><strong>Post Update:</strong> {job.publishDate}</span>
               <span className="date-sep">|</span>
-              <span><strong>Last Date:</strong> <span className="text-red font-bold">{job.lastDate}</span></span>
-              <span className="date-sep">|</span>
-              <span><strong>Category:</strong> {job.category ? job.category.toUpperCase() : 'VACANCY'}</span>
+              <span><strong>By:</strong> Odisha Aspirants</span>
             </div>
-          </div>
-
-          {/* Short Information Summary */}
-          <div className="sarkari-short-info">
-            <strong>Short Information: </strong>
-            <span>
-              <strong>{job.boardFull} ({job.board})</strong> has published the official recruitment advertisement for{' '}
-              <strong>{job.title}</strong>. Candidates holding <strong>{job.qualification}</strong> eligibility can read the detailed recruitment advertisement and submit their application before the closing date <strong>{job.lastDate}</strong>.
-            </span>
           </div>
 
           {/* Master Structured Govt Table */}
@@ -102,6 +87,15 @@ export default function ArticleDetailsClient({ slug, initialJob, initialAllJobs 
               <h2>{job.boardFull} ({job.board})</h2>
               <h3>{job.title} Recruitment Notification 2026</h3>
               <p className="masthead-tagline">WWW.ODISHAASPIRANTS.COM</p>
+            </div>
+
+            {/* Short Information Summary inside Master Table */}
+            <div className="sarkari-short-info-inside">
+              <strong>Short Information: </strong>
+              <span>
+                <strong>{job.boardFull} ({job.board})</strong> has published the official recruitment advertisement for{' '}
+                <strong>{job.title}</strong>. Candidates holding <strong>{job.qualification}</strong> eligibility can read the detailed recruitment advertisement and submit their application before the closing date <strong>{job.lastDate}</strong>.
+              </span>
             </div>
 
             {/* 2-Column Split: Important Dates & Application Fee */}
