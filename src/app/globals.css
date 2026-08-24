@@ -1599,14 +1599,29 @@ h1, h2, h3, h4, h5, h6, .poppins-font {
   color: #cbd5e1;
 }
 
-/* Social Media Share Bar */
+/* Short Info Section */
+.sarkari-short-info-section {
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 1.15rem 1.75rem;
+  font-size: 0.9rem;
+  color: #334155;
+  line-height: 1.65;
+}
+
+.sarkari-short-info-section strong {
+  color: #0b4ca3;
+}
+
+/* Social Media Share Bar (Between Short Info and Table Masthead) */
 .sarkari-share-bar {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 12px;
-  margin-top: 1rem;
-  padding-top: 0.85rem;
-  border-top: 1px dashed #e2e8f0;
+  background: #ffffff;
+  padding: 0.85rem 1.75rem;
+  border-bottom: 2px solid #0b4ca3;
   flex-wrap: wrap;
 }
 
@@ -1698,20 +1713,6 @@ h1, h2, h3, h4, h5, h6, .poppins-font {
   background: #dcfce7;
   color: #15803d !important;
   border-color: #86efac;
-}
-
-/* Short Info Section */
-.sarkari-short-info-section {
-  background: #f8fafc;
-  border-bottom: 2px solid #0b4ca3;
-  padding: 1.15rem 1.75rem;
-  font-size: 0.9rem;
-  color: #334155;
-  line-height: 1.65;
-}
-
-.sarkari-short-info-section strong {
-  color: #0b4ca3;
 }
 
 .sarkari-table-masthead {
