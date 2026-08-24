@@ -46,7 +46,7 @@ export default function Footer() {
       <div className="footer-bottom-bar">
         <div className="footer-bottom-container">
           <p className="footer-copyright-text">
-            © 2026 <strong>Odisha Aspirants</strong>. All Rights Reserved. Prepared for Success.
+            © {new Date().getFullYear()} <strong>Odisha Aspirants</strong>. All Rights Reserved.
           </p>
           <ul className="footer-bottom-links">
             <li><Link href="/about-us">About Us</Link></li>
