@@ -76,7 +76,6 @@ export default function AdmitCardClient({ initialItems }: { initialItems: JobIte
                     <td data-label="Board" className="board-col">
                       <div className="cell-value board-col">
                         <strong>{item.board}</strong>
-                        <span className="board-full-name">{item.boardFull}</span>
                       </div>
                     </td>
                     <td data-label="Post Name" className="post-name-col">
