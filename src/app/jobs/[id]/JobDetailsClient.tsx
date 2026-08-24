@@ -73,7 +73,7 @@ export default function JobDetailsClient({ id, initialJob, initialAllJobs }: Job
       <div className="sarkari-layout-grid">
         {/* Left / Main Post Content */}
         <main className="sarkari-main-content">
-          <div className="sarkari-main-card">
+          <div className="sarkari-master-table-card">
             {/* Post Title & Quick Meta Row */}
             <div className="sarkari-title-section">
               <h1 className="sarkari-post-title">
@@ -95,14 +95,12 @@ export default function JobDetailsClient({ id, initialJob, initialAllJobs }: Job
               </span>
             </div>
 
-            {/* Master Structured Govt Table */}
-            <div className="sarkari-master-table-card">
-              {/* Header Banner */}
-              <div className="sarkari-table-masthead">
-                <h2>{job.boardFull} ({job.board})</h2>
-                <h3>{job.title} Recruitment Notification 2026</h3>
-                <p className="masthead-tagline">WWW.ODISHAASPIRANTS.COM</p>
-              </div>
+            {/* Header Banner */}
+            <div className="sarkari-table-masthead">
+              <h2>{job.boardFull} ({job.board})</h2>
+              <h3>{job.title} Recruitment Notification 2026</h3>
+              <p className="masthead-tagline">WWW.ODISHAASPIRANTS.COM</p>
+            </div>
 
             {/* 2-Column Split: Important Dates & Application Fee */}
             <div className="sarkari-two-col-grid">
@@ -295,7 +293,6 @@ export default function JobDetailsClient({ id, initialJob, initialAllJobs }: Job
                 </tbody>
               </table>
             </div>
-          </div>
           </div>
         </main>
 
