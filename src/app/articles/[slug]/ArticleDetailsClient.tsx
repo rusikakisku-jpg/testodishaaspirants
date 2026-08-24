@@ -68,35 +68,36 @@ export default function ArticleDetailsClient({ slug, initialJob, initialAllJobs 
       <div className="sarkari-layout-grid">
         {/* Left / Main Post Content */}
         <main className="sarkari-main-content">
-          {/* Post Title & Quick Meta Box */}
-          <div className="sarkari-title-box">
-            <h1 className="sarkari-post-title">
-              {job.board} {job.title} Recruitment 2026 – Apply Online for {job.vacancies} Posts
-            </h1>
-            <div className="sarkari-post-date-row">
-              <span><strong>Post Update:</strong> {job.publishDate}</span>
-              <span className="date-sep">|</span>
-              <span><strong>By:</strong> Odisha Aspirants</span>
-            </div>
-          </div>
-
-          {/* Master Structured Govt Table */}
-          <div className="sarkari-master-table-card">
-            {/* Header Banner */}
-            <div className="sarkari-table-masthead">
-              <h2>{job.boardFull} ({job.board})</h2>
-              <h3>{job.title} Recruitment Notification 2026</h3>
-              <p className="masthead-tagline">WWW.ODISHAASPIRANTS.COM</p>
+          <div className="sarkari-main-card">
+            {/* Post Title & Quick Meta Row */}
+            <div className="sarkari-title-section">
+              <h1 className="sarkari-post-title">
+                {job.board} {job.title} Recruitment 2026 – Apply Online for {job.vacancies} Posts
+              </h1>
+              <div className="sarkari-post-date-row">
+                <span><strong>Post Update:</strong> {job.publishDate}</span>
+                <span className="date-sep">|</span>
+                <span><strong>By:</strong> Odisha Aspirants</span>
+              </div>
             </div>
 
-            {/* Short Information Summary inside Master Table */}
-            <div className="sarkari-short-info-inside">
+            {/* Short Information Summary */}
+            <div className="sarkari-short-info-section">
               <strong>Short Information: </strong>
               <span>
                 <strong>{job.boardFull} ({job.board})</strong> has published the official recruitment advertisement for{' '}
                 <strong>{job.title}</strong>. Candidates holding <strong>{job.qualification}</strong> eligibility can read the detailed recruitment advertisement and submit their application before the closing date <strong>{job.lastDate}</strong>.
               </span>
             </div>
+
+            {/* Master Structured Govt Table */}
+            <div className="sarkari-master-table-card">
+              {/* Header Banner */}
+              <div className="sarkari-table-masthead">
+                <h2>{job.boardFull} ({job.board})</h2>
+                <h3>{job.title} Recruitment Notification 2026</h3>
+                <p className="masthead-tagline">WWW.ODISHAASPIRANTS.COM</p>
+              </div>
 
             {/* 2-Column Split: Important Dates & Application Fee */}
             <div className="sarkari-two-col-grid">
@@ -289,6 +290,7 @@ export default function ArticleDetailsClient({ slug, initialJob, initialAllJobs 
                 </tbody>
               </table>
             </div>
+          </div>
           </div>
         </main>
 
