@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { JobItem } from '@/lib/data';
-import { fetchJobDetailsApi, getJobSlug } from '@/lib/api';
+import { fetchJobDetailsApi, fetchJobsApi, getJobSlug } from '@/lib/api';
 import {
   Calendar,
   ExternalLink,
@@ -15,7 +15,7 @@ import {
   GraduationCap,
   CheckCircle2,
   ChevronRight,
-  Share2,
+  Layers,
 } from 'lucide-react';
 
 interface ArticleDetailsClientProps {
@@ -26,7 +26,7 @@ interface ArticleDetailsClientProps {
 
 export default function ArticleDetailsClient({ slug, initialJob, initialAllJobs }: ArticleDetailsClientProps) {
   const [job, setJob] = useState<JobItem | null>(initialJob);
-  const otherJobs = initialAllJobs ? initialAllJobs.filter((j) => getJobSlug(j) !== slug).slice(0, 5) : [];
+  const [allJobs, setAllJobs] = useState<JobItem[]>(initialAllJobs || []);
 
   useEffect(() => {
     if (!job && slug) {
@@ -34,7 +34,12 @@ export default function ArticleDetailsClient({ slug, initialJob, initialAllJobs 
         if (res) setJob(res);
       });
     }
-  }, [slug, job]);
+    if (!allJobs || allJobs.length === 0) {
+      fetchJobsApi().then((res) => {
+        if (res && res.length > 0) setAllJobs(res);
+      });
+    }
+  }, [slug, job, allJobs]);
 
   if (!job) {
     return (
@@ -43,6 +48,10 @@ export default function ArticleDetailsClient({ slug, initialJob, initialAllJobs 
       </div>
     );
   }
+
+  const latestVacancies = allJobs
+    ? allJobs.filter((j) => j.category === 'vacancy' && getJobSlug(j) !== slug).slice(0, 6)
+    : [];
 
   return (
     <div className="sarkari-article-wrapper">
@@ -289,47 +298,138 @@ export default function ArticleDetailsClient({ slug, initialJob, initialAllJobs 
           </div>
         </main>
 
-        {/* Sidebar Column */}
+        {/* Sidebar Column: Categories, Latest Jobs, Jobs by Qualification */}
         <aside className="sarkari-sidebar">
-          {/* Quick Actions Card */}
-          <div className="sidebar-card action-card">
-            <h4 className="sidebar-title">Quick Action Links</h4>
-            <a href={job.ctaUrl || '#'} target="_blank" rel="noopener noreferrer" className="side-btn side-btn-apply">
-              🚀 Apply Online
-            </a>
-            <a href={job.notificationUrl || '#'} target="_blank" rel="noopener noreferrer" className="side-btn side-btn-notif">
-              📄 Official PDF Notification
-            </a>
+          {/* 1. Explore Categories */}
+          <div className="sidebar-card">
+            <h4 className="sidebar-title">
+              <Layers size={16} className="sidebar-title-icon" /> Categories
+            </h4>
+            <ul className="sidebar-cat-list">
+              <li>
+                <Link href="/latest-jobs" className="sidebar-cat-item">
+                  <span className="cat-name">Latest Jobs</span>
+                  <ChevronRight size={14} className="cat-arrow" />
+                </Link>
+              </li>
+              <li>
+                <Link href="/admit-card" className="sidebar-cat-item">
+                  <span className="cat-name">Admit Cards</span>
+                  <ChevronRight size={14} className="cat-arrow" />
+                </Link>
+              </li>
+              <li>
+                <Link href="/answer-key" className="sidebar-cat-item">
+                  <span className="cat-name">Answer Keys</span>
+                  <ChevronRight size={14} className="cat-arrow" />
+                </Link>
+              </li>
+              <li>
+                <Link href="/result" className="sidebar-cat-item">
+                  <span className="cat-name">Results &amp; Merit Lists</span>
+                  <ChevronRight size={14} className="cat-arrow" />
+                </Link>
+              </li>
+              <li>
+                <Link href="/syllabus" className="sidebar-cat-item">
+                  <span className="cat-name">Exam Syllabus</span>
+                  <ChevronRight size={14} className="cat-arrow" />
+                </Link>
+              </li>
+              <li>
+                <Link href="/pyq" className="sidebar-cat-item">
+                  <span className="cat-name">Previous Year Papers</span>
+                  <ChevronRight size={14} className="cat-arrow" />
+                </Link>
+              </li>
+              <li>
+                <Link href="/notes" className="sidebar-cat-item">
+                  <span className="cat-name">Study Notes</span>
+                  <ChevronRight size={14} className="cat-arrow" />
+                </Link>
+              </li>
+              <li>
+                <Link href="/test-player" className="sidebar-cat-item">
+                  <span className="cat-name">Online Mock Tests</span>
+                  <span className="cat-badge-new">CBT</span>
+                </Link>
+              </li>
+            </ul>
           </div>
 
-          {/* About Board Info */}
-          <div className="sidebar-card about-board-card">
-            <h4 className="sidebar-title">About {job.board}</h4>
-            <div className="board-full-badge">{job.boardFull}</div>
-            <p className="board-desc">
-              The <strong>{job.boardFull}</strong> conducts state-level recruitment and selection examinations for government vacancies across Odisha.
-            </p>
-            <Link href="/latest-jobs" className="side-board-link">
-              View all {job.board} jobs &rarr;
-            </Link>
-          </div>
-
-          {/* Other Latest Jobs */}
-          {otherJobs.length > 0 && (
-            <div className="sidebar-card other-jobs-card">
-              <h4 className="sidebar-title">Other Odisha Jobs</h4>
-              <ul className="other-jobs-list">
-                {otherJobs.map((oj) => (
-                  <li key={oj.id}>
-                    <Link href={`/articles/${getJobSlug(oj)}`} className="other-job-item">
-                      <span className="other-job-board">{oj.board}</span>
-                      <span className="other-job-title">{oj.title}</span>
+          {/* 2. Latest Jobs */}
+          <div className="sidebar-card">
+            <h4 className="sidebar-title">
+              <Briefcase size={16} className="sidebar-title-icon" /> Latest Jobs
+            </h4>
+            <ul className="sidebar-jobs-list">
+              {latestVacancies.length > 0 ? (
+                latestVacancies.map((item) => (
+                  <li key={item.id}>
+                    <Link href={`/articles/${getJobSlug(item)}`} className="sidebar-job-card">
+                      <div className="sidebar-job-badge-row">
+                        <span className="sidebar-job-board">{item.board}</span>
+                        <span className="sidebar-job-date">{item.publishDate}</span>
+                      </div>
+                      <div className="sidebar-job-name">{item.title}</div>
                     </Link>
                   </li>
-                ))}
-              </ul>
+                ))
+              ) : (
+                <li className="sidebar-empty">No other vacancies available</li>
+              )}
+            </ul>
+            <div className="sidebar-more-link-wrap">
+              <Link href="/latest-jobs" className="sidebar-view-more">
+                View All Latest Jobs &rarr;
+              </Link>
             </div>
-          )}
+          </div>
+
+          {/* 3. Jobs by Qualification */}
+          <div className="sidebar-card">
+            <h4 className="sidebar-title">
+              <GraduationCap size={16} className="sidebar-title-icon" /> Jobs by Qualification
+            </h4>
+            <ul className="sidebar-qual-list">
+              <li>
+                <Link href="/latest-jobs" className="sidebar-qual-item">
+                  <span>10th Pass / Matric Jobs</span>
+                  <span className="qual-tag">10th</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/latest-jobs" className="sidebar-qual-item">
+                  <span>12th / +2 Pass Jobs</span>
+                  <span className="qual-tag">+2 / 12th</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/latest-jobs" className="sidebar-qual-item">
+                  <span>Any Graduate Degree Jobs</span>
+                  <span className="qual-tag">Graduate</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/latest-jobs" className="sidebar-qual-item">
+                  <span>Diploma / Engineering Jobs</span>
+                  <span className="qual-tag">Diploma</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/latest-jobs" className="sidebar-qual-item">
+                  <span>B.Sc / Medical / Nursing Jobs</span>
+                  <span className="qual-tag">Medical</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/latest-jobs" className="sidebar-qual-item">
+                  <span>Post Graduate (PG) Jobs</span>
+                  <span className="qual-tag">PG</span>
+                </Link>
+              </li>
+            </ul>
+          </div>
         </aside>
       </div>
 
