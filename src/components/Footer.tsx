@@ -28,6 +28,7 @@ export default function Footer() {
             </a>
           </div>
 
+          {/* Temporarily hidden social links
           <div className="footer-social-row">
             <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="social-circle social-circle-youtube">
               <span style={{ fontWeight: 800, fontSize: '0.8rem' }}>YT</span>
@@ -39,6 +40,7 @@ export default function Footer() {
               <span style={{ fontWeight: 800, fontSize: '0.8rem' }}>WA</span>
             </a>
           </div>
+          */}
         </div>
       </div>
 
