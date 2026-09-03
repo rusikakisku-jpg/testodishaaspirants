@@ -61,10 +61,10 @@ export default function SyllabusClient({ initialList }: { initialList: SyllabusD
   });
 
   return (
-    <div style={{ maxWidth: '1240px', margin: '30px auto', padding: '0 1.5rem' }}>
+    <div style={{ maxWidth: '1240px', margin: '20px auto', padding: '0 clamp(0.75rem, 3vw, 1.5rem)' }}>
       {/* Header section */}
-      <div style={{ marginBottom: '25px' }}>
-        <h1 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#0f172a', margin: '0 0 8px 0', fontFamily: 'Poppins' }}>
+      <div style={{ marginBottom: '20px' }}>
+        <h1 style={{ fontSize: 'clamp(1.3rem, 3vw, 1.8rem)', fontWeight: 800, color: '#0f172a', margin: '0 0 8px 0', fontFamily: 'Poppins' }}>
           Exam Syllabus &amp; Selection Pattern
         </h1>
         <p style={{ color: '#64748b', margin: 0, fontSize: '0.95rem' }}>
@@ -78,7 +78,7 @@ export default function SyllabusClient({ initialList }: { initialList: SyllabusD
           background: 'white',
           border: '1px solid #e2e8f0',
           borderRadius: '16px',
-          padding: '15px 20px',
+          padding: 'clamp(12px, 2.5vw, 18px)',
           marginBottom: '25px',
           display: 'flex',
           justifyContent: 'space-between',
@@ -111,7 +111,7 @@ export default function SyllabusClient({ initialList }: { initialList: SyllabusD
         </div>
 
         {/* Search input */}
-        <div style={{ position: 'relative', width: '300px', maxWidth: '100%' }}>
+        <div style={{ position: 'relative', width: '300px', maxWidth: '100%', flex: '1 1 240px' }}>
           <Search style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', width: '16px', height: '16px', color: '#94a3b8' }} />
           <input
             type="text"
@@ -125,13 +125,14 @@ export default function SyllabusClient({ initialList }: { initialList: SyllabusD
               border: '1px solid #cbd5e1',
               fontSize: '0.85rem',
               outline: 'none',
+              boxSizing: 'border-box',
             }}
           />
         </div>
       </div>
 
       {/* Grid of Syllabus Cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '20px' }}>
+      <div className="responsive-cards-grid">
         {filteredItems.map((item) => (
           <div
             key={item.id}

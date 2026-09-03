@@ -169,7 +169,7 @@ export default function TestPlayerPage() {
     }
   });
 
-  const totalScore = (correctCount * exam.marksCorrect - incorrectCount * exam.marksIncorrect).toFixed(2);
+  const totalScore = (correctCount * exam.marksCorrect + incorrectCount * exam.marksIncorrect).toFixed(2);
   const accuracy = (correctCount + incorrectCount) > 0 ? Math.round((correctCount / (correctCount + incorrectCount)) * 100) : 0;
   const timeTakenSeconds = exam.timeLimitMinutes * 60 - timeLeft;
 
@@ -193,20 +193,20 @@ export default function TestPlayerPage() {
   };
 
   return (
-    <div style={{ maxWidth: '1360px', margin: '20px auto', padding: '0 1rem' }}>
+    <div style={{ maxWidth: '1360px', margin: '20px auto', padding: '0 clamp(0.75rem, 2.5vw, 1.5rem)' }}>
       {/* Top CBT Header */}
-      <div style={{ background: '#0f172a', color: 'white', padding: '14px 24px', borderRadius: '16px', marginBottom: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '15px' }}>
+      <div className="cbt-top-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <Sparkles style={{ width: '24px', height: '24px', color: '#ff7a00' }} />
+          <Sparkles style={{ width: '24px', height: '24px', color: '#ff7a00', flexShrink: 0 }} />
           <div>
-            <h1 style={{ fontSize: '1.15rem', fontWeight: 800, margin: 0, fontFamily: 'Poppins' }}>{exam.title}</h1>
+            <h1 style={{ fontSize: 'clamp(1rem, 2.5vw, 1.15rem)', fontWeight: 800, margin: 0, fontFamily: 'Poppins' }}>{exam.title}</h1>
             <span style={{ fontSize: '0.78rem', color: '#94a3b8' }}>Odisha Sub-Ordinate Staff Selection Commission CBT Portal</span>
           </div>
         </div>
 
         {!isSubmitted && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-            <div style={{ background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.4)', color: '#fca5a5', padding: '8px 18px', borderRadius: '99px', fontWeight: 800, fontSize: '1.05rem', display: 'flex', alignItems: 'center', gap: '8px', fontFamily: 'monospace' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
+            <div style={{ background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.4)', color: '#fca5a5', padding: '8px 16px', borderRadius: '99px', fontWeight: 800, fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '8px', fontFamily: 'monospace' }}>
               <Clock style={{ width: '18px', height: '18px', color: '#ef4444' }} /> {formatTime(timeLeft)}
             </div>
 
@@ -222,19 +222,19 @@ export default function TestPlayerPage() {
 
       {/* If Submitted: Show Detailed Scorecard & Answer Review */}
       {isSubmitted ? (
-        <div className="animate-fade-in" style={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '20px', padding: '30px' }}>
-          <div style={{ textAlign: 'center', marginBottom: '35px' }}>
+        <div className="animate-fade-in" style={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '20px', padding: 'clamp(1.25rem, 3vw, 2rem)' }}>
+          <div style={{ textAlign: 'center', marginBottom: '30px' }}>
             <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: 'rgba(16, 185, 129, 0.15)', color: '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 15px auto' }}>
               <Award style={{ width: '36px', height: '36px' }} />
             </div>
-            <h2 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#0f172a', margin: '0 0 6px 0', fontFamily: 'Poppins' }}>
+            <h2 style={{ fontSize: 'clamp(1.3rem, 3vw, 1.8rem)', fontWeight: 800, color: '#0f172a', margin: '0 0 6px 0', fontFamily: 'Poppins' }}>
               Mock Test Completed Successfully!
             </h2>
-            <p style={{ color: '#64748b', margin: 0 }}>Here is your performance analytics report and detailed answer key review.</p>
+            <p style={{ color: '#64748b', margin: 0, fontSize: '0.9rem' }}>Here is your performance analytics report and detailed answer key review.</p>
           </div>
 
           {/* Performance Cards Grid */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '15px', marginBottom: '40px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 150px), 1fr))', gap: '15px', marginBottom: '35px' }}>
             <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '14px', padding: '20px', textAlign: 'center' }}>
               <div style={{ fontSize: '0.82rem', color: '#64748b', fontWeight: 600 }}>FINAL SCORE</div>
               <div style={{ fontSize: '2rem', fontWeight: 800, color: '#0b4ca3', fontFamily: 'Poppins' }}>{totalScore}</div>
@@ -295,7 +295,7 @@ export default function TestPlayerPage() {
                     {q.questionText}
                   </div>
 
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', fontSize: '0.9rem', marginBottom: '14px' }}>
+                  <div className="cbt-options-review-grid">
                     {(['A', 'B', 'C', 'D'] as const).map((optKey) => {
                       const optText = q[`option${optKey}` as keyof Question];
                       const isUserChoice = uAns === optKey;
@@ -347,9 +347,9 @@ export default function TestPlayerPage() {
         </div>
       ) : (
         /* CBT Exam Interface */
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: '20px' }}>
+        <div className="cbt-layout-grid">
           {/* Main Question Panel */}
-          <div style={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+          <div style={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '16px', padding: 'clamp(1rem, 2.5vw, 1.5rem)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
             <div>
               {/* Section Selector Tabs */}
               <div style={{ display: 'flex', borderBottom: '2px solid #e2e8f0', marginBottom: '20px', gap: '15px', overflowX: 'auto' }}>

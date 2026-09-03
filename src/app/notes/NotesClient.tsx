@@ -28,13 +28,13 @@ export default function NotesClient({ initialNotes }: { initialNotes: any[] }) {
   });
 
   return (
-    <div style={{ maxWidth: '1240px', margin: '30px auto', padding: '0 1.5rem' }}>
+    <div style={{ maxWidth: '1240px', margin: '20px auto', padding: '0 clamp(0.75rem, 3vw, 1.5rem)' }}>
       {/* Hero Header */}
-      <div style={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '20px', padding: '30px', marginBottom: '30px' }}>
+      <div style={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '20px', padding: 'clamp(1.25rem, 3.5vw, 2rem)', marginBottom: '25px' }}>
         <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', color: '#059669', background: 'rgba(5, 150, 105, 0.08)', padding: '4px 12px', borderRadius: '99px', fontSize: '0.8rem', fontWeight: 800, marginBottom: '12px' }}>
           <BookOpen style={{ width: '16px', height: '16px' }} /> SPECIAL EXAM HANDBOOKS
         </div>
-        <h1 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#0f172a', margin: '0 0 10px 0', fontFamily: 'Poppins' }}>
+        <h1 style={{ fontSize: 'clamp(1.3rem, 3vw, 1.8rem)', fontWeight: 800, color: '#0f172a', margin: '0 0 10px 0', fontFamily: 'Poppins' }}>
           Subject Notes &amp; Exam Capsules 2026
         </h1>
         <p style={{ color: '#64748b', margin: '0 0 20px 0', fontSize: '0.95rem' }}>
@@ -42,7 +42,7 @@ export default function NotesClient({ initialNotes }: { initialNotes: any[] }) {
         </p>
 
         {/* Search */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 220px', gap: '15px' }}>
+        <div className="notes-search-grid">
           <div style={{ position: 'relative' }}>
             <Search style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', width: '18px', height: '18px', color: '#94a3b8' }} />
             <input
@@ -57,6 +57,7 @@ export default function NotesClient({ initialNotes }: { initialNotes: any[] }) {
                 border: '1px solid #cbd5e1',
                 fontSize: '0.9rem',
                 outline: 'none',
+                boxSizing: 'border-box',
               }}
             />
           </div>
@@ -71,6 +72,8 @@ export default function NotesClient({ initialNotes }: { initialNotes: any[] }) {
               background: '#f8fafc',
               color: '#334155',
               fontWeight: 600,
+              width: '100%',
+              boxSizing: 'border-box',
             }}
           >
             <option value="all">All Subjects</option>
@@ -83,7 +86,7 @@ export default function NotesClient({ initialNotes }: { initialNotes: any[] }) {
       </div>
 
       {/* Grid of study notes */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: '20px' }}>
+      <div className="responsive-cards-grid">
         {filteredNotes.map((note) => (
           <div
             key={note.id}

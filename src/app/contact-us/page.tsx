@@ -7,16 +7,16 @@ export default function ContactUsPage() {
   const [submitted, setSubmitted] = useState(false);
 
   return (
-    <div style={{ maxWidth: '1000px', margin: '40px auto', padding: '0 1.5rem' }}>
-      <div style={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '20px', padding: '40px' }}>
-        <h1 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#0f172a', margin: '0 0 10px 0', fontFamily: 'Poppins' }}>
+    <div style={{ maxWidth: '1000px', margin: '20px auto', padding: '0 clamp(0.75rem, 3vw, 1.5rem)' }}>
+      <div style={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '20px', padding: 'clamp(1.25rem, 3.5vw, 2.5rem)' }}>
+        <h1 style={{ fontSize: 'clamp(1.3rem, 3vw, 1.8rem)', fontWeight: 800, color: '#0f172a', margin: '0 0 10px 0', fontFamily: 'Poppins' }}>
           Contact Support Team
         </h1>
-        <p style={{ color: '#64748b', margin: '0 0 30px 0', fontSize: '0.95rem' }}>
+        <p style={{ color: '#64748b', margin: '0 0 25px 0', fontSize: '0.95rem' }}>
           Have a question regarding recruitment notifications, syllabus, or CBT mock tests? Send us a message below.
         </p>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px' }}>
+        <div className="contact-layout-grid">
           <div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '30px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '14px', background: '#f8fafc', padding: '16px', borderRadius: '12px' }}>

@@ -2,9 +2,9 @@ import React from 'react';
 
 export default function DisclaimerPage() {
   return (
-    <div style={{ maxWidth: '900px', margin: '40px auto', padding: '0 1.5rem' }}>
-      <div style={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '20px', padding: '40px' }}>
-        <h1 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#0f172a', margin: '0 0 20px 0', fontFamily: 'Poppins' }}>
+    <div style={{ maxWidth: '900px', margin: '20px auto', padding: '0 clamp(0.75rem, 3vw, 1.5rem)' }}>
+      <div style={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '20px', padding: 'clamp(1.25rem, 3.5vw, 2.5rem)' }}>
+        <h1 style={{ fontSize: 'clamp(1.3rem, 3vw, 1.8rem)', fontWeight: 800, color: '#0f172a', margin: '0 0 16px 0', fontFamily: 'Poppins' }}>
           Disclaimer Policy
         </h1>
         <div style={{ color: '#334155', lineHeight: 1.8, fontSize: '0.95rem' }}>

@@ -30,10 +30,10 @@ export default function JobsPage() {
   });
 
   return (
-    <div style={{ maxWidth: '1240px', margin: '30px auto', padding: '0 1.5rem' }}>
+    <div style={{ maxWidth: '1240px', margin: '20px auto', padding: '0 clamp(0.75rem, 3vw, 1.5rem)' }}>
       {/* Page Header */}
-      <div style={{ marginBottom: '30px', background: 'white', border: '1px solid #e2e8f0', borderRadius: '20px', padding: '30px' }}>
-        <h1 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#0f172a', margin: '0 0 10px 0', fontFamily: 'Poppins' }}>
+      <div style={{ marginBottom: '25px', background: 'white', border: '1px solid #e2e8f0', borderRadius: '20px', padding: 'clamp(1.25rem, 3.5vw, 2rem)' }}>
+        <h1 style={{ fontSize: 'clamp(1.3rem, 3vw, 1.8rem)', fontWeight: 800, color: '#0f172a', margin: '0 0 10px 0', fontFamily: 'Poppins' }}>
           Government Job Vacancies in Odisha 2026
         </h1>
         <p style={{ color: '#64748b', margin: '0 0 20px 0', fontSize: '0.95rem' }}>
@@ -41,7 +41,7 @@ export default function JobsPage() {
         </p>
 
         {/* Filters */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 200px 200px', gap: '15px' }}>
+        <div className="jobs-filters-grid">
           <div style={{ position: 'relative' }}>
             <Search style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', width: '18px', height: '18px', color: '#94a3b8' }} />
             <input
@@ -72,6 +72,8 @@ export default function JobsPage() {
               outline: 'none',
               background: 'white',
               cursor: 'pointer',
+              width: '100%',
+              boxSizing: 'border-box',
             }}
           >
             <option value="all">All Boards</option>
@@ -93,6 +95,8 @@ export default function JobsPage() {
               outline: 'none',
               background: 'white',
               cursor: 'pointer',
+              width: '100%',
+              boxSizing: 'border-box',
             }}
           >
             <option value="all">All Categories</option>
@@ -105,7 +109,7 @@ export default function JobsPage() {
       </div>
 
       {/* Jobs Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: '20px' }}>
+      <div className="responsive-cards-grid">
         {loading ? (
           <div style={{ gridColumn: '1 / -1', padding: '40px', textAlign: 'center', color: '#64748b' }}>
             Loading recruitment posts from Cloudflare D1...

@@ -3,13 +3,13 @@ import { Sparkles, Shield, Target, Users } from 'lucide-react';
 
 export default function AboutUsPage() {
   return (
-    <div style={{ maxWidth: '1000px', margin: '40px auto', padding: '0 1.5rem' }}>
-      <div style={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '20px', padding: '40px' }}>
+    <div style={{ maxWidth: '1000px', margin: '20px auto', padding: '0 clamp(0.75rem, 3vw, 1.5rem)' }}>
+      <div style={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '20px', padding: 'clamp(1.25rem, 3.5vw, 2.5rem)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
-          <div style={{ width: '42px', height: '42px', borderRadius: '10px', background: '#0b4ca3', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
+          <div style={{ width: '42px', height: '42px', borderRadius: '10px', background: '#0b4ca3', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', flexShrink: 0 }}>
             <Sparkles style={{ width: '24px', height: '24px', color: '#ff7a00' }} />
           </div>
-          <h1 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#0f172a', margin: 0, fontFamily: 'Poppins' }}>
+          <h1 style={{ fontSize: 'clamp(1.3rem, 3vw, 1.8rem)', fontWeight: 800, color: '#0f172a', margin: 0, fontFamily: 'Poppins' }}>
             About Odisha Aspirants
           </h1>
         </div>
@@ -18,7 +18,7 @@ export default function AboutUsPage() {
           <strong>Odisha Aspirants</strong> is dedicated to helping government job candidates across Odisha succeed in their exams. We provide free, fast, and accurate updates for OSSSC, OPSC, OSSC, Railway Recruitment Board (RRB), and Odisha Banking exams.
         </p>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px', margin: '35px 0' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))', gap: '20px', margin: '30px 0' }}>
           <div style={{ background: '#f8fafc', padding: '20px', borderRadius: '14px', border: '1px solid #e2e8f0' }}>
             <Shield style={{ width: '28px', height: '28px', color: '#0b4ca3', marginBottom: '10px' }} />
             <h3 style={{ fontSize: '1.1rem', color: '#0f172a', margin: '0 0 6px 0', fontFamily: 'Poppins' }}>100% Authentic Updates</h3>
