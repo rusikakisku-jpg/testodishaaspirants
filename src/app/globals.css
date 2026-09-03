@@ -757,6 +757,193 @@ h1, h2, h3, h4, h5, h6, .poppins-font {
   .mobile-bottom-nav {
     display: flex;
   }
+
+  /* Transform listing table to responsive cards on mobile (eliminates horizontal scroll) */
+  .table-card {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+    margin-bottom: 2rem !important;
+    width: 100% !important;
+  }
+
+  .jobs-table {
+    min-width: 0 !important;
+    width: 100% !important;
+    display: block !important;
+  }
+
+  .jobs-table thead {
+    display: none !important;
+  }
+
+  .jobs-table tbody {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 14px !important;
+    width: 100% !important;
+  }
+
+  .jobs-table tr {
+    display: flex !important;
+    flex-direction: column !important;
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 16px !important;
+    padding: 16px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03) !important;
+    gap: 10px !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+  }
+
+  .jobs-table tr:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06) !important;
+  }
+
+  .jobs-table tbody tr:hover td,
+  .jobs-table tr:hover td {
+    background: transparent !important;
+  }
+
+  .jobs-table td {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 7px 0 !important;
+    border-bottom: 1px dashed #f1f5f9 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    font-size: 0.86rem !important;
+    gap: 12px !important;
+    box-sizing: border-box !important;
+  }
+
+  .jobs-table td::before {
+    content: attr(data-label);
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    text-align: left;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+  }
+
+  /* Board row at the top */
+  .jobs-table td.board-col {
+    order: 1;
+    border-bottom: 1px solid #e2e8f0 !important;
+    padding-bottom: 10px !important;
+  }
+
+  .jobs-table td.board-col .cell-value strong {
+    background: rgba(11, 76, 163, 0.08);
+    color: #0b4ca3;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 0.84rem;
+    font-weight: 800;
+  }
+
+  /* Post Name row: full width headline */
+  .jobs-table td.post-name-col {
+    order: 2;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 4px !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    padding: 10px 0 !important;
+  }
+
+  .jobs-table td.post-name-col::before {
+    font-size: 0.68rem;
+    color: #94a3b8;
+  }
+
+  .jobs-table td.post-name-col .cell-value {
+    max-width: 100% !important;
+    font-size: 1.02rem !important;
+    font-weight: 700 !important;
+    color: #0f172a !important;
+    text-align: left !important;
+    line-height: 1.4 !important;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  /* Publish Date */
+  .jobs-table td.publish-date-col {
+    order: 3;
+    width: 100% !important;
+  }
+
+  /* Eligibility */
+  .jobs-table td.eligibility-col {
+    order: 4;
+    width: 100% !important;
+  }
+
+  /* Last Date / Status */
+  .jobs-table td.last-date-col {
+    order: 5;
+    width: 100% !important;
+  }
+
+  .jobs-table td.last-date-col .cell-value {
+    color: #dc2626 !important;
+    font-weight: 700 !important;
+  }
+
+  /* Action button row: Full width thumb friendly */
+  .jobs-table td.action-col {
+    order: 6;
+    border-bottom: none !important;
+    padding-top: 8px !important;
+    padding-bottom: 0 !important;
+    width: 100% !important;
+    justify-content: stretch !important;
+  }
+
+  .jobs-table td.action-col::before {
+    display: none !important;
+  }
+
+  .jobs-table td.action-col .btn-view {
+    width: 100% !important;
+    padding: 12px 16px !important;
+    text-align: center !important;
+    justify-content: center !important;
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
+    border-radius: 10px !important;
+    box-sizing: border-box !important;
+    box-shadow: 0 2px 6px rgba(11, 76, 163, 0.2) !important;
+  }
+
+  .jobs-table .cell-value {
+    text-align: right;
+    max-width: 65%;
+    word-break: break-word;
+    color: #1e293b;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .jobs-table tr td.no-records {
+    display: block !important;
+    text-align: center !important;
+    padding: 2.5rem 1rem !important;
+    width: 100% !important;
+    border-bottom: none !important;
+  }
+
+  .jobs-table tr td.no-records::before {
+    display: none !important;
+  }
 }
 
 @media (max-width: 480px) {
