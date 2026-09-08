@@ -33,9 +33,14 @@ function subscribe(callback: () => void) {
 }
 
 function getFromSnapshot(): string {
+  if (typeof window === 'undefined') return '';
   const params = new URLSearchParams(window.location.search);
   const from = params.get('from');
   if (from) return from;
+  try {
+    const stored = sessionStorage.getItem('last_section');
+    if (stored) return stored;
+  } catch {}
   if (typeof document !== 'undefined' && document.referrer) {
     try {
       const refPath = new URL(document.referrer).pathname;

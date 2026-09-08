@@ -58,7 +58,7 @@ export default function SyllabusClient({ initialList }: { initialList: SyllabusD
             year: p.update_year || '2026',
             pattern: p.pattern,
             description: p.description,
-            link: `/articles/${slug}?from=syllabus`,
+            link: `/articles/${slug}`,
           };
         });
 
@@ -71,7 +71,7 @@ export default function SyllabusClient({ initialList }: { initialList: SyllabusD
               year: '2026',
               pattern: 'Written Exam / CBT + Certificate Verification',
               description: `Official selection scheme and syllabus pattern for ${j.board} ${j.title} recruitment 2026.`,
-              link: `/articles/${getJobSlug(j)}?from=syllabus`,
+              link: `/articles/${getJobSlug(j)}`,
             });
           }
         });
@@ -169,6 +169,11 @@ export default function SyllabusClient({ initialList }: { initialList: SyllabusD
               <div>
                 <Link
                   href={item.link}
+                  onClick={() => {
+                    try {
+                      sessionStorage.setItem('last_section', 'syllabus');
+                    } catch {}
+                  }}
                   className="syllabus-btn-direct-link"
                 >
                   <span>Full Syllabus &amp; Notification</span>

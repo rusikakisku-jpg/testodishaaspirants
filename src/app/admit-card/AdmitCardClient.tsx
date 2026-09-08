@@ -88,7 +88,13 @@ export default function AdmitCardClient({ initialItems }: { initialItems: JobIte
                       <span className="cell-value">{item.lastDate}</span>
                     </td>
                     <td data-label="Action" className="action-col">
-                      <Link href={`/articles/${getJobSlug(item)}?from=admit-card`} className="btn-view">
+                      <Link
+                        href={`/articles/${getJobSlug(item)}`}
+                        onClick={() => {
+                          try { sessionStorage.setItem('last_section', 'admit-card'); } catch {}
+                        }}
+                        className="btn-view"
+                      >
                         View Details
                       </Link>
                     </td>

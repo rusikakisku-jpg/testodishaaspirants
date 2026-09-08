@@ -79,7 +79,13 @@ export default function HomePageClient({
               {vacancies.length > 0 ? (
                 vacancies.map((item) => (
                   <li key={item.id}>
-                    <Link href={`/articles/${getJobSlug(item)}?from=latest-jobs`} className="card-list-item">
+                    <Link
+                      href={`/articles/${getJobSlug(item)}`}
+                      onClick={() => {
+                        try { sessionStorage.setItem('last_section', 'latest-jobs'); } catch {}
+                      }}
+                      className="card-list-item"
+                    >
                       <span className="item-bullet"></span>
                       <span>{item.title}</span>
                     </Link>
@@ -106,7 +112,13 @@ export default function HomePageClient({
               {admitCards.length > 0 ? (
                 admitCards.map((item) => (
                   <li key={item.id}>
-                    <Link href={`/articles/${getJobSlug(item)}?from=admit-card`} className="card-list-item">
+                    <Link
+                      href={`/articles/${getJobSlug(item)}`}
+                      onClick={() => {
+                        try { sessionStorage.setItem('last_section', 'admit-card'); } catch {}
+                      }}
+                      className="card-list-item"
+                    >
                       <span className="item-bullet"></span>
                       <span>{item.title}</span>
                     </Link>
@@ -133,7 +145,13 @@ export default function HomePageClient({
               {answerKeys.length > 0 ? (
                 answerKeys.map((item) => (
                   <li key={item.id}>
-                    <Link href={`/articles/${getJobSlug(item)}?from=answer-key`} className="card-list-item">
+                    <Link
+                      href={`/articles/${getJobSlug(item)}`}
+                      onClick={() => {
+                        try { sessionStorage.setItem('last_section', 'answer-key'); } catch {}
+                      }}
+                      className="card-list-item"
+                    >
                       <span className="item-bullet"></span>
                       <span>{item.title}</span>
                     </Link>
@@ -160,7 +178,13 @@ export default function HomePageClient({
               {results.length > 0 ? (
                 results.map((item) => (
                   <li key={item.id}>
-                    <Link href={`/articles/${getJobSlug(item)}?from=result`} className="card-list-item">
+                    <Link
+                      href={`/articles/${getJobSlug(item)}`}
+                      onClick={() => {
+                        try { sessionStorage.setItem('last_section', 'result'); } catch {}
+                      }}
+                      className="card-list-item"
+                    >
                       <span className="item-bullet"></span>
                       <span>{item.title}</span>
                     </Link>
@@ -214,7 +238,13 @@ export default function HomePageClient({
               {syllabusList.length > 0 ? (
                 syllabusList.map((item) => (
                   <li key={item.id}>
-                    <Link href={`/articles/${getJobSlug(item)}?from=syllabus`} className="card-list-item">
+                    <Link
+                      href={`/articles/${getJobSlug(item)}`}
+                      onClick={() => {
+                        try { sessionStorage.setItem('last_section', 'syllabus'); } catch {}
+                      }}
+                      className="card-list-item"
+                    >
                       <span className="item-bullet"></span>
                       <span>{item.title}</span>
                     </Link>

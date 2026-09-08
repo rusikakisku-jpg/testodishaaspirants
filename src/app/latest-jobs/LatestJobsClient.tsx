@@ -88,7 +88,13 @@ export default function LatestJobsClient({ initialJobs }: { initialJobs: JobItem
                       <span className="cell-value">{job.lastDate}</span>
                     </td>
                     <td data-label="Action" className="action-col">
-                      <Link href={`/articles/${getJobSlug(job)}?from=latest-jobs`} className="btn-view">
+                      <Link
+                        href={`/articles/${getJobSlug(job)}`}
+                        onClick={() => {
+                          try { sessionStorage.setItem('last_section', 'latest-jobs'); } catch {}
+                        }}
+                        className="btn-view"
+                      >
                         View Details
                       </Link>
                     </td>
