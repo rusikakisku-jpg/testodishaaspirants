@@ -24,6 +24,118 @@ export interface PyqRecord {
   exam_year?: number | string;
 }
 
+function PYQCardItem({
+  item,
+  badgeStyle,
+}: {
+  item: PyqRecord;
+  badgeStyle: { bg: string; color: string; border: string };
+}) {
+  const yearsArray = item.years 
+    ? item.years.split(',').map((y: string) => y.trim()).filter(Boolean)
+    : [String(item.exam_year || 2024)];
+
+  const sortedYears = [...yearsArray].sort((a, b) => Number(b) - Number(a));
+  const [selectedYear, setSelectedYear] = useState<string>(sortedYears[0] || '2024');
+
+  return (
+    <div className="pyq-paper-card">
+      <div>
+        {/* Card Top: Board Badge & Verified Indicator */}
+        <div className="pyq-card-top">
+          <span 
+            className="pyq-board-badge" 
+            style={{ background: badgeStyle.bg, color: badgeStyle.color, border: badgeStyle.border }}
+          >
+            {item.board}
+          </span>
+          <div className="pyq-official-badge">
+            <CheckCircle2 style={{ width: '14px', height: '14px', color: '#059669' }} />
+            <span>Official PDF</span>
+          </div>
+        </div>
+
+        {/* Title */}
+        <h3 className="pyq-card-title">
+          {item.title}
+        </h3>
+
+        {/* Description */}
+        <p className="pyq-card-desc">
+          {item.description}
+        </p>
+
+        {/* Option 2: Interactive Year Selector Chips */}
+        <div style={{ margin: '14px 0 20px 0' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+            <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+              Select Exam Session:
+            </span>
+            <span style={{ fontSize: '0.74rem', fontWeight: 700, color: '#0b4ca3' }}>
+              Selected: <strong>{selectedYear}</strong>
+            </span>
+          </div>
+
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+            {sortedYears.map((year, idx) => {
+              const isActive = selectedYear === year;
+              return (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => setSelectedYear(year)}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                    padding: '5px 11px',
+                    borderRadius: '8px',
+                    fontSize: '0.78rem',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    background: isActive ? '#0b4ca3' : '#f8fafc',
+                    color: isActive ? '#ffffff' : '#334155',
+                    border: isActive ? '1px solid #0b4ca3' : '1px solid #cbd5e1',
+                    boxShadow: isActive ? '0 2px 6px rgba(11, 76, 163, 0.25)' : 'none',
+                  }}
+                  aria-pressed={isActive}
+                >
+                  <Calendar size={12} style={{ color: isActive ? '#ffffff' : '#0b4ca3' }} />
+                  <span>{year}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* Dynamic Action Buttons for the Selected Year */}
+      <div className="pyq-card-actions">
+        <a
+          href={item.pdf_url || '#'}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="pyq-btn-download"
+          title={`Download ${item.board} ${selectedYear} Official Paper PDF`}
+        >
+          <Download style={{ width: '15px', height: '15px' }} />
+          <span>Download {selectedYear} PDF</span>
+        </a>
+        
+        <Link
+          href={`/test-player?exam=${encodeURIComponent(item.board.toLowerCase())}&year=${selectedYear}`}
+          className="pyq-btn-cbt"
+          title={`Practice ${item.board} ${selectedYear} CBT Mock Test`}
+        >
+          <PlayCircle style={{ width: '15px', height: '15px', color: '#0b4ca3' }} />
+          <span>Practice {selectedYear} CBT</span>
+        </Link>
+      </div>
+    </div>
+  );
+}
+
 export default function PYQClient({ initialPyqs }: { initialPyqs: PyqRecord[] }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [pyqs, setPyqs] = useState<PyqRecord[]>(initialPyqs);
@@ -115,146 +227,13 @@ export default function PYQClient({ initialPyqs }: { initialPyqs: PyqRecord[] })
       {/* Grid of PYQ Cards */}
       {filteredPYQ.length > 0 ? (
         <div className="responsive-cards-grid">
-          {filteredPYQ.map((item) => {
-            const badgeStyle = getBoardBadgeStyle(item.board);
-            const yearsArray = item.years 
-              ? item.years.split(',').map((y: string) => y.trim()).filter(Boolean)
-              : [String(item.exam_year || 2024)];
-
-            const sortedYears = [...yearsArray].sort((a, b) => Number(b) - Number(a));
-
-            return (
-              <div key={item.id} className="pyq-paper-card">
-                <div>
-                  {/* Card Top: Board Badge & Verified Indicator */}
-                  <div className="pyq-card-top">
-                    <span 
-                      className="pyq-board-badge" 
-                      style={{ background: badgeStyle.bg, color: badgeStyle.color, border: badgeStyle.border }}
-                    >
-                      {item.board}
-                    </span>
-                    <div className="pyq-official-badge">
-                      <CheckCircle2 style={{ width: '14px', height: '14px', color: '#059669' }} />
-                      <span>Official PDF</span>
-                    </div>
-                  </div>
-
-                  {/* Title */}
-                  <h3 className="pyq-card-title">
-                    {item.title}
-                  </h3>
-
-                  {/* Description */}
-                  <p className="pyq-card-desc">
-                    {item.description}
-                  </p>
-                </div>
-
-                {/* Option 1: Year-Wise Direct Session Papers & CBT Practice List */}
-                <div style={{ marginTop: '8px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                    <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                      Available Exam Papers &amp; CBT Sets:
-                    </span>
-                    <span style={{ fontSize: '0.72rem', fontWeight: 700, color: '#0b4ca3', background: 'rgba(11, 76, 163, 0.08)', padding: '2px 8px', borderRadius: '99px' }}>
-                      {sortedYears.length} Sessions
-                    </span>
-                  </div>
-
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    {sortedYears.map((year: string, idx: number) => (
-                      <div
-                        key={idx}
-                        style={{
-                          background: '#f8fafc',
-                          border: '1px solid #e2e8f0',
-                          borderRadius: '10px',
-                          padding: '9px 12px',
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
-                          gap: '10px',
-                          flexWrap: 'wrap',
-                        }}
-                      >
-                        {/* Year & Session Name */}
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                          <span
-                            style={{
-                              background: '#0b4ca3',
-                              color: '#ffffff',
-                              fontSize: '0.74rem',
-                              fontWeight: 800,
-                              padding: '2px 7px',
-                              borderRadius: '5px',
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              gap: '4px',
-                            }}
-                          >
-                            <Calendar size={11} /> {year}
-                          </span>
-                          <span style={{ fontSize: '0.84rem', fontWeight: 600, color: '#1e293b' }}>
-                            {item.board} {year} Question Paper
-                          </span>
-                        </div>
-
-                        {/* Separate Action Buttons for this specific year */}
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
-                          <a
-                            href={item.pdf_url || '#'}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            title={`Download ${item.board} ${year} Official Question Paper PDF`}
-                            style={{
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              gap: '4px',
-                              background: '#ffffff',
-                              color: '#0f172a',
-                              border: '1px solid #cbd5e1',
-                              padding: '5px 10px',
-                              borderRadius: '6px',
-                              fontSize: '0.76rem',
-                              fontWeight: 700,
-                              textDecoration: 'none',
-                              cursor: 'pointer',
-                            }}
-                          >
-                            <Download size={12} style={{ color: '#0b4ca3' }} />
-                            <span>Download PDF</span>
-                          </a>
-
-                          <Link
-                            href={`/test-player?exam=${encodeURIComponent(item.board.toLowerCase())}&year=${year}`}
-                            title={`Practice ${item.board} ${year} Online CBT Mock Test`}
-                            style={{
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              gap: '4px',
-                              background: '#0b4ca3',
-                              color: '#ffffff',
-                              border: 'none',
-                              padding: '5px 10px',
-                              borderRadius: '6px',
-                              fontSize: '0.76rem',
-                              fontWeight: 700,
-                              textDecoration: 'none',
-                              cursor: 'pointer',
-                            }}
-                          >
-                            <PlayCircle size={12} />
-                            <span>Practice CBT</span>
-                          </Link>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+          {filteredPYQ.map((item) => (
+            <PYQCardItem
+              key={item.id}
+              item={item}
+              badgeStyle={getBoardBadgeStyle(item.board)}
+            />
+          ))}
         </div>
       ) : (
         /* Empty State */
