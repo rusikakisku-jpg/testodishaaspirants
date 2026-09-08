@@ -7,9 +7,7 @@ import {
   BookOpen, 
   ArrowRight, 
   RotateCcw,
-  Calendar, 
-  ChevronDown, 
-  ChevronUp 
+  Calendar 
 } from 'lucide-react';
 import { fetchSyllabusApi, fetchJobsApi } from '@/lib/api';
 
@@ -35,7 +33,6 @@ export interface SyllabusDisplayItem {
 export default function SyllabusClient({ initialList }: { initialList: SyllabusDisplayItem[] }) {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [syllabusList, setSyllabusList] = useState<SyllabusDisplayItem[]>(initialList);
-  const [expandedId, setExpandedId] = useState<string | number | null>(null);
 
   useEffect(() => {
     async function refreshData() {
@@ -77,31 +74,6 @@ export default function SyllabusClient({ initialList }: { initialList: SyllabusD
     refreshData();
   }, []);
 
-  // Board badge styling helper
-  const getBoardBadgeStyle = (board: string) => {
-    switch ((board || '').toUpperCase()) {
-      case 'OPSC':
-        return { bg: 'rgba(124, 58, 237, 0.08)', color: '#7c3aed', border: '1px solid rgba(124, 58, 237, 0.2)' };
-      case 'OSSC':
-        return { bg: 'rgba(11, 76, 163, 0.08)', color: '#0b4ca3', border: '1px solid rgba(11, 76, 163, 0.2)' };
-      case 'OSSSC':
-        return { bg: 'rgba(5, 150, 105, 0.08)', color: '#059669', border: '1px solid rgba(5, 150, 105, 0.2)' };
-      case 'RRB':
-        return { bg: 'rgba(217, 119, 6, 0.08)', color: '#d97706', border: '1px solid rgba(217, 119, 6, 0.2)' };
-      default:
-        return { bg: '#f1f5f9', color: '#475569', border: '1px solid #e2e8f0' };
-    }
-  };
-
-  // Helper to parse stages from pattern string
-  const parseStages = (pattern?: string) => {
-    if (!pattern) return ['Written Examination', 'Document Verification'];
-    return pattern
-      .split('+')
-      .map((s) => s.trim())
-      .filter(Boolean);
-  };
-
   const filteredItems = syllabusList.filter((item) => {
     const matchesSearch =
       item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -109,10 +81,6 @@ export default function SyllabusClient({ initialList }: { initialList: SyllabusD
       (item.description && item.description.toLowerCase().includes(searchTerm.toLowerCase()));
     return matchesSearch;
   });
-
-  const toggleExpand = (id: string | number) => {
-    setExpandedId((prev) => (prev === id ? null : id));
-  };
 
   return (
     <div className="container">
@@ -165,102 +133,40 @@ export default function SyllabusClient({ initialList }: { initialList: SyllabusD
       {/* Grid of Syllabus Cards with Accordion Preview */}
       {filteredItems.length > 0 ? (
         <div className="responsive-cards-grid">
-          {filteredItems.map((item) => {
-            const badgeStyle = getBoardBadgeStyle(item.board);
-            const stages = parseStages(item.pattern);
-            const isExpanded = expandedId === item.id;
-
-            return (
-              <div key={item.id} className="syllabus-directory-card">
-                <div>
-                  {/* Card Top: Board Badge & Year */}
-                  <div className="syllabus-card-top-bar">
-                    <span 
-                      className="syllabus-board-pill-tag" 
-                      style={{ background: badgeStyle.bg, color: badgeStyle.color, border: badgeStyle.border }}
-                    >
-                      {item.board}
-                    </span>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.78rem', color: '#64748b', fontWeight: 600 }}>
-                      <Calendar style={{ width: '12px', height: '12px', color: '#0b4ca3' }} />
-                      <span>Updated {item.year}</span>
-                    </div>
-                  </div>
-
-                  {/* Exam Title */}
-                  <h3 className="syllabus-exam-title">
-                    {item.title}
-                  </h3>
-
-                  {/* Specs Matrix */}
-                  <div className="syllabus-specs-grid">
-                    <div className="syllabus-spec-item">
-                      <span className="syllabus-spec-label">Selection Mode:</span>
-                      <span className="syllabus-spec-value">{stages[0] || 'Written Test / CBT'}</span>
-                    </div>
-                    <div className="syllabus-spec-item">
-                      <span className="syllabus-spec-label">Exam Stages:</span>
-                      <span className="syllabus-spec-value">{stages.length} Stage Selection</span>
-                    </div>
-                    <div className="syllabus-spec-item">
-                      <span className="syllabus-spec-label">Negative Mark:</span>
-                      <span className="syllabus-spec-value" style={{ color: '#dc2626' }}>
-                        {item.board.toUpperCase() === 'OPSC' ? '-0.33 (1/3rd)' : '-0.25 (1/4th)'} per wrong answer
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Description */}
-                  {item.description && (
-                    <p style={{ fontSize: '0.85rem', color: '#64748b', margin: '0 0 14px 0', lineHeight: 1.55 }}>
-                      {item.description}
-                    </p>
-                  )}
-
-                  {/* Accordion Drawer (Expanded View) */}
-                  {isExpanded && (
-                    <div className="syllabus-accordion-drawer">
-                      <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#0b4ca3', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                        Complete Selection Hierarchy:
-                      </div>
-                      {stages.map((stage, idx) => (
-                        <div key={idx} className="syllabus-drawer-stage-item">
-                          <span className="syllabus-drawer-stage-dot"></span>
-                          <span>Stage {idx + 1}: {stage}</span>
-                        </div>
-                      ))}
-                      <div style={{ marginTop: '8px', paddingTop: '8px', borderTop: '1px dashed #cbd5e1', fontSize: '0.78rem', color: '#64748b' }}>
-                        Includes detailed syllabus PDF and CBT practice simulation.
-                      </div>
-                    </div>
-                  )}
+          {filteredItems.map((item) => (
+            <div key={item.id} className="syllabus-directory-card">
+              <div>
+                {/* Update Date */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.78rem', color: '#64748b', fontWeight: 600, marginBottom: '10px' }}>
+                  <Calendar style={{ width: '13px', height: '13px', color: '#0b4ca3' }} />
+                  <span>Updated {item.year}</span>
                 </div>
 
-                {/* Actions: Toggle Accordion & Direct Link */}
-                <div>
-                  <button
-                    onClick={() => toggleExpand(item.id)}
-                    className="syllabus-btn-accordion-toggle"
-                  >
-                    <span>{isExpanded ? 'Hide Stage Breakdown' : 'Quick View Stages & Details'}</span>
-                    {isExpanded ? (
-                      <ChevronUp style={{ width: '15px', height: '15px' }} />
-                    ) : (
-                      <ChevronDown style={{ width: '15px', height: '15px' }} />
-                    )}
-                  </button>
+                {/* Title */}
+                <h3 className="syllabus-exam-title">
+                  {item.title}
+                </h3>
 
-                  <Link
-                    href={item.link}
-                    className="syllabus-btn-direct-link"
-                  >
-                    <span>Full Syllabus &amp; Notification</span>
-                    <ArrowRight style={{ width: '15px', height: '15px' }} />
-                  </Link>
-                </div>
+                {/* Subtitle */}
+                {item.description && (
+                  <p style={{ fontSize: '0.86rem', color: '#64748b', margin: '0 0 18px 0', lineHeight: 1.55 }}>
+                    {item.description}
+                  </p>
+                )}
               </div>
-            );
-          })}
+
+              {/* Full Syllabus & Notification Link */}
+              <div>
+                <Link
+                  href={item.link}
+                  className="syllabus-btn-direct-link"
+                >
+                  <span>Full Syllabus &amp; Notification</span>
+                  <ArrowRight style={{ width: '15px', height: '15px' }} />
+                </Link>
+              </div>
+            </div>
+          ))}
         </div>
       ) : (
         /* Empty State */
