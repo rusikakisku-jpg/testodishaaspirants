@@ -36,7 +36,7 @@ function PYQCardItem({
     : [String(item.exam_year || 2024)];
 
   const sortedYears = [...yearsArray].sort((a, b) => Number(b) - Number(a));
-  const [selectedYear, setSelectedYear] = useState<string>(sortedYears[0] || '2024');
+  const [selectedYear, setSelectedYear] = useState<string | null>(null);
 
   return (
     <div className="pyq-paper-card">
@@ -65,15 +65,17 @@ function PYQCardItem({
           {item.description}
         </p>
 
-        {/* Option 2: Interactive Year Selector Chips */}
+        {/* Interactive Year Selector Chips */}
         <div style={{ margin: '14px 0 20px 0' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
             <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-              Select Exam Session:
+              Available Exam Sessions:
             </span>
-            <span style={{ fontSize: '0.74rem', fontWeight: 700, color: '#0b4ca3' }}>
-              Selected: <strong>{selectedYear}</strong>
-            </span>
+            {selectedYear && (
+              <span style={{ fontSize: '0.74rem', fontWeight: 700, color: '#0b4ca3' }}>
+                Selected: <strong>{selectedYear}</strong>
+              </span>
+            )}
           </div>
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
@@ -83,7 +85,7 @@ function PYQCardItem({
                 <button
                   key={idx}
                   type="button"
-                  onClick={() => setSelectedYear(year)}
+                  onClick={() => setSelectedYear(selectedYear === year ? null : year)}
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
@@ -110,26 +112,30 @@ function PYQCardItem({
         </div>
       </div>
 
-      {/* Dynamic Action Buttons for the Selected Year */}
+      {/* Action Buttons */}
       <div className="pyq-card-actions">
         <a
           href={item.pdf_url || '#'}
           target="_blank"
           rel="noopener noreferrer"
           className="pyq-btn-download"
-          title={`Download ${item.board} ${selectedYear} Official Paper PDF`}
+          title={selectedYear ? `Download ${item.board} ${selectedYear} Official Paper PDF` : `Download ${item.board} Official Paper PDF`}
         >
           <Download style={{ width: '15px', height: '15px' }} />
-          <span>Download {selectedYear} PDF</span>
+          <span>Download PDF</span>
         </a>
         
         <Link
-          href={`/test-player?exam=${encodeURIComponent(item.board.toLowerCase())}&year=${selectedYear}`}
+          href={
+            selectedYear
+              ? `/test-player?exam=${encodeURIComponent(item.board.toLowerCase())}&year=${selectedYear}`
+              : `/test-player?exam=${encodeURIComponent(item.board.toLowerCase())}`
+          }
           className="pyq-btn-cbt"
-          title={`Practice ${item.board} ${selectedYear} CBT Mock Test`}
+          title={selectedYear ? `Practice ${item.board} ${selectedYear} CBT Mock Test` : `Practice ${item.board} CBT Mock Test`}
         >
           <PlayCircle style={{ width: '15px', height: '15px', color: '#0b4ca3' }} />
-          <span>Practice {selectedYear} CBT</span>
+          <span>Practice CBT</span>
         </Link>
       </div>
     </div>
