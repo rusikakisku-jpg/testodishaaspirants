@@ -582,12 +582,12 @@ export default function ArticleDetailsClient({ slug, initialJob, initialAllJobs 
                 </Link>
               </li>
               <li>
-                <Link href="/test-player" className="sidebar-cat-item">
+                <Link href="/mock-test" className="sidebar-cat-item">
                   <div className="sidebar-cat-left">
                     <span className="cat-item-icon cat-theme-cbt">
                       <Sparkles size={14} />
                     </span>
-                    <span className="cat-name">Online Mock Tests</span>
+                    <span className="cat-name">Mock Test</span>
                   </div>
                   <span className="cat-cbt-tag">CBT LIVE</span>
                 </Link>
