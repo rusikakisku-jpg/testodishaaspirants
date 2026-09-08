@@ -121,6 +121,8 @@ export default function PYQClient({ initialPyqs }: { initialPyqs: PyqRecord[] })
               ? item.years.split(',').map((y: string) => y.trim()).filter(Boolean)
               : [String(item.exam_year || 2024)];
 
+            const sortedYears = [...yearsArray].sort((a, b) => Number(b) - Number(a));
+
             return (
               <div key={item.id} className="pyq-paper-card">
                 <div>
@@ -147,37 +149,108 @@ export default function PYQClient({ initialPyqs }: { initialPyqs: PyqRecord[] })
                   <p className="pyq-card-desc">
                     {item.description}
                   </p>
-
-                  {/* Available Years Section */}
-                  <div className="pyq-years-section">
-                    <span className="pyq-years-label">Available Exam Sessions:</span>
-                    <div className="pyq-years-chips-row">
-                      {yearsArray.map((year: string, idx: number) => (
-                        <span key={idx} className="pyq-year-chip">
-                          <Calendar style={{ width: '11px', height: '11px', color: '#0b4ca3' }} />
-                          {year}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
                 </div>
 
-                {/* Card Action Buttons */}
-                <div className="pyq-card-actions">
-                  <a
-                    href={item.pdf_url || '#'}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="pyq-btn-download"
-                  >
-                    <Download style={{ width: '15px', height: '15px' }} />
-                    <span>Download PDF</span>
-                  </a>
-                  
-                  <Link href="/test-player" className="pyq-btn-cbt">
-                    <PlayCircle style={{ width: '15px', height: '15px', color: '#0b4ca3' }} />
-                    <span>Practice CBT</span>
-                  </Link>
+                {/* Option 1: Year-Wise Direct Session Papers & CBT Practice List */}
+                <div style={{ marginTop: '8px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                    <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                      Available Exam Papers &amp; CBT Sets:
+                    </span>
+                    <span style={{ fontSize: '0.72rem', fontWeight: 700, color: '#0b4ca3', background: 'rgba(11, 76, 163, 0.08)', padding: '2px 8px', borderRadius: '99px' }}>
+                      {sortedYears.length} Sessions
+                    </span>
+                  </div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    {sortedYears.map((year: string, idx: number) => (
+                      <div
+                        key={idx}
+                        style={{
+                          background: '#f8fafc',
+                          border: '1px solid #e2e8f0',
+                          borderRadius: '10px',
+                          padding: '9px 12px',
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          gap: '10px',
+                          flexWrap: 'wrap',
+                        }}
+                      >
+                        {/* Year & Session Name */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <span
+                            style={{
+                              background: '#0b4ca3',
+                              color: '#ffffff',
+                              fontSize: '0.74rem',
+                              fontWeight: 800,
+                              padding: '2px 7px',
+                              borderRadius: '5px',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '4px',
+                            }}
+                          >
+                            <Calendar size={11} /> {year}
+                          </span>
+                          <span style={{ fontSize: '0.84rem', fontWeight: 600, color: '#1e293b' }}>
+                            {item.board} {year} Question Paper
+                          </span>
+                        </div>
+
+                        {/* Separate Action Buttons for this specific year */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
+                          <a
+                            href={item.pdf_url || '#'}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            title={`Download ${item.board} ${year} Official Question Paper PDF`}
+                            style={{
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '4px',
+                              background: '#ffffff',
+                              color: '#0f172a',
+                              border: '1px solid #cbd5e1',
+                              padding: '5px 10px',
+                              borderRadius: '6px',
+                              fontSize: '0.76rem',
+                              fontWeight: 700,
+                              textDecoration: 'none',
+                              cursor: 'pointer',
+                            }}
+                          >
+                            <Download size={12} style={{ color: '#0b4ca3' }} />
+                            <span>Download PDF</span>
+                          </a>
+
+                          <Link
+                            href={`/test-player?exam=${encodeURIComponent(item.board.toLowerCase())}&year=${year}`}
+                            title={`Practice ${item.board} ${year} Online CBT Mock Test`}
+                            style={{
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '4px',
+                              background: '#0b4ca3',
+                              color: '#ffffff',
+                              border: 'none',
+                              padding: '5px 10px',
+                              borderRadius: '6px',
+                              fontSize: '0.76rem',
+                              fontWeight: 700,
+                              textDecoration: 'none',
+                              cursor: 'pointer',
+                            }}
+                          >
+                            <PlayCircle size={12} />
+                            <span>Practice CBT</span>
+                          </Link>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             );
