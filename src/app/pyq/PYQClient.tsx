@@ -5,28 +5,37 @@ import { fetchPyqsApi } from '@/lib/api';
 import { 
   Download, 
   Search, 
-  Sparkles, 
   CheckCircle2, 
   Calendar, 
   PlayCircle, 
-  FileCheck, 
-  RotateCcw,
-  BookOpen,
-  X
+  RotateCcw, 
+  BookOpen 
 } from 'lucide-react';
 import Link from 'next/link';
 
-export default function PYQClient({ initialPyqs }: { initialPyqs: any[] }) {
+export interface PyqRecord {
+  id: number | string;
+  board: string;
+  years?: string;
+  title: string;
+  description?: string;
+  accent?: string;
+  pdf_url?: string;
+  exam_year?: number | string;
+}
+
+export default function PYQClient({ initialPyqs }: { initialPyqs: PyqRecord[] }) {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedBoard, setSelectedBoard] = useState('all');
-  const [pyqs, setPyqs] = useState<any[]>(initialPyqs);
+  const [pyqs, setPyqs] = useState<PyqRecord[]>(initialPyqs);
 
   useEffect(() => {
     async function refreshData() {
       try {
         const data = await fetchPyqsApi();
         if (data.length > 0) setPyqs(data);
-      } catch (e) {}
+      } catch {
+        // Fallback to initial
+      }
     }
     refreshData();
   }, []);
@@ -47,125 +56,34 @@ export default function PYQClient({ initialPyqs }: { initialPyqs: any[] }) {
     }
   };
 
-  const boardsList = ['all', 'OSSSC', 'OSSC', 'OPSC', 'RRB'];
-
   const filteredPYQ = pyqs.filter((item) => {
     const matchesSearch =
       item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (item.description && item.description.toLowerCase().includes(searchTerm.toLowerCase())) ||
       (item.board && item.board.toLowerCase().includes(searchTerm.toLowerCase()));
-    const matchesBoard = selectedBoard === 'all' || item.board === selectedBoard;
-    return matchesSearch && matchesBoard;
+    return matchesSearch;
   });
 
   return (
-    <div style={{ maxWidth: '1240px', margin: '20px auto', padding: '0 clamp(0.75rem, 3vw, 1.5rem)' }}>
-      {/* Professional Hero Section */}
-      <div className="pyq-hero-card">
-        <div className="pyq-hero-badge">
-          <Sparkles style={{ width: '15px', height: '15px', color: '#ff7a00' }} />
-          <span>OFFICIAL ODISHA EXAMS ARCHIVE • 2015 – 2026</span>
-        </div>
-        
-        <h1 className="pyq-hero-title">
-          Previous Year Question Papers (PYQ) &amp; Solutions
-        </h1>
-        
-        <p className="pyq-hero-desc">
-          Download verified shift-wise question papers and official answer keys for OSSSC RI, ARI, OPSC OCS, OSSC CGL, and Railway recruitment exams. Practice in real exam simulation mode to maximize your score.
-        </p>
-
-        {/* Feature Highlights Strip */}
-        <div className="pyq-features-strip">
-          <div className="pyq-feature-chip">
-            <FileCheck style={{ width: '15px', height: '15px', color: '#059669' }} />
-            <span>Official Answer Keys Included</span>
-          </div>
-          <div className="pyq-feature-chip">
-            <Download style={{ width: '15px', height: '15px', color: '#0b4ca3' }} />
-            <span>100% Free Direct PDF Downloads</span>
-          </div>
-          <div className="pyq-feature-chip">
-            <PlayCircle style={{ width: '15px', height: '15px', color: '#7c3aed' }} />
-            <span>Interactive CBT Player Ready</span>
-          </div>
+    <div className="container">
+      {/* Section Header & Search Row matching odishaaspirants.com/latest-jobs */}
+      <div className="header-search-row">
+        <div className="page-header">
+          <h1>Previous Year Question Papers</h1>
+          <p>Download previous year question papers and practice CBT tests.</p>
         </div>
 
-        {/* Search & Board Filter Bar */}
-        <div className="pyq-filter-bar">
-          {/* Board Filter Tabs */}
-          <div className="pyq-board-tabs">
-            {boardsList.map((board) => {
-              const isActive = selectedBoard === board;
-              const count = board === 'all' 
-                ? pyqs.length 
-                : pyqs.filter((p) => p.board === board).length;
-              return (
-                <button
-                  key={board}
-                  onClick={() => setSelectedBoard(board)}
-                  className={`pyq-board-tab-btn ${isActive ? 'active' : ''}`}
-                >
-                  <span>{board === 'all' ? 'All Boards' : board}</span>
-                  <span style={{ 
-                    fontSize: '0.72rem', 
-                    padding: '1px 6px', 
-                    borderRadius: '99px', 
-                    background: isActive ? 'rgba(255, 255, 255, 0.25)' : '#e2e8f0',
-                    color: isActive ? 'white' : '#64748b'
-                  }}>
-                    {count}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Search Input with Clear Button */}
-          <div style={{ position: 'relative', width: '100%' }}>
-            <Search style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', width: '18px', height: '18px', color: '#94a3b8' }} />
-            <input
-              type="text"
-              placeholder="Search by exam name, post, or keyword (e.g. CGL, OCS, RI)..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              style={{
-                width: '100%',
-                padding: '12px 42px 12px 42px',
-                borderRadius: '12px',
-                border: '1px solid #cbd5e1',
-                fontSize: '0.92rem',
-                outline: 'none',
-                boxSizing: 'border-box',
-                background: '#f8fafc',
-                transition: 'border-color 0.2s, background 0.2s',
-              }}
-              onFocus={(e) => (e.target.style.background = '#ffffff')}
-              onBlur={(e) => (e.target.style.background = '#f8fafc')}
-            />
-            {searchTerm && (
-              <button
-                onClick={() => setSearchTerm('')}
-                style={{
-                  position: 'absolute',
-                  right: '12px',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  background: 'transparent',
-                  border: 'none',
-                  cursor: 'pointer',
-                  color: '#94a3b8',
-                  padding: '4px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-                aria-label="Clear search"
-              >
-                <X style={{ width: '16px', height: '16px' }} />
-              </button>
-            )}
-          </div>
+        <div className="search-wrapper">
+          <Search style={{ position: 'absolute', left: '1.25rem', top: '50%', transform: 'translateY(-50%)', width: '18px', height: '18px', color: '#94a3b8', pointerEvents: 'none', zIndex: 10 }} />
+          <input
+            type="text"
+            className="search-input"
+            id="searchBar"
+            placeholder="Search past papers, boards, or titles..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            aria-label="Search entries"
+          />
         </div>
       </div>
 
@@ -174,12 +92,9 @@ export default function PYQClient({ initialPyqs }: { initialPyqs: any[] }) {
         <div style={{ fontSize: '0.88rem', fontWeight: 700, color: '#475569' }}>
           Showing <span style={{ color: '#0b4ca3', fontWeight: 800 }}>{filteredPYQ.length}</span> question paper archives
         </div>
-        {(searchTerm || selectedBoard !== 'all') && (
+        {searchTerm && (
           <button
-            onClick={() => {
-              setSearchTerm('');
-              setSelectedBoard('all');
-            }}
+            onClick={() => setSearchTerm('')}
             style={{
               background: 'transparent',
               border: 'none',
@@ -192,7 +107,7 @@ export default function PYQClient({ initialPyqs }: { initialPyqs: any[] }) {
               gap: '4px',
             }}
           >
-            <RotateCcw style={{ width: '13px', height: '13px' }} /> Reset Filters
+            <RotateCcw style={{ width: '13px', height: '13px' }} /> Clear Search
           </button>
         )}
       </div>
@@ -285,13 +200,10 @@ export default function PYQClient({ initialPyqs }: { initialPyqs: any[] }) {
             No Question Papers Found
           </h3>
           <p style={{ color: '#64748b', fontSize: '0.9rem', maxWidth: '420px', margin: '0 auto 20px auto' }}>
-            No past papers match your current search &quot;{searchTerm}&quot;. Try using a different exam name or clear the board filter.
+            No past papers match your current search &quot;{searchTerm}&quot;. Try searching with another exam name or keyword.
           </p>
           <button
-            onClick={() => {
-              setSearchTerm('');
-              setSelectedBoard('all');
-            }}
+            onClick={() => setSearchTerm('')}
             style={{
               background: '#0b4ca3',
               color: 'white',
@@ -306,7 +218,7 @@ export default function PYQClient({ initialPyqs }: { initialPyqs: any[] }) {
               gap: '6px',
             }}
           >
-            <RotateCcw style={{ width: '15px', height: '15px' }} /> Reset All Filters
+            <RotateCcw style={{ width: '15px', height: '15px' }} /> Clear Search
           </button>
         </div>
       )}
