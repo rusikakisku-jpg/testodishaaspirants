@@ -466,7 +466,7 @@ export default function JobDetailsClient({ id, initialJob, initialAllJobs }: Job
         <aside className="sarkari-sidebar">
           {/* 1. Explore Categories */}
           <div className="sidebar-card sidebar-card-categories">
-            <div className="sidebar-card-header">
+            <div className="sidebar-card-header header-theme-blue">
               <div className="sidebar-header-left">
                 <div className="sidebar-header-icon icon-blue">
                   <Layers size={17} />
@@ -602,7 +602,7 @@ export default function JobDetailsClient({ id, initialJob, initialAllJobs }: Job
 
           {/* 2. Latest Jobs */}
           <div className="sidebar-card sidebar-card-latest">
-            <div className="sidebar-card-header">
+            <div className="sidebar-card-header header-theme-green">
               <div className="sidebar-header-left">
                 <div className="sidebar-header-icon icon-green">
                   <Briefcase size={17} />
@@ -663,7 +663,7 @@ export default function JobDetailsClient({ id, initialJob, initialAllJobs }: Job
 
           {/* 3. Jobs by Qualification */}
           <div className="sidebar-card sidebar-card-qual">
-            <div className="sidebar-card-header">
+            <div className="sidebar-card-header header-theme-purple">
               <div className="sidebar-header-left">
                 <div className="sidebar-header-icon icon-purple">
                   <GraduationCap size={17} />
@@ -673,6 +673,7 @@ export default function JobDetailsClient({ id, initialJob, initialAllJobs }: Job
                   <p className="sidebar-card-subtitle">Find jobs matching your degree</p>
                 </div>
               </div>
+              <span className="sidebar-count-badge">6 Levels</span>
             </div>
             <ul className="sidebar-qual-list">
               <li>

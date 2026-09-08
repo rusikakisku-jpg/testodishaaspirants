@@ -2095,7 +2095,7 @@ h1, h2, h3, h4, h5, h6, .poppins-font {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 16px;
+  padding: 13px 16px;
   background: #ffffff;
   border-bottom: 1px solid #f1f5f9;
 }
@@ -2193,6 +2193,105 @@ h1, h2, h3, h4, h5, h6, .poppins-font {
   0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
   70% { transform: scale(1); box-shadow: 0 0 0 5px rgba(16, 185, 129, 0); }
   100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+/* 1. Explore Categories Header Theme - Royal Blue */
+.sidebar-card-categories .sidebar-card-header,
+.sidebar-card-header.header-theme-blue {
+  background: linear-gradient(135deg, #0b4ca3 0%, #1d4ed8 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.sidebar-card-categories .sidebar-card-header .sidebar-card-title,
+.sidebar-card-header.header-theme-blue .sidebar-card-title {
+  color: #ffffff;
+}
+
+.sidebar-card-categories .sidebar-card-header .sidebar-card-subtitle,
+.sidebar-card-header.header-theme-blue .sidebar-card-subtitle {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.sidebar-card-categories .sidebar-card-header .sidebar-header-icon,
+.sidebar-card-header.header-theme-blue .sidebar-header-icon {
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+}
+
+.sidebar-card-categories .sidebar-card-header .sidebar-count-badge,
+.sidebar-card-header.header-theme-blue .sidebar-count-badge {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* 2. Latest Jobs Header Theme - Emerald Green */
+.sidebar-card-latest .sidebar-card-header,
+.sidebar-card-header.header-theme-green {
+  background: linear-gradient(135deg, #047857 0%, #059669 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.sidebar-card-latest .sidebar-card-header .sidebar-card-title,
+.sidebar-card-header.header-theme-green .sidebar-card-title {
+  color: #ffffff;
+}
+
+.sidebar-card-latest .sidebar-card-header .sidebar-card-subtitle,
+.sidebar-card-header.header-theme-green .sidebar-card-subtitle {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.sidebar-card-latest .sidebar-card-header .sidebar-header-icon,
+.sidebar-card-header.header-theme-green .sidebar-header-icon {
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+}
+
+.sidebar-card-latest .sidebar-card-header .sidebar-live-pill,
+.sidebar-card-header.header-theme-green .sidebar-live-pill {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.sidebar-card-latest .sidebar-card-header .sidebar-live-dot,
+.sidebar-card-header.header-theme-green .sidebar-live-dot {
+  background: #34d399;
+  box-shadow: 0 0 0 2px rgba(52, 211, 153, 0.5);
+}
+
+/* 3. Jobs by Qualification Header Theme - Royal Purple */
+.sidebar-card-qual .sidebar-card-header,
+.sidebar-card-header.header-theme-purple {
+  background: linear-gradient(135deg, #6d28d9 0%, #7c3aed 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.sidebar-card-qual .sidebar-card-header .sidebar-card-title,
+.sidebar-card-header.header-theme-purple .sidebar-card-title {
+  color: #ffffff;
+}
+
+.sidebar-card-qual .sidebar-card-header .sidebar-card-subtitle,
+.sidebar-card-header.header-theme-purple .sidebar-card-subtitle {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.sidebar-card-qual .sidebar-card-header .sidebar-header-icon,
+.sidebar-card-header.header-theme-purple .sidebar-header-icon {
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+}
+
+.sidebar-card-qual .sidebar-card-header .sidebar-count-badge,
+.sidebar-card-header.header-theme-purple .sidebar-count-badge {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 /* 1. Explore Categories List */
