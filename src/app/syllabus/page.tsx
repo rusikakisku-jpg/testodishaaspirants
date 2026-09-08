@@ -1,6 +1,6 @@
 import React from 'react';
 import { fetchSyllabusApi, fetchJobsApi } from '@/lib/api';
-import SyllabusClient, { SyllabusDisplayItem } from './SyllabusClient';
+import SyllabusClient, { SyllabusDisplayItem, PatternApiItem } from './SyllabusClient';
 
 export default async function SyllabusPage() {
   const [patterns, jobs] = await Promise.all([
@@ -8,7 +8,7 @@ export default async function SyllabusPage() {
     fetchJobsApi(),
   ]);
 
-  const initialList: SyllabusDisplayItem[] = patterns.map((p: any) => ({
+  const initialList: SyllabusDisplayItem[] = patterns.map((p: PatternApiItem) => ({
     id: p.id,
     title: p.title,
     board: p.board,

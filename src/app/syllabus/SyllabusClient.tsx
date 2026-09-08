@@ -5,19 +5,22 @@ import Link from 'next/link';
 import { 
   Search, 
   BookOpen, 
-  Layers, 
   ArrowRight, 
   RotateCcw,
-  Calendar,
-  AlertCircle,
-  FileCheck,
-  ChevronDown,
-  ChevronUp,
-  ExternalLink,
-  ShieldCheck,
-  X
+  Calendar, 
+  ChevronDown, 
+  ChevronUp 
 } from 'lucide-react';
 import { fetchSyllabusApi, fetchJobsApi } from '@/lib/api';
+
+export interface PatternApiItem {
+  id: string | number;
+  title: string;
+  board: string;
+  update_year?: string;
+  pattern?: string;
+  description?: string;
+}
 
 export interface SyllabusDisplayItem {
   id: string | number;
@@ -30,7 +33,6 @@ export interface SyllabusDisplayItem {
 }
 
 export default function SyllabusClient({ initialList }: { initialList: SyllabusDisplayItem[] }) {
-  const [activeBoard, setActiveBoard] = useState<string>('All');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [syllabusList, setSyllabusList] = useState<SyllabusDisplayItem[]>(initialList);
   const [expandedId, setExpandedId] = useState<string | number | null>(null);
@@ -43,7 +45,7 @@ export default function SyllabusClient({ initialList }: { initialList: SyllabusD
           fetchJobsApi(),
         ]);
 
-        const formatted: SyllabusDisplayItem[] = patterns.map((p: any) => ({
+        const formatted: SyllabusDisplayItem[] = patterns.map((p: PatternApiItem) => ({
           id: p.id,
           title: p.title,
           board: p.board,
@@ -68,7 +70,9 @@ export default function SyllabusClient({ initialList }: { initialList: SyllabusD
         });
 
         if (formatted.length > 0) setSyllabusList(formatted);
-      } catch (e) {}
+      } catch {
+        // Silently handle refresh error
+      }
     }
     refreshData();
   }, []);
@@ -98,15 +102,12 @@ export default function SyllabusClient({ initialList }: { initialList: SyllabusD
       .filter(Boolean);
   };
 
-  const boardsList = ['All', 'OSSSC', 'OSSC', 'OPSC', 'RRB'];
-
   const filteredItems = syllabusList.filter((item) => {
-    const matchesBoard = activeBoard === 'All' || item.board.toUpperCase() === activeBoard.toUpperCase();
     const matchesSearch =
       item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.board.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (item.description && item.description.toLowerCase().includes(searchTerm.toLowerCase()));
-    return matchesBoard && matchesSearch;
+    return matchesSearch;
   });
 
   const toggleExpand = (id: string | number) => {
@@ -114,129 +115,25 @@ export default function SyllabusClient({ initialList }: { initialList: SyllabusD
   };
 
   return (
-    <div style={{ maxWidth: '1240px', margin: '20px auto', padding: '0 clamp(0.75rem, 3vw, 1.5rem)' }}>
-      {/* Clean Minimalist Hero Header */}
-      <div className="syllabus-clean-hero">
-        <div className="syllabus-clean-header-top">
-          <div className="syllabus-clean-icon-box">
-            <BookOpen style={{ width: '22px', height: '22px' }} />
-          </div>
-          <div>
-            <h1 className="syllabus-clean-title">
-              Odisha Exam Syllabus &amp; Selection Pattern 2026
-            </h1>
-            <span style={{ fontSize: '0.8rem', color: '#0b4ca3', fontWeight: 700 }}>
-              Official Curriculum &amp; Marking Schemes Archive
-            </span>
-          </div>
+    <div className="container">
+      {/* Section Header & Search Row matching /latest-jobs and /pyq */}
+      <div className="header-search-row">
+        <div className="page-header">
+          <h1>Odisha Exam Syllabus</h1>
+          <p>Official exam syllabi, selection processes, and marking schemes.</p>
         </div>
 
-        <p className="syllabus-clean-desc">
-          Browse verified exam syllabi, multi-stage selection processes, section-wise marks distribution, and negative marking penalty rules for OSSSC, OSSC, OPSC, and Railway recruitments.
-        </p>
-
-        {/* Quick Highlights Strip */}
-        <div className="syllabus-quick-chips-row">
-          <div className="syllabus-quick-chip">
-            <ShieldCheck style={{ width: '15px', height: '15px', color: '#059669' }} />
-            <span>100% Official &amp; Verified Schemes</span>
-          </div>
-          <div className="syllabus-quick-chip">
-            <Layers style={{ width: '15px', height: '15px', color: '#0b4ca3' }} />
-            <span>Stage 1 (Prelims), Stage 2 (Mains) &amp; Skill Tests</span>
-          </div>
-          <div className="syllabus-quick-chip">
-            <AlertCircle style={{ width: '15px', height: '15px', color: '#dc2626' }} />
-            <span>Negative Marking: 0.25 to 0.33 Marks</span>
-          </div>
-        </div>
-
-        {/* Search & Board Switcher Hub */}
-        <div>
-          {/* Board Selector Tabs */}
-          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '16px' }}>
-            {boardsList.map((board) => {
-              const isActive = activeBoard.toUpperCase() === board.toUpperCase();
-              const count = board === 'All' 
-                ? syllabusList.length 
-                : syllabusList.filter((s) => s.board.toUpperCase() === board.toUpperCase()).length;
-              return (
-                <button
-                  key={board}
-                  onClick={() => setActiveBoard(board)}
-                  style={{
-                    padding: '8px 16px',
-                    borderRadius: '10px',
-                    fontSize: '0.84rem',
-                    fontWeight: 700,
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease',
-                    border: isActive ? '1px solid #0b4ca3' : '1px solid #e2e8f0',
-                    background: isActive ? '#0b4ca3' : '#f8fafc',
-                    color: isActive ? '#ffffff' : '#475569',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                    boxShadow: isActive ? '0 2px 8px rgba(11, 76, 163, 0.2)' : 'none',
-                  }}
-                >
-                  <span>{board === 'All' ? 'All Boards' : board}</span>
-                  <span style={{ 
-                    fontSize: '0.72rem', 
-                    padding: '1px 6px', 
-                    borderRadius: '99px', 
-                    background: isActive ? 'rgba(255, 255, 255, 0.25)' : '#e2e8f0',
-                    color: isActive ? 'white' : '#64748b'
-                  }}>
-                    {count}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Search Input with Clear Button */}
-          <div style={{ position: 'relative', width: '100%' }}>
-            <Search style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', width: '18px', height: '18px', color: '#94a3b8' }} />
-            <input
-              type="text"
-              placeholder="Search syllabus by exam or post name (e.g. CGL, RI, OCS, Forest Guard)..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              style={{
-                width: '100%',
-                padding: '12px 42px 12px 42px',
-                borderRadius: '12px',
-                border: '1px solid #cbd5e1',
-                fontSize: '0.92rem',
-                outline: 'none',
-                boxSizing: 'border-box',
-                background: '#f8fafc',
-              }}
-            />
-            {searchTerm && (
-              <button
-                onClick={() => setSearchTerm('')}
-                style={{
-                  position: 'absolute',
-                  right: '12px',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  background: 'transparent',
-                  border: 'none',
-                  cursor: 'pointer',
-                  color: '#94a3b8',
-                  padding: '4px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-                aria-label="Clear search"
-              >
-                <X style={{ width: '16px', height: '16px' }} />
-              </button>
-            )}
-          </div>
+        <div className="search-wrapper">
+          <Search style={{ position: 'absolute', left: '1.25rem', top: '50%', transform: 'translateY(-50%)', width: '18px', height: '18px', color: '#94a3b8', pointerEvents: 'none', zIndex: 10 }} />
+          <input
+            type="text"
+            className="search-input"
+            id="searchBar"
+            placeholder="Search syllabus, boards, or posts..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            aria-label="Search entries"
+          />
         </div>
       </div>
 
@@ -245,12 +142,9 @@ export default function SyllabusClient({ initialList }: { initialList: SyllabusD
         <div style={{ fontSize: '0.88rem', fontWeight: 700, color: '#475569' }}>
           Showing <span style={{ color: '#0b4ca3', fontWeight: 800 }}>{filteredItems.length}</span> exam syllabus patterns
         </div>
-        {(searchTerm || activeBoard !== 'All') && (
+        {searchTerm && (
           <button
-            onClick={() => {
-              setSearchTerm('');
-              setActiveBoard('All');
-            }}
+            onClick={() => setSearchTerm('')}
             style={{
               background: 'transparent',
               border: 'none',
@@ -263,7 +157,7 @@ export default function SyllabusClient({ initialList }: { initialList: SyllabusD
               gap: '4px',
             }}
           >
-            <RotateCcw style={{ width: '13px', height: '13px' }} /> Reset Filters
+            <RotateCcw style={{ width: '13px', height: '13px' }} /> Clear Search
           </button>
         )}
       </div>
@@ -385,13 +279,10 @@ export default function SyllabusClient({ initialList }: { initialList: SyllabusD
             No Exam Syllabus Found
           </h3>
           <p style={{ color: '#64748b', fontSize: '0.9rem', maxWidth: '420px', margin: '0 auto 20px auto' }}>
-            No syllabus entries match your search &quot;{searchTerm}&quot;. Try using another board name or clear your filters.
+            No syllabus entries match your search &quot;{searchTerm}&quot;. Try using another exam name or keyword.
           </p>
           <button
-            onClick={() => {
-              setSearchTerm('');
-              setActiveBoard('All');
-            }}
+            onClick={() => setSearchTerm('')}
             style={{
               background: '#0b4ca3',
               color: 'white',
@@ -406,7 +297,7 @@ export default function SyllabusClient({ initialList }: { initialList: SyllabusD
               gap: '6px',
             }}
           >
-            <RotateCcw style={{ width: '15px', height: '15px' }} /> Reset All Filters
+            <RotateCcw style={{ width: '15px', height: '15px' }} /> Clear Search
           </button>
         </div>
       )}
