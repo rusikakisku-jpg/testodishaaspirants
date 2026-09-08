@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import {
-  ArrowLeft,
   ChevronRight,
   Sparkles,
   User,
@@ -12,10 +11,8 @@ import {
   Mail,
   Eye,
   EyeOff,
-  ShieldCheck,
   LogIn,
   UserPlus,
-  GraduationCap,
 } from 'lucide-react';
 
 export default function LoginPage() {
@@ -23,14 +20,13 @@ export default function LoginPage() {
   const [authMode, setAuthMode] = useState<'signin' | 'signup'>('signin');
 
   // Form Fields
-  const [loginId, setLoginId] = useState('');
+  const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [showLoginPassword, setShowLoginPassword] = useState(false);
   const [loginError, setLoginError] = useState('');
 
   const [regName, setRegName] = useState('');
-  const [regContact, setRegContact] = useState('');
-  const [regExam, setRegExam] = useState('OSSSC Combined Recruitment Exam IV (CRE IV)');
+  const [regEmail, setRegEmail] = useState('');
   const [regPassword, setRegPassword] = useState('');
   const [showRegPassword, setShowRegPassword] = useState(false);
   const [regError, setRegError] = useState('');
@@ -38,25 +34,23 @@ export default function LoginPage() {
   const handleSignIn = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     setLoginError('');
-    if (!loginId.trim()) {
-      setLoginError('Please enter Roll Number, Registration No, or Email.');
+    if (!loginEmail.trim()) {
+      setLoginError('Please enter your Email ID.');
       return;
     }
     if (!loginPassword.trim()) {
-      setLoginError('Please enter your Password or DOB PIN.');
+      setLoginError('Please enter your Password.');
       return;
     }
 
-    const trimmed = loginId.trim();
-    const isEmail = trimmed.includes('@');
-    const autoRoll = trimmed.toUpperCase().startsWith('OA-')
-      ? trimmed.toUpperCase()
-      : `OA-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+    const trimmed = loginEmail.trim();
+    const displayName = trimmed.includes('@') ? trimmed.split('@')[0] : trimmed;
+    const autoRoll = `OA-2026-${Math.floor(1000 + Math.random() * 9000)}`;
 
     const newCandidate = {
-      name: isEmail ? trimmed.split('@')[0] : `Candidate ${trimmed}`,
+      name: displayName,
       rollNo: autoRoll,
-      email: isEmail ? trimmed : undefined,
+      email: trimmed,
       targetExam: 'OSSSC Combined Recruitment Exam IV (CRE IV)',
       isGuest: false,
     };
@@ -71,15 +65,15 @@ export default function LoginPage() {
     if (e) e.preventDefault();
     setRegError('');
     if (!regName.trim()) {
-      setRegError('Please enter candidate full name.');
+      setRegError('Please enter your name.');
       return;
     }
-    if (!regContact.trim()) {
-      setRegError('Please enter email or mobile number.');
+    if (!regEmail.trim()) {
+      setRegError('Please enter your Email ID.');
       return;
     }
     if (!regPassword.trim() || regPassword.length < 4) {
-      setRegError('Please create a password of at least 4 characters.');
+      setRegError('Please enter a password with at least 4 characters.');
       return;
     }
 
@@ -87,8 +81,8 @@ export default function LoginPage() {
     const newCandidate = {
       name: regName.trim(),
       rollNo: generatedRoll,
-      email: regContact.trim(),
-      targetExam: regExam,
+      email: regEmail.trim(),
+      targetExam: 'OSSSC Combined Recruitment Exam IV (CRE IV)',
       isGuest: false,
     };
 
@@ -127,27 +121,20 @@ export default function LoginPage() {
 
   return (
     <div className="cbt-auth-viewport">
-      {/* Top Header Bar */}
-      <div className="cbt-auth-topbar">
-        <div className="cbt-auth-brand">
-          <span className="cbt-auth-brand-logo">Odisha Aspirants</span>
-          <span className="cbt-auth-badge">PORTAL LOGIN</span>
-        </div>
-        <Link href="/" className="cbt-auth-return-btn">
-          <ArrowLeft size={14} /> Return to Home
-        </Link>
-      </div>
-
       {/* Center Main Login Card */}
       <div className="cbt-auth-main">
         <div className="cbt-auth-card animate-fade-in">
           <div className="cbt-auth-header">
-            <div className="cbt-auth-icon">
-              <ShieldCheck size={22} />
-            </div>
-            <h1 className="cbt-auth-title">Candidate Login</h1>
+            <Link href="/" style={{ textDecoration: 'none', display: 'inline-block' }}>
+              <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0b4ca3', fontFamily: 'Poppins', letterSpacing: '-0.3px', marginBottom: '4px' }}>
+                Odisha Aspirants
+              </div>
+            </Link>
+            <h1 className="cbt-auth-title">
+              {authMode === 'signin' ? 'Candidate Login' : 'Candidate Registration'}
+            </h1>
             <p className="cbt-auth-subtitle">
-              Sign in to access Mock Tests & Examination Features
+              Computer Based Mock Test
             </p>
           </div>
 
@@ -177,7 +164,7 @@ export default function LoginPage() {
             </button>
           </div>
 
-          {/* Sign In Tab */}
+          {/* Sign In Tab (Email ID & Password) */}
           {authMode === 'signin' ? (
             <form onSubmit={handleSignIn}>
               {loginError && (
@@ -187,14 +174,14 @@ export default function LoginPage() {
               )}
 
               <div className="cbt-auth-field">
-                <label className="cbt-auth-label">Roll No / Registration No / Email</label>
+                <label className="cbt-auth-label">Email ID</label>
                 <div className="cbt-auth-input-wrap">
-                  <User className="cbt-auth-input-icon" />
+                  <Mail className="cbt-auth-input-icon" />
                   <input
-                    type="text"
-                    value={loginId}
-                    onChange={(e) => setLoginId(e.target.value)}
-                    placeholder="e.g. OA-2026-8942 or email"
+                    type="email"
+                    value={loginEmail}
+                    onChange={(e) => setLoginEmail(e.target.value)}
+                    placeholder="e.g. yourname@gmail.com"
                     className="cbt-auth-input"
                   />
                 </div>
@@ -202,9 +189,9 @@ export default function LoginPage() {
 
               <div className="cbt-auth-field">
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
-                  <label className="cbt-auth-label" style={{ marginBottom: 0 }}>Password / PIN</label>
+                  <label className="cbt-auth-label" style={{ marginBottom: 0 }}>Password</label>
                   <span
-                    onClick={() => alert('For practice tests, enter any password (e.g. 1234) or use the 1-Click Quick Demo Login below.')}
+                    onClick={() => alert('For practice tests, enter any password or use the 1-Click Quick Demo Login below.')}
                     style={{ fontSize: '0.72rem', color: '#0b4ca3', cursor: 'pointer', fontWeight: 600 }}
                   >
                     Need Help?
@@ -216,7 +203,7 @@ export default function LoginPage() {
                     type={showLoginPassword ? 'text' : 'password'}
                     value={loginPassword}
                     onChange={(e) => setLoginPassword(e.target.value)}
-                    placeholder="Enter password or DDMMYYYY"
+                    placeholder="Enter your password"
                     className="cbt-auth-input"
                   />
                   <button
@@ -231,7 +218,7 @@ export default function LoginPage() {
               </div>
 
               <button type="submit" className="cbt-auth-btn">
-                <LogIn size={16} /> Sign In & Enter Portal <ChevronRight size={14} />
+                <LogIn size={16} /> Sign In & Enter Mock Test <ChevronRight size={14} />
               </button>
 
               <button
@@ -244,7 +231,7 @@ export default function LoginPage() {
               </button>
             </form>
           ) : (
-            /* Sign Up Tab */
+            /* Sign Up Tab (Name, Email ID, Password) */
             <form onSubmit={handleSignUp}>
               {regError && (
                 <div style={{ background: '#fef2f2', border: '1px solid #fecaca', color: '#b91c1c', padding: '6px 10px', borderRadius: '6px', fontSize: '0.78rem', marginBottom: '10px', fontWeight: 600 }}>
@@ -253,50 +240,30 @@ export default function LoginPage() {
               )}
 
               <div className="cbt-auth-field">
-                <label className="cbt-auth-label">Candidate Full Name</label>
+                <label className="cbt-auth-label">Name</label>
                 <div className="cbt-auth-input-wrap">
                   <User className="cbt-auth-input-icon" />
                   <input
                     type="text"
                     value={regName}
                     onChange={(e) => setRegName(e.target.value)}
-                    placeholder="Full Name"
+                    placeholder="Enter your full name"
                     className="cbt-auth-input"
                   />
                 </div>
               </div>
 
               <div className="cbt-auth-field">
-                <label className="cbt-auth-label">Email / Mobile Number</label>
+                <label className="cbt-auth-label">Email ID</label>
                 <div className="cbt-auth-input-wrap">
                   <Mail className="cbt-auth-input-icon" />
                   <input
-                    type="text"
-                    value={regContact}
-                    onChange={(e) => setRegContact(e.target.value)}
-                    placeholder="Email or Mobile"
+                    type="email"
+                    value={regEmail}
+                    onChange={(e) => setRegEmail(e.target.value)}
+                    placeholder="Enter your email id"
                     className="cbt-auth-input"
                   />
-                </div>
-              </div>
-
-              <div className="cbt-auth-field">
-                <label className="cbt-auth-label">Target Examination</label>
-                <div className="cbt-auth-input-wrap">
-                  <GraduationCap className="cbt-auth-input-icon" />
-                  <select
-                    value={regExam}
-                    onChange={(e) => setRegExam(e.target.value)}
-                    className="cbt-auth-input"
-                    style={{ cursor: 'pointer' }}
-                  >
-                    <option value="OSSSC Combined Recruitment Exam IV (CRE IV)">OSSSC Combined Recruitment Exam IV (CRE IV)</option>
-                    <option value="OSSC Combined Graduate Level (CGL)">OSSC Combined Graduate Level (CGL)</option>
-                    <option value="OPSC Odisha Civil Services (OAS)">OPSC Odisha Civil Services (OAS)</option>
-                    <option value="Odisha Police SI & Constable">Odisha Police SI & Constable</option>
-                    <option value="Railway RRB NTPC & Group D">Railway RRB NTPC & Group D</option>
-                    <option value="Other Odisha State Recruitments">Other Odisha State Recruitments</option>
-                  </select>
                 </div>
               </div>
 
@@ -323,7 +290,7 @@ export default function LoginPage() {
               </div>
 
               <button type="submit" className="cbt-auth-btn">
-                <UserPlus size={16} /> Register & Enter Portal <ChevronRight size={14} />
+                <UserPlus size={16} /> Register & Enter Mock Test <ChevronRight size={14} />
               </button>
             </form>
           )}
@@ -336,6 +303,11 @@ export default function LoginPage() {
           >
             Practice as Guest Aspirant without Sign In &rarr;
           </button>
+          <div style={{ textAlign: 'center', marginTop: '8px' }}>
+            <Link href="/" style={{ color: '#94a3b8', fontSize: '0.76rem', textDecoration: 'none' }}>
+              ← Return to Home
+            </Link>
+          </div>
         </div>
       </div>
     </div>
