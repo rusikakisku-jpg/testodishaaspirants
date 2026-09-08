@@ -128,6 +128,8 @@ function PYQCardItem({
           
           <Link
             href={`/mock-test?exam=${encodeURIComponent(item.board.toLowerCase())}&year=${selectedYear}`}
+            target="_blank"
+            rel="noopener noreferrer"
             className="pyq-btn-cbt"
             title={`Practice ${item.board} ${selectedYear} CBT Mock Test`}
           >

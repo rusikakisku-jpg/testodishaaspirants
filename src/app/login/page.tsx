@@ -58,7 +58,7 @@ export default function LoginPage() {
     try {
       localStorage.setItem('oa_mock_candidate', JSON.stringify(newCandidate));
     } catch {}
-    router.push('/mock-test');
+    router.push('/dashboard');
   };
 
   const handleSignUp = (e?: React.FormEvent) => {
@@ -89,7 +89,7 @@ export default function LoginPage() {
     try {
       localStorage.setItem('oa_mock_candidate', JSON.stringify(newCandidate));
     } catch {}
-    router.push('/mock-test');
+    router.push('/dashboard');
   };
 
   const handleQuickDemoLogin = () => {
@@ -103,7 +103,7 @@ export default function LoginPage() {
     try {
       localStorage.setItem('oa_mock_candidate', JSON.stringify(demoCandidate));
     } catch {}
-    router.push('/mock-test');
+    router.push('/dashboard');
   };
 
   const handleGuestLogin = () => {
@@ -116,7 +116,7 @@ export default function LoginPage() {
     try {
       localStorage.setItem('oa_mock_candidate', JSON.stringify(guestCandidate));
     } catch {}
-    router.push('/mock-test');
+    router.push('/dashboard');
   };
 
   return (

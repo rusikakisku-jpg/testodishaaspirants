@@ -587,7 +587,7 @@ export default function JobDetailsClient({ id, initialJob, initialAllJobs }: Job
                 </Link>
               </li>
               <li>
-                <Link href="/mock-test" className="sidebar-cat-item">
+                <Link href="/mock-test" target="_blank" rel="noopener noreferrer" className="sidebar-cat-item">
                   <div className="sidebar-cat-left">
                     <span className="cat-item-icon cat-theme-cbt">
                       <Sparkles size={14} />
