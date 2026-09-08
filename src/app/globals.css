@@ -2761,6 +2761,201 @@ h1, h2, h3, h4, h5, h6, .poppins-font {
   margin-bottom: 14px;
 }
 
+/* CBT Mock Test Login & Registration Styles */
+.mock-auth-wrapper {
+  max-width: 1040px;
+  margin: 30px auto 60px auto;
+  padding: 0 clamp(0.75rem, 2.5vw, 1.5rem);
+}
+
+.mock-auth-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 28px;
+  align-items: stretch;
+}
+
+.mock-auth-banner {
+  background: linear-gradient(145deg, #0b2246 0%, #0f172a 100%);
+  color: white;
+  border-radius: 20px;
+  padding: clamp(1.75rem, 3.5vw, 2.75rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 16px 36px rgba(11, 34, 70, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.mock-auth-banner::after {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 122, 0, 0.25) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.mock-auth-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: clamp(1.5rem, 3.5vw, 2.25rem);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.mock-auth-tabs {
+  display: flex;
+  background: #f1f5f9;
+  padding: 4px;
+  border-radius: 12px;
+  margin-bottom: 22px;
+  gap: 4px;
+}
+
+.mock-auth-tab-btn {
+  flex: 1;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 9px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+.mock-auth-tab-btn.active {
+  background: #ffffff;
+  color: #0b4ca3;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.mock-auth-tab-btn:not(.active) {
+  background: transparent;
+  color: #64748b;
+}
+
+.mock-input-group {
+  margin-bottom: 16px;
+}
+
+.mock-input-label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #334155;
+  margin-bottom: 6px;
+}
+
+.mock-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.mock-input-icon {
+  position: absolute;
+  left: 14px;
+  width: 17px;
+  height: 17px;
+  color: #94a3b8;
+  pointer-events: none;
+}
+
+.mock-input {
+  width: 100%;
+  padding: 11px 14px 11px 40px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  color: #0f172a;
+  outline: none;
+  font-family: inherit;
+  transition: all 0.15s ease;
+  background: #f8fafc;
+}
+
+.mock-input:focus {
+  background: #ffffff;
+  border-color: #0b4ca3;
+  box-shadow: 0 0 0 3px rgba(11, 76, 163, 0.12);
+}
+
+.mock-input-toggle {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mock-submit-btn {
+  width: 100%;
+  background: #0b4ca3;
+  color: #ffffff;
+  padding: 13px 20px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.15s ease, transform 0.1s ease;
+  font-family: 'Poppins', sans-serif;
+  margin-top: 6px;
+}
+
+.mock-submit-btn:hover {
+  background: #093c82;
+}
+
+.mock-quick-demo-btn {
+  width: 100%;
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1.5px dashed #93c5fd;
+  padding: 11px 16px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+  transition: all 0.15s ease;
+}
+
+.mock-quick-demo-btn:hover {
+  background: #dbeafe;
+  border-color: #3b82f6;
+}
+
+@media (max-width: 900px) {
+  .mock-auth-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
 /* 3. Contact & Legal Page Grids */
 .contact-layout-grid {
   display: grid;
