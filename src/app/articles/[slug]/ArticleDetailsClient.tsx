@@ -19,6 +19,12 @@ import {
   Share2,
   Copy,
   Check,
+  IdCard,
+  Key,
+  Award,
+  BookOpen,
+  FileText,
+  Sparkles,
 } from 'lucide-react';
 
 interface ArticleDetailsClientProps {
@@ -452,68 +458,139 @@ export default function ArticleDetailsClient({ slug, initialJob, initialAllJobs 
         </main>
 
         {/* Sidebar Column: Categories, Latest Jobs, Jobs by Qualification */}
+        {/* Sidebar Column: Categories, Latest Jobs, Jobs by Qualification */}
         <aside className="sarkari-sidebar">
           {/* 1. Explore Categories */}
           <div className="sidebar-card sidebar-card-categories">
-            <div className="sidebar-header-banner banner-blue">
-              <Layers size={16} />
-              <h4>Explore Categories</h4>
+            <div className="sidebar-card-header">
+              <div className="sidebar-header-left">
+                <div className="sidebar-header-icon icon-blue">
+                  <Layers size={17} />
+                </div>
+                <div className="sidebar-title-wrap">
+                  <h4 className="sidebar-card-title">Explore Categories</h4>
+                  <p className="sidebar-card-subtitle">Official state portals &amp; sections</p>
+                </div>
+              </div>
+              <span className="sidebar-count-badge">8 Sectors</span>
             </div>
             <ul className="sidebar-cat-list">
               <li>
-                <Link href="/latest-jobs" className="sidebar-cat-item cat-item-jobs">
-                  <span className="cat-bullet bullet-blue"></span>
-                  <span className="cat-name">Latest Jobs</span>
+                <Link
+                  href="/latest-jobs"
+                  onClick={() => {
+                    try { sessionStorage.setItem('last_section', 'latest-jobs'); } catch {}
+                  }}
+                  className="sidebar-cat-item"
+                >
+                  <div className="sidebar-cat-left">
+                    <span className="cat-item-icon cat-theme-jobs">
+                      <Briefcase size={14} />
+                    </span>
+                    <span className="cat-name">Latest Jobs</span>
+                  </div>
                   <ChevronRight size={14} className="cat-arrow" />
                 </Link>
               </li>
               <li>
-                <Link href="/admit-card" className="sidebar-cat-item cat-item-admit">
-                  <span className="cat-bullet bullet-amber"></span>
-                  <span className="cat-name">Admit Cards</span>
+                <Link
+                  href="/admit-card"
+                  onClick={() => {
+                    try { sessionStorage.setItem('last_section', 'admit-card'); } catch {}
+                  }}
+                  className="sidebar-cat-item"
+                >
+                  <div className="sidebar-cat-left">
+                    <span className="cat-item-icon cat-theme-admit">
+                      <IdCard size={14} />
+                    </span>
+                    <span className="cat-name">Admit Cards</span>
+                  </div>
                   <ChevronRight size={14} className="cat-arrow" />
                 </Link>
               </li>
               <li>
-                <Link href="/answer-key" className="sidebar-cat-item cat-item-key">
-                  <span className="cat-bullet bullet-purple"></span>
-                  <span className="cat-name">Answer Keys</span>
+                <Link
+                  href="/answer-key"
+                  onClick={() => {
+                    try { sessionStorage.setItem('last_section', 'answer-key'); } catch {}
+                  }}
+                  className="sidebar-cat-item"
+                >
+                  <div className="sidebar-cat-left">
+                    <span className="cat-item-icon cat-theme-key">
+                      <Key size={14} />
+                    </span>
+                    <span className="cat-name">Answer Keys</span>
+                  </div>
                   <ChevronRight size={14} className="cat-arrow" />
                 </Link>
               </li>
               <li>
-                <Link href="/result" className="sidebar-cat-item cat-item-result">
-                  <span className="cat-bullet bullet-green"></span>
-                  <span className="cat-name">Results &amp; Merit Lists</span>
+                <Link
+                  href="/result"
+                  onClick={() => {
+                    try { sessionStorage.setItem('last_section', 'result'); } catch {}
+                  }}
+                  className="sidebar-cat-item"
+                >
+                  <div className="sidebar-cat-left">
+                    <span className="cat-item-icon cat-theme-result">
+                      <Award size={14} />
+                    </span>
+                    <span className="cat-name">Results &amp; Merit Lists</span>
+                  </div>
                   <ChevronRight size={14} className="cat-arrow" />
                 </Link>
               </li>
               <li>
-                <Link href="/syllabus" className="sidebar-cat-item cat-item-syllabus">
-                  <span className="cat-bullet bullet-teal"></span>
-                  <span className="cat-name">Exam Syllabus</span>
+                <Link
+                  href="/syllabus"
+                  onClick={() => {
+                    try { sessionStorage.setItem('last_section', 'syllabus'); } catch {}
+                  }}
+                  className="sidebar-cat-item"
+                >
+                  <div className="sidebar-cat-left">
+                    <span className="cat-item-icon cat-theme-syllabus">
+                      <BookOpen size={14} />
+                    </span>
+                    <span className="cat-name">Exam Syllabus</span>
+                  </div>
                   <ChevronRight size={14} className="cat-arrow" />
                 </Link>
               </li>
               <li>
-                <Link href="/pyq" className="sidebar-cat-item cat-item-pyq">
-                  <span className="cat-bullet bullet-rose"></span>
-                  <span className="cat-name">Previous Year Papers</span>
+                <Link href="/pyq" className="sidebar-cat-item">
+                  <div className="sidebar-cat-left">
+                    <span className="cat-item-icon cat-theme-pyq">
+                      <GraduationCap size={14} />
+                    </span>
+                    <span className="cat-name">Previous Year Papers</span>
+                  </div>
                   <ChevronRight size={14} className="cat-arrow" />
                 </Link>
               </li>
               <li>
-                <Link href="/notes" className="sidebar-cat-item cat-item-notes">
-                  <span className="cat-bullet bullet-indigo"></span>
-                  <span className="cat-name">Study Notes</span>
+                <Link href="/notes" className="sidebar-cat-item">
+                  <div className="sidebar-cat-left">
+                    <span className="cat-item-icon cat-theme-notes">
+                      <FileText size={14} />
+                    </span>
+                    <span className="cat-name">Study Notes</span>
+                  </div>
                   <ChevronRight size={14} className="cat-arrow" />
                 </Link>
               </li>
               <li>
-                <Link href="/test-player" className="sidebar-cat-item cat-item-mock">
-                  <span className="cat-bullet bullet-red"></span>
-                  <span className="cat-name">Online Mock Tests</span>
-                  <span className="cat-badge-new">CBT</span>
+                <Link href="/test-player" className="sidebar-cat-item">
+                  <div className="sidebar-cat-left">
+                    <span className="cat-item-icon cat-theme-cbt">
+                      <Sparkles size={14} />
+                    </span>
+                    <span className="cat-name">Online Mock Tests</span>
+                  </div>
+                  <span className="cat-cbt-tag">CBT LIVE</span>
                 </Link>
               </li>
             </ul>
@@ -521,20 +598,44 @@ export default function ArticleDetailsClient({ slug, initialJob, initialAllJobs 
 
           {/* 2. Latest Jobs */}
           <div className="sidebar-card sidebar-card-latest">
-            <div className="sidebar-header-banner banner-green">
-              <Briefcase size={16} />
-              <h4>Latest Jobs</h4>
+            <div className="sidebar-card-header">
+              <div className="sidebar-header-left">
+                <div className="sidebar-header-icon icon-green">
+                  <Briefcase size={17} />
+                </div>
+                <div className="sidebar-title-wrap">
+                  <h4 className="sidebar-card-title">Latest Recruitments</h4>
+                  <p className="sidebar-card-subtitle">Active Odisha notifications</p>
+                </div>
+              </div>
+              <span className="sidebar-live-pill">
+                <span className="sidebar-live-dot"></span>
+                Live
+              </span>
             </div>
             <ul className="sidebar-jobs-list">
               {latestVacancies.length > 0 ? (
                 latestVacancies.map((item) => (
                   <li key={item.id}>
-                    <Link href={`/articles/${getJobSlug(item)}`} className="sidebar-job-card">
-                      <div className="sidebar-job-badge-row">
-                        <span className={`sidebar-job-board board-${(item.board || '').toLowerCase().replace(/[^a-z0-9]/g, '')}`}>{item.board}</span>
-                        <span className="sidebar-job-date">{item.publishDate}</span>
+                    <Link
+                      href={`/articles/${getJobSlug(item)}`}
+                      onClick={() => {
+                        try { sessionStorage.setItem('last_section', 'latest-jobs'); } catch {}
+                      }}
+                      className="sidebar-job-item"
+                    >
+                      <div className="sidebar-job-meta">
+                        <span className={`sidebar-board-pill board-${(item.board || '').toLowerCase().replace(/[^a-z0-9]/g, '')}`}>
+                          {item.board || 'GOVT'}
+                        </span>
+                        {item.publishDate && (
+                          <span className="sidebar-job-date">
+                            <Calendar size={11} />
+                            {item.publishDate}
+                          </span>
+                        )}
                       </div>
-                      <div className="sidebar-job-name">{item.title}</div>
+                      <h5 className="sidebar-job-title">{item.title}</h5>
                     </Link>
                   </li>
                 ))
@@ -542,54 +643,140 @@ export default function ArticleDetailsClient({ slug, initialJob, initialAllJobs 
                 <li className="sidebar-empty">No other vacancies available</li>
               )}
             </ul>
-            <div className="sidebar-more-link-wrap">
-              <Link href="/latest-jobs" className="sidebar-view-more link-green">
-                View All Latest Jobs &rarr;
+            <div className="sidebar-footer-action">
+              <Link
+                href="/latest-jobs"
+                onClick={() => {
+                  try { sessionStorage.setItem('last_section', 'latest-jobs'); } catch {}
+                }}
+                className="sidebar-btn-view-all btn-green"
+              >
+                <span>View All Latest Jobs</span>
+                <ArrowRight size={14} />
               </Link>
             </div>
           </div>
 
           {/* 3. Jobs by Qualification */}
           <div className="sidebar-card sidebar-card-qual">
-            <div className="sidebar-header-banner banner-purple">
-              <GraduationCap size={16} />
-              <h4>Jobs by Qualification</h4>
+            <div className="sidebar-card-header">
+              <div className="sidebar-header-left">
+                <div className="sidebar-header-icon icon-purple">
+                  <GraduationCap size={17} />
+                </div>
+                <div className="sidebar-title-wrap">
+                  <h4 className="sidebar-card-title">Jobs by Qualification</h4>
+                  <p className="sidebar-card-subtitle">Find jobs matching your degree</p>
+                </div>
+              </div>
             </div>
             <ul className="sidebar-qual-list">
               <li>
-                <Link href="/latest-jobs" className="sidebar-qual-item item-10th">
-                  <span className="qual-name">10th Pass / Matric Jobs</span>
-                  <span className="qual-tag qual-10th">10th</span>
+                <Link
+                  href="/latest-jobs"
+                  onClick={() => {
+                    try { sessionStorage.setItem('last_section', 'latest-jobs'); } catch {}
+                  }}
+                  className="sidebar-qual-item"
+                >
+                  <div className="sidebar-qual-left">
+                    <span className="qual-badge-pill qual-badge-10th">10th</span>
+                    <div className="qual-info">
+                      <span className="qual-primary-title">10th Pass / Matric Jobs</span>
+                      <span className="qual-subtitle-desc">Matric, ITI &amp; Constable posts</span>
+                    </div>
+                  </div>
+                  <ChevronRight size={14} className="qual-chevron" />
                 </Link>
               </li>
               <li>
-                <Link href="/latest-jobs" className="sidebar-qual-item item-12th">
-                  <span className="qual-name">12th / +2 Pass Jobs</span>
-                  <span className="qual-tag qual-12th">+2 / 12th</span>
+                <Link
+                  href="/latest-jobs"
+                  onClick={() => {
+                    try { sessionStorage.setItem('last_section', 'latest-jobs'); } catch {}
+                  }}
+                  className="sidebar-qual-item"
+                >
+                  <div className="sidebar-qual-left">
+                    <span className="qual-badge-pill qual-badge-12th">+2</span>
+                    <div className="qual-info">
+                      <span className="qual-primary-title">12th / +2 Pass Jobs</span>
+                      <span className="qual-subtitle-desc">CHSE, Arts, Science &amp; Commerce</span>
+                    </div>
+                  </div>
+                  <ChevronRight size={14} className="qual-chevron" />
                 </Link>
               </li>
               <li>
-                <Link href="/latest-jobs" className="sidebar-qual-item item-grad">
-                  <span className="qual-name">Any Graduate Degree Jobs</span>
-                  <span className="qual-tag qual-grad">Graduate</span>
+                <Link
+                  href="/latest-jobs"
+                  onClick={() => {
+                    try { sessionStorage.setItem('last_section', 'latest-jobs'); } catch {}
+                  }}
+                  className="sidebar-qual-item"
+                >
+                  <div className="sidebar-qual-left">
+                    <span className="qual-badge-pill qual-badge-grad">UG</span>
+                    <div className="qual-info">
+                      <span className="qual-primary-title">Any Graduate Degree Jobs</span>
+                      <span className="qual-subtitle-desc">B.A, B.Sc, B.Com, B.Tech &amp; BBA</span>
+                    </div>
+                  </div>
+                  <ChevronRight size={14} className="qual-chevron" />
                 </Link>
               </li>
               <li>
-                <Link href="/latest-jobs" className="sidebar-qual-item item-dip">
-                  <span className="qual-name">Diploma / Engineering Jobs</span>
-                  <span className="qual-tag qual-dip">Diploma</span>
+                <Link
+                  href="/latest-jobs"
+                  onClick={() => {
+                    try { sessionStorage.setItem('last_section', 'latest-jobs'); } catch {}
+                  }}
+                  className="sidebar-qual-item"
+                >
+                  <div className="sidebar-qual-left">
+                    <span className="qual-badge-pill qual-badge-dip">Dip</span>
+                    <div className="qual-info">
+                      <span className="qual-primary-title">Diploma / Engineering Jobs</span>
+                      <span className="qual-subtitle-desc">Polytechnic &amp; Technical posts</span>
+                    </div>
+                  </div>
+                  <ChevronRight size={14} className="qual-chevron" />
                 </Link>
               </li>
               <li>
-                <Link href="/latest-jobs" className="sidebar-qual-item item-med">
-                  <span className="qual-name">B.Sc / Medical / Nursing Jobs</span>
-                  <span className="qual-tag qual-med">Medical</span>
+                <Link
+                  href="/latest-jobs"
+                  onClick={() => {
+                    try { sessionStorage.setItem('last_section', 'latest-jobs'); } catch {}
+                  }}
+                  className="sidebar-qual-item"
+                >
+                  <div className="sidebar-qual-left">
+                    <span className="qual-badge-pill qual-badge-med">Med</span>
+                    <div className="qual-info">
+                      <span className="qual-primary-title">B.Sc / Medical / Nursing Jobs</span>
+                      <span className="qual-subtitle-desc">Staff Nurse, ANM, GNM &amp; Pharma</span>
+                    </div>
+                  </div>
+                  <ChevronRight size={14} className="qual-chevron" />
                 </Link>
               </li>
               <li>
-                <Link href="/latest-jobs" className="sidebar-qual-item item-pg">
-                  <span className="qual-name">Post Graduate (PG) Jobs</span>
-                  <span className="qual-tag qual-pg">PG</span>
+                <Link
+                  href="/latest-jobs"
+                  onClick={() => {
+                    try { sessionStorage.setItem('last_section', 'latest-jobs'); } catch {}
+                  }}
+                  className="sidebar-qual-item"
+                >
+                  <div className="sidebar-qual-left">
+                    <span className="qual-badge-pill qual-badge-pg">PG</span>
+                    <div className="qual-info">
+                      <span className="qual-primary-title">Post Graduate (PG) Jobs</span>
+                      <span className="qual-subtitle-desc">M.A, M.Sc, M.Com, MCA &amp; MBA</span>
+                    </div>
+                  </div>
+                  <ChevronRight size={14} className="qual-chevron" />
                 </Link>
               </li>
             </ul>
