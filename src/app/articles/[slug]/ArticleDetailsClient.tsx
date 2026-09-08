@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useSyncExternalStore } from 'react';
 import Link from 'next/link';
 import { JobItem } from '@/lib/data';
 import { fetchJobDetailsApi, fetchJobsApi, getJobSlug } from '@/lib/api';
@@ -27,17 +27,68 @@ interface ArticleDetailsClientProps {
   initialAllJobs: JobItem[];
 }
 
+function subscribe(callback: () => void) {
+  window.addEventListener('popstate', callback);
+  return () => window.removeEventListener('popstate', callback);
+}
+
+function getFromSnapshot(): string {
+  const params = new URLSearchParams(window.location.search);
+  const from = params.get('from');
+  if (from) return from;
+  if (typeof document !== 'undefined' && document.referrer) {
+    try {
+      const refPath = new URL(document.referrer).pathname;
+      if (refPath.includes('/admit-card')) return 'admit-card';
+      if (refPath.includes('/answer-key')) return 'answer-key';
+      if (refPath.includes('/result')) return 'result';
+      if (refPath.includes('/syllabus')) return 'syllabus';
+      if (refPath.includes('/latest-jobs')) return 'latest-jobs';
+    } catch {}
+  }
+  return '';
+}
+
+function getServerSnapshot(): string {
+  return '';
+}
+
+function resolveCategory(fromParam: string, category?: string) {
+  if (fromParam === 'admit-card' || fromParam === 'admit') {
+    return { label: 'Admit Card', href: '/admit-card' };
+  }
+  if (fromParam === 'answer-key' || fromParam === 'key') {
+    return { label: 'Answer Key', href: '/answer-key' };
+  }
+  if (fromParam === 'result' || fromParam === 'results') {
+    return { label: 'Result', href: '/result' };
+  }
+  if (fromParam === 'syllabus') {
+    return { label: 'Syllabus', href: '/syllabus' };
+  }
+  if (fromParam === 'latest-jobs' || fromParam === 'jobs') {
+    return { label: 'Latest Jobs', href: '/latest-jobs' };
+  }
+
+  switch (category) {
+    case 'admit':
+      return { label: 'Admit Card', href: '/admit-card' };
+    case 'key':
+      return { label: 'Answer Key', href: '/answer-key' };
+    case 'result':
+      return { label: 'Result', href: '/result' };
+    default:
+      return { label: 'Latest Jobs', href: '/latest-jobs' };
+  }
+}
+
 export default function ArticleDetailsClient({ slug, initialJob, initialAllJobs }: ArticleDetailsClientProps) {
   const [job, setJob] = useState<JobItem | null>(initialJob);
   const [allJobs, setAllJobs] = useState<JobItem[]>(initialAllJobs || []);
   const [copied, setCopied] = useState(false);
-  const [currentUrl, setCurrentUrl] = useState('');
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setCurrentUrl(window.location.href);
-    }
-  }, []);
+  const fromParam = useSyncExternalStore(subscribe, getFromSnapshot, getServerSnapshot);
+  const parentCategory = resolveCategory(fromParam, job?.category);
 
   useEffect(() => {
     if (!job && slug) {
@@ -65,7 +116,7 @@ export default function ArticleDetailsClient({ slug, initialJob, initialAllJobs 
     : [];
 
   const shareTitle = `${job.board} ${job.title} Recruitment 2026 - Apply Online Details`;
-  const urlToShare = currentUrl || (typeof window !== 'undefined' ? window.location.href : `https://odishaaspirants.com/articles/${slug}`);
+  const urlToShare = typeof window !== 'undefined' ? window.location.href : `https://odishaaspirants.com/articles/${slug}`;
 
   const shareLinks = {
     whatsapp: `https://api.whatsapp.com/send?text=${encodeURIComponent(shareTitle + '\n' + urlToShare)}`,
@@ -89,7 +140,7 @@ export default function ArticleDetailsClient({ slug, initialJob, initialAllJobs 
       <nav className="sarkari-breadcrumb" aria-label="breadcrumb">
         <Link href="/">Home</Link>
         <ChevronRight size={14} className="bread-sep" />
-        <Link href="/latest-jobs">Latest Jobs</Link>
+        <Link href={parentCategory.href}>{parentCategory.label}</Link>
         <ChevronRight size={14} className="bread-sep" />
         <span className="bread-current">{job.board} {job.title}</span>
       </nav>

@@ -23,7 +23,7 @@ export default async function SyllabusPage() {
       year: p.update_year || '2026',
       pattern: p.pattern,
       description: p.description,
-      link: `/articles/${slug}`,
+      link: `/articles/${slug}?from=syllabus`,
     };
   });
 
@@ -36,7 +36,7 @@ export default async function SyllabusPage() {
         year: '2026',
         pattern: 'Written Exam / CBT + Certificate Verification',
         description: `Official selection scheme and syllabus pattern for ${j.board} ${j.title} recruitment 2026.`,
-        link: `/articles/${getJobSlug(j)}`,
+        link: `/articles/${getJobSlug(j)}?from=syllabus`,
       });
     }
   });

@@ -88,7 +88,7 @@ export default function ResultClient({ initialItems }: { initialItems: JobItem[]
                       <span className="cell-value">{item.lastDate}</span>
                     </td>
                     <td data-label="Action" className="action-col">
-                      <Link href={`/articles/${getJobSlug(item)}`} className="btn-view">
+                      <Link href={`/articles/${getJobSlug(item)}?from=result`} className="btn-view">
                         View Details
                       </Link>
                     </td>

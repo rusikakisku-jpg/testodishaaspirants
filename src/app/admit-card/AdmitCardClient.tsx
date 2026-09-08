@@ -88,7 +88,7 @@ export default function AdmitCardClient({ initialItems }: { initialItems: JobIte
                       <span className="cell-value">{item.lastDate}</span>
                     </td>
                     <td data-label="Action" className="action-col">
-                      <Link href={`/articles/${getJobSlug(item)}`} className="btn-view">
+                      <Link href={`/articles/${getJobSlug(item)}?from=admit-card`} className="btn-view">
                         View Details
                       </Link>
                     </td>

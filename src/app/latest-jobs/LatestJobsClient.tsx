@@ -88,7 +88,7 @@ export default function LatestJobsClient({ initialJobs }: { initialJobs: JobItem
                       <span className="cell-value">{job.lastDate}</span>
                     </td>
                     <td data-label="Action" className="action-col">
-                      <Link href={`/articles/${getJobSlug(job)}`} className="btn-view">
+                      <Link href={`/articles/${getJobSlug(job)}?from=latest-jobs`} className="btn-view">
                         View Details
                       </Link>
                     </td>
