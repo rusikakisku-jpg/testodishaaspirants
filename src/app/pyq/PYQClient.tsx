@@ -112,32 +112,30 @@ function PYQCardItem({
         </div>
       </div>
 
-      {/* Action Buttons */}
-      <div className="pyq-card-actions">
-        <a
-          href={item.pdf_url || '#'}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="pyq-btn-download"
-          title={selectedYear ? `Download ${item.board} ${selectedYear} Official Paper PDF` : `Download ${item.board} Official Paper PDF`}
-        >
-          <Download style={{ width: '15px', height: '15px' }} />
-          <span>Download PDF</span>
-        </a>
-        
-        <Link
-          href={
-            selectedYear
-              ? `/test-player?exam=${encodeURIComponent(item.board.toLowerCase())}&year=${selectedYear}`
-              : `/test-player?exam=${encodeURIComponent(item.board.toLowerCase())}`
-          }
-          className="pyq-btn-cbt"
-          title={selectedYear ? `Practice ${item.board} ${selectedYear} CBT Mock Test` : `Practice ${item.board} CBT Mock Test`}
-        >
-          <PlayCircle style={{ width: '15px', height: '15px', color: '#0b4ca3' }} />
-          <span>Practice CBT</span>
-        </Link>
-      </div>
+      {/* Action Buttons: Only shown when an exam session year is chosen */}
+      {selectedYear && (
+        <div className="pyq-card-actions">
+          <a
+            href={item.pdf_url || '#'}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="pyq-btn-download"
+            title={`Download ${item.board} ${selectedYear} Official Paper PDF`}
+          >
+            <Download style={{ width: '15px', height: '15px' }} />
+            <span>Download PDF</span>
+          </a>
+          
+          <Link
+            href={`/test-player?exam=${encodeURIComponent(item.board.toLowerCase())}&year=${selectedYear}`}
+            className="pyq-btn-cbt"
+            title={`Practice ${item.board} ${selectedYear} CBT Mock Test`}
+          >
+            <PlayCircle style={{ width: '15px', height: '15px', color: '#0b4ca3' }} />
+            <span>Practice CBT</span>
+          </Link>
+        </div>
+      )}
     </div>
   );
 }
