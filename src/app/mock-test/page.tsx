@@ -5,11 +5,7 @@ import Link from 'next/link';
 import { Question } from '@/lib/data';
 import {
   Clock,
-  CheckCircle,
-  XCircle,
-  HelpCircle,
   Award,
-  BarChart2,
   RefreshCw,
   ArrowLeft,
   ChevronRight,
@@ -25,9 +21,7 @@ import {
   LogIn,
   UserPlus,
   LogOut,
-  Check,
   GraduationCap,
-  BookOpen,
 } from 'lucide-react';
 
 interface Candidate {
@@ -121,7 +115,6 @@ export default function MockTestPage() {
   const [regExam, setRegExam] = useState('OSSSC Combined Recruitment Exam IV (CRE IV)');
   const [regPassword, setRegPassword] = useState('');
   const [showRegPassword, setShowRegPassword] = useState(false);
-  const [regAgreed, setRegAgreed] = useState(true);
   const [regError, setRegError] = useState('');
 
   // CBT Exam State
@@ -143,13 +136,13 @@ export default function MockTestPage() {
           setCandidate(JSON.parse(saved));
         }
       } catch {
-        // ignore parse error
+        // ignore
       }
       setIsCheckingAuth(false);
     }
   }, []);
 
-  // Timer Countdown Effect (runs only when candidate is logged in and test is ongoing)
+  // Timer Countdown Effect
   useEffect(() => {
     if (!candidate || isSubmitted || timeLeft <= 0) return;
     const interval = setInterval(() => {
@@ -170,11 +163,11 @@ export default function MockTestPage() {
     if (e) e.preventDefault();
     setLoginError('');
     if (!loginId.trim()) {
-      setLoginError('Please enter your Registration Number, Roll Number, or Email.');
+      setLoginError('Please enter Roll Number, Registration No, or Email.');
       return;
     }
     if (!loginPassword.trim()) {
-      setLoginError('Please enter your Password or Date of Birth PIN.');
+      setLoginError('Please enter your Password or DOB PIN.');
       return;
     }
 
@@ -202,19 +195,15 @@ export default function MockTestPage() {
     if (e) e.preventDefault();
     setRegError('');
     if (!regName.trim()) {
-      setRegError('Please enter your full name.');
+      setRegError('Please enter candidate full name.');
       return;
     }
     if (!regContact.trim()) {
-      setRegError('Please enter your email or mobile number.');
+      setRegError('Please enter email or mobile number.');
       return;
     }
     if (!regPassword.trim() || regPassword.length < 4) {
       setRegError('Please create a password of at least 4 characters.');
-      return;
-    }
-    if (!regAgreed) {
-      setRegError('Please accept the CBT examination guidelines.');
       return;
     }
 
@@ -365,311 +354,219 @@ export default function MockTestPage() {
     );
   }
 
-  // 1. PROFESSIONAL CANDIDATE LOGIN / SIGN UP SCREEN
+  // 1. SINGLE-PAGE NON-SCROLLABLE CANDIDATE LOGIN / REGISTRATION SCREEN
   if (!candidate) {
     return (
-      <div className="mock-auth-wrapper">
-        {/* Navigation Breadcrumb */}
-        <div style={{ marginBottom: '20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px' }}>
-          <Link
-            href="/"
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', color: '#0b4ca3', fontWeight: 700, fontSize: '0.88rem', textDecoration: 'none' }}
-          >
-            <ArrowLeft style={{ width: '16px', height: '16px' }} /> Return to Odisha Aspirants Home
-          </Link>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.78rem', background: '#eff6ff', color: '#1e40af', padding: '4px 12px', borderRadius: '99px', fontWeight: 700 }}>
-            <Sparkles style={{ width: '14px', height: '14px', color: '#ff7a00' }} />
-            Official CBT Mock Test Engine 2026
+      <div className="cbt-auth-viewport">
+        {/* Top Header Bar */}
+        <div className="cbt-auth-topbar">
+          <div className="cbt-auth-brand">
+            <span className="cbt-auth-brand-logo">Odisha Aspirants</span>
+            <span className="cbt-auth-badge">CBT PORTAL 2026</span>
           </div>
+          <Link href="/" className="cbt-auth-return-btn">
+            <ArrowLeft size={14} /> Return to Home
+          </Link>
         </div>
 
-        <div className="mock-auth-grid">
-          {/* Left Brand & Information Banner */}
-          <div className="mock-auth-banner">
-            <div>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(255, 255, 255, 0.1)', padding: '6px 14px', borderRadius: '99px', fontSize: '0.8rem', fontWeight: 700, color: '#fca5a5', marginBottom: '18px', border: '1px solid rgba(255,255,255,0.15)' }}>
-                <ShieldCheck style={{ width: '15px', height: '15px', color: '#10b981' }} />
-                Verified Candidate Portal
+        {/* Center Main Login Card */}
+        <div className="cbt-auth-main">
+          <div className="cbt-auth-card animate-fade-in">
+            <div className="cbt-auth-header">
+              <div className="cbt-auth-icon">
+                <ShieldCheck size={22} />
               </div>
-
-              <h1 style={{ fontSize: 'clamp(1.5rem, 3vw, 2.1rem)', fontWeight: 800, margin: '0 0 14px 0', lineHeight: 1.25, fontFamily: 'Poppins' }}>
-                Online CBT Mock Test Portal
-              </h1>
-
-              <p style={{ color: '#cbd5e1', fontSize: '0.94rem', lineHeight: 1.6, margin: '0 0 28px 0' }}>
-                Sign in or register to attempt official Computer Based Tests (CBT) for OSSSC, OSSC, and OPSC competitive recruitments with automated timer and negative marks evaluation.
+              <h1 className="cbt-auth-title">Candidate Login</h1>
+              <p className="cbt-auth-subtitle">
+                Official Computer Based Test (CBT) Assessment
               </p>
-
-              {/* Highlight Features */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '30px' }}>
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
-                  <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'rgba(255, 255, 255, 0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <ShieldCheck style={{ width: '20px', height: '20px', color: '#38bdf8' }} />
-                  </div>
-                  <div>
-                    <strong style={{ display: 'block', fontSize: '0.92rem', color: '#ffffff' }}>Real TCS iON Pattern</strong>
-                    <span style={{ fontSize: '0.82rem', color: '#94a3b8' }}>Exact user interface with palette, review marks, and section jumps.</span>
-                  </div>
-                </div>
-
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
-                  <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'rgba(255, 255, 255, 0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <BarChart2 style={{ width: '20px', height: '20px', color: '#4ade80' }} />
-                  </div>
-                  <div>
-                    <strong style={{ display: 'block', fontSize: '0.92rem', color: '#ffffff' }}>Instant Performance Scorecard</strong>
-                    <span style={{ fontSize: '0.82rem', color: '#94a3b8' }}>Automated accuracy percentage, negative penalty (-0.25), and time tracking.</span>
-                  </div>
-                </div>
-
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
-                  <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: 'rgba(255, 255, 255, 0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <BookOpen style={{ width: '20px', height: '20px', color: '#fbbf24' }} />
-                  </div>
-                  <div>
-                    <strong style={{ display: 'block', fontSize: '0.92rem', color: '#ffffff' }}>Detailed Answer Key Review</strong>
-                    <span style={{ fontSize: '0.82rem', color: '#94a3b8' }}>Comprehensive answer verification after test completion.</span>
-                  </div>
-                </div>
-              </div>
             </div>
 
-            {/* Bottom Trust Tag */}
-            <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.12)', paddingTop: '18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px', fontSize: '0.8rem', color: '#94a3b8' }}>
-              <span>✓ 100% Free For All Aspirants</span>
-              <span>✓ Official 2026 Pattern</span>
-            </div>
-          </div>
-
-          {/* Right Candidate Authentication Card */}
-          <div className="mock-auth-card">
-            <div>
-              {/* Tab Switcher: Login vs Sign Up */}
-              <div className="mock-auth-tabs">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setAuthMode('signin');
-                    setLoginError('');
-                    setRegError('');
-                  }}
-                  className={`mock-auth-tab-btn ${authMode === 'signin' ? 'active' : ''}`}
-                >
-                  Candidate Sign In
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setAuthMode('signup');
-                    setLoginError('');
-                    setRegError('');
-                  }}
-                  className={`mock-auth-tab-btn ${authMode === 'signup' ? 'active' : ''}`}
-                >
-                  New Registration
-                </button>
-              </div>
-
-              {/* Form Content */}
-              {authMode === 'signin' ? (
-                <form onSubmit={handleSignIn}>
-                  <div style={{ marginBottom: '18px' }}>
-                    <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', margin: '0 0 6px 0', fontFamily: 'Poppins' }}>
-                      Candidate Login
-                    </h2>
-                    <p style={{ color: '#64748b', fontSize: '0.85rem', margin: 0 }}>
-                      Enter your registration details or roll number to start the test.
-                    </p>
-                  </div>
-
-                  {loginError && (
-                    <div style={{ background: '#fef2f2', border: '1px solid #fecaca', color: '#b91c1c', padding: '10px 14px', borderRadius: '8px', fontSize: '0.85rem', marginBottom: '16px', fontWeight: 600 }}>
-                      {loginError}
-                    </div>
-                  )}
-
-                  <div className="mock-input-group">
-                    <label className="mock-input-label">Roll Number / Registration No / Email</label>
-                    <div className="mock-input-wrapper">
-                      <User className="mock-input-icon" />
-                      <input
-                        type="text"
-                        value={loginId}
-                        onChange={(e) => setLoginId(e.target.value)}
-                        placeholder="e.g. OA-2026-8942 or your email"
-                        className="mock-input"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="mock-input-group">
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-                      <label className="mock-input-label" style={{ marginBottom: 0 }}>Password / DOB PIN</label>
-                      <span
-                        onClick={() => alert('For practice tests, you can enter any password (e.g. 1234) or use the 1-Click Quick Demo Login below.')}
-                        style={{ fontSize: '0.75rem', color: '#0b4ca3', cursor: 'pointer', fontWeight: 600 }}
-                      >
-                        Need Help?
-                      </span>
-                    </div>
-                    <div className="mock-input-wrapper">
-                      <Lock className="mock-input-icon" />
-                      <input
-                        type={showLoginPassword ? 'text' : 'password'}
-                        value={loginPassword}
-                        onChange={(e) => setLoginPassword(e.target.value)}
-                        placeholder="Enter password or DDMMYYYY"
-                        className="mock-input"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setShowLoginPassword(!showLoginPassword)}
-                        className="mock-input-toggle"
-                        aria-label="Toggle password visibility"
-                      >
-                        {showLoginPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-                      </button>
-                    </div>
-                  </div>
-
-                  <button type="submit" className="mock-submit-btn">
-                    <LogIn size={18} /> Sign In & Start Mock Test <ChevronRight size={16} />
-                  </button>
-
-                  <div style={{ display: 'flex', alignItems: 'center', margin: '20px 0 12px 0', gap: '10px' }}>
-                    <div style={{ flex: 1, height: '1px', background: '#e2e8f0' }}></div>
-                    <span style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 700 }}>OR INSTANT ACCESS</span>
-                    <div style={{ flex: 1, height: '1px', background: '#e2e8f0' }}></div>
-                  </div>
-
-                  {/* 1-Click Instant Demo Login */}
-                  <button
-                    type="button"
-                    onClick={handleQuickDemoLogin}
-                    className="mock-quick-demo-btn"
-                  >
-                    <Sparkles size={16} style={{ color: '#2563eb' }} />
-                    Quick Demo Login (1-Click Instant Test)
-                  </button>
-                </form>
-              ) : (
-                /* Sign Up Form */
-                <form onSubmit={handleSignUp}>
-                  <div style={{ marginBottom: '18px' }}>
-                    <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', margin: '0 0 6px 0', fontFamily: 'Poppins' }}>
-                      New Candidate Registration
-                    </h2>
-                    <p style={{ color: '#64748b', fontSize: '0.85rem', margin: 0 }}>
-                      Create your candidate profile to practice and track test scores.
-                    </p>
-                  </div>
-
-                  {regError && (
-                    <div style={{ background: '#fef2f2', border: '1px solid #fecaca', color: '#b91c1c', padding: '10px 14px', borderRadius: '8px', fontSize: '0.85rem', marginBottom: '16px', fontWeight: 600 }}>
-                      {regError}
-                    </div>
-                  )}
-
-                  <div className="mock-input-group">
-                    <label className="mock-input-label">Full Candidate Name</label>
-                    <div className="mock-input-wrapper">
-                      <User className="mock-input-icon" />
-                      <input
-                        type="text"
-                        value={regName}
-                        onChange={(e) => setRegName(e.target.value)}
-                        placeholder="e.g. Priyabrata Mohanty"
-                        className="mock-input"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="mock-input-group">
-                    <label className="mock-input-label">Email Address / Mobile Number</label>
-                    <div className="mock-input-wrapper">
-                      <Mail className="mock-input-icon" />
-                      <input
-                        type="text"
-                        value={regContact}
-                        onChange={(e) => setRegContact(e.target.value)}
-                        placeholder="e.g. aspirant@gmail.com or 9876543210"
-                        className="mock-input"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="mock-input-group">
-                    <label className="mock-input-label">Target Examination</label>
-                    <div className="mock-input-wrapper">
-                      <GraduationCap className="mock-input-icon" />
-                      <select
-                        value={regExam}
-                        onChange={(e) => setRegExam(e.target.value)}
-                        className="mock-input"
-                        style={{ cursor: 'pointer' }}
-                      >
-                        <option value="OSSSC Combined Recruitment Exam IV (CRE IV)">OSSSC Combined Recruitment Exam IV (CRE IV)</option>
-                        <option value="OSSC Combined Graduate Level (CGL)">OSSC Combined Graduate Level (CGL)</option>
-                        <option value="OPSC Odisha Civil Services (OAS)">OPSC Odisha Civil Services (OAS)</option>
-                        <option value="Odisha Police SI & Constable">Odisha Police SI & Constable</option>
-                        <option value="Railway RRB NTPC & Group D">Railway RRB NTPC & Group D</option>
-                        <option value="Other Odisha State Recruitments">Other Odisha State Recruitments</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div className="mock-input-group">
-                    <label className="mock-input-label">Create Password / PIN</label>
-                    <div className="mock-input-wrapper">
-                      <Lock className="mock-input-icon" />
-                      <input
-                        type={showRegPassword ? 'text' : 'password'}
-                        value={regPassword}
-                        onChange={(e) => setRegPassword(e.target.value)}
-                        placeholder="Minimum 4 characters"
-                        className="mock-input"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setShowRegPassword(!showRegPassword)}
-                        className="mock-input-toggle"
-                        aria-label="Toggle password visibility"
-                      >
-                        {showRegPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-                      </button>
-                    </div>
-                  </div>
-
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '18px' }}>
-                    <input
-                      type="checkbox"
-                      id="cbt-guidelines-agree"
-                      checked={regAgreed}
-                      onChange={(e) => setRegAgreed(e.target.checked)}
-                      style={{ cursor: 'pointer', width: '16px', height: '16px', accentColor: '#0b4ca3' }}
-                    />
-                    <label htmlFor="cbt-guidelines-agree" style={{ fontSize: '0.82rem', color: '#475569', cursor: 'pointer' }}>
-                      I agree to follow official CBT test rules & time limits.
-                    </label>
-                  </div>
-
-                  <button type="submit" className="mock-submit-btn">
-                    <UserPlus size={18} /> Register & Enter Mock Test <ChevronRight size={16} />
-                  </button>
-                </form>
-              )}
-            </div>
-
-            {/* Guest Practice Link */}
-            <div style={{ textAlign: 'center', marginTop: '22px', borderTop: '1px solid #f1f5f9', paddingTop: '16px' }}>
+            {/* Tab Switcher */}
+            <div className="cbt-auth-tabs">
               <button
                 type="button"
-                onClick={handleGuestLogin}
-                style={{ background: 'none', border: 'none', color: '#64748b', fontSize: '0.85rem', cursor: 'pointer', fontWeight: 600, textDecoration: 'underline' }}
+                onClick={() => {
+                  setAuthMode('signin');
+                  setLoginError('');
+                  setRegError('');
+                }}
+                className={`cbt-auth-tab ${authMode === 'signin' ? 'active' : ''}`}
               >
-                Continue as Guest Aspirant without Sign In &rarr;
+                Sign In
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setAuthMode('signup');
+                  setLoginError('');
+                  setRegError('');
+                }}
+                className={`cbt-auth-tab ${authMode === 'signup' ? 'active' : ''}`}
+              >
+                New Registration
               </button>
             </div>
+
+            {/* Sign In Tab */}
+            {authMode === 'signin' ? (
+              <form onSubmit={handleSignIn}>
+                {loginError && (
+                  <div style={{ background: '#fef2f2', border: '1px solid #fecaca', color: '#b91c1c', padding: '6px 10px', borderRadius: '6px', fontSize: '0.78rem', marginBottom: '10px', fontWeight: 600 }}>
+                    {loginError}
+                  </div>
+                )}
+
+                <div className="cbt-auth-field">
+                  <label className="cbt-auth-label">Roll No / Registration No / Email</label>
+                  <div className="cbt-auth-input-wrap">
+                    <User className="cbt-auth-input-icon" />
+                    <input
+                      type="text"
+                      value={loginId}
+                      onChange={(e) => setLoginId(e.target.value)}
+                      placeholder="e.g. OA-2026-8942 or email"
+                      className="cbt-auth-input"
+                    />
+                  </div>
+                </div>
+
+                <div className="cbt-auth-field">
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+                    <label className="cbt-auth-label" style={{ marginBottom: 0 }}>Password / PIN</label>
+                    <span
+                      onClick={() => alert('For practice tests, enter any password (e.g. 1234) or use the 1-Click Quick Demo Login below.')}
+                      style={{ fontSize: '0.72rem', color: '#0b4ca3', cursor: 'pointer', fontWeight: 600 }}
+                    >
+                      Need Help?
+                    </span>
+                  </div>
+                  <div className="cbt-auth-input-wrap">
+                    <Lock className="cbt-auth-input-icon" />
+                    <input
+                      type={showLoginPassword ? 'text' : 'password'}
+                      value={loginPassword}
+                      onChange={(e) => setLoginPassword(e.target.value)}
+                      placeholder="Enter password or DDMMYYYY"
+                      className="cbt-auth-input"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowLoginPassword(!showLoginPassword)}
+                      className="cbt-auth-toggle"
+                      aria-label="Toggle password visibility"
+                    >
+                      {showLoginPassword ? <EyeOff size={14} /> : <Eye size={14} />}
+                    </button>
+                  </div>
+                </div>
+
+                <button type="submit" className="cbt-auth-btn">
+                  <LogIn size={16} /> Sign In & Start Mock Test <ChevronRight size={14} />
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleQuickDemoLogin}
+                  className="cbt-auth-demo-btn"
+                >
+                  <Sparkles size={14} style={{ color: '#2563eb' }} />
+                  ⚡ Quick Demo Login (1-Click Instant Test)
+                </button>
+              </form>
+            ) : (
+              /* Sign Up Tab */
+              <form onSubmit={handleSignUp}>
+                {regError && (
+                  <div style={{ background: '#fef2f2', border: '1px solid #fecaca', color: '#b91c1c', padding: '6px 10px', borderRadius: '6px', fontSize: '0.78rem', marginBottom: '10px', fontWeight: 600 }}>
+                    {regError}
+                  </div>
+                )}
+
+                <div className="cbt-auth-field">
+                  <label className="cbt-auth-label">Candidate Full Name</label>
+                  <div className="cbt-auth-input-wrap">
+                    <User className="cbt-auth-input-icon" />
+                    <input
+                      type="text"
+                      value={regName}
+                      onChange={(e) => setRegName(e.target.value)}
+                      placeholder="Full Name"
+                      className="cbt-auth-input"
+                    />
+                  </div>
+                </div>
+
+                <div className="cbt-auth-field">
+                  <label className="cbt-auth-label">Email / Mobile Number</label>
+                  <div className="cbt-auth-input-wrap">
+                    <Mail className="cbt-auth-input-icon" />
+                    <input
+                      type="text"
+                      value={regContact}
+                      onChange={(e) => setRegContact(e.target.value)}
+                      placeholder="Email or Mobile"
+                      className="cbt-auth-input"
+                    />
+                  </div>
+                </div>
+
+                <div className="cbt-auth-field">
+                  <label className="cbt-auth-label">Target Examination</label>
+                  <div className="cbt-auth-input-wrap">
+                    <GraduationCap className="cbt-auth-input-icon" />
+                    <select
+                      value={regExam}
+                      onChange={(e) => setRegExam(e.target.value)}
+                      className="cbt-auth-input"
+                      style={{ cursor: 'pointer' }}
+                    >
+                      <option value="OSSSC Combined Recruitment Exam IV (CRE IV)">OSSSC Combined Recruitment Exam IV (CRE IV)</option>
+                      <option value="OSSC Combined Graduate Level (CGL)">OSSC Combined Graduate Level (CGL)</option>
+                      <option value="OPSC Odisha Civil Services (OAS)">OPSC Odisha Civil Services (OAS)</option>
+                      <option value="Odisha Police SI & Constable">Odisha Police SI & Constable</option>
+                      <option value="Railway RRB NTPC & Group D">Railway RRB NTPC & Group D</option>
+                      <option value="Other Odisha State Recruitments">Other Odisha State Recruitments</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="cbt-auth-field">
+                  <label className="cbt-auth-label">Password</label>
+                  <div className="cbt-auth-input-wrap">
+                    <Lock className="cbt-auth-input-icon" />
+                    <input
+                      type={showRegPassword ? 'text' : 'password'}
+                      value={regPassword}
+                      onChange={(e) => setRegPassword(e.target.value)}
+                      placeholder="Create password"
+                      className="cbt-auth-input"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowRegPassword(!showRegPassword)}
+                      className="cbt-auth-toggle"
+                      aria-label="Toggle password visibility"
+                    >
+                      {showRegPassword ? <EyeOff size={14} /> : <Eye size={14} />}
+                    </button>
+                  </div>
+                </div>
+
+                <button type="submit" className="cbt-auth-btn">
+                  <UserPlus size={16} /> Register & Enter Mock Test <ChevronRight size={14} />
+                </button>
+              </form>
+            )}
+
+            {/* Guest Practice Link */}
+            <button
+              type="button"
+              onClick={handleGuestLogin}
+              className="cbt-auth-guest-btn"
+            >
+              Practice as Guest Aspirant without Sign In &rarr;
+            </button>
           </div>
         </div>
       </div>

@@ -2761,199 +2761,283 @@ h1, h2, h3, h4, h5, h6, .poppins-font {
   margin-bottom: 14px;
 }
 
-/* CBT Mock Test Login & Registration Styles */
-.mock-auth-wrapper {
-  max-width: 1040px;
-  margin: 30px auto 60px auto;
-  padding: 0 clamp(0.75rem, 2.5vw, 1.5rem);
-}
-
-.mock-auth-grid {
-  display: grid;
-  grid-template-columns: 1.15fr 1fr;
-  gap: 28px;
-  align-items: stretch;
-}
-
-.mock-auth-banner {
-  background: linear-gradient(145deg, #0b2246 0%, #0f172a 100%);
-  color: white;
-  border-radius: 20px;
-  padding: clamp(1.75rem, 3.5vw, 2.75rem);
+/* Single-Page Non-Scrollable CBT Candidate Login Screen */
+.cbt-auth-viewport {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  background: radial-gradient(circle at 50% 25%, #1e293b 0%, #0f172a 70%, #020617 100%);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 16px 36px rgba(11, 34, 70, 0.15);
-  position: relative;
   overflow: hidden;
+  box-sizing: border-box;
 }
 
-.mock-auth-banner::after {
-  content: '';
-  position: absolute;
-  top: -40px;
-  right: -40px;
-  width: 160px;
-  height: 160px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 122, 0, 0.25) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.mock-auth-card {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 20px;
-  padding: clamp(1.5rem, 3.5vw, 2.25rem);
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+.cbt-auth-topbar {
+  height: 56px;
+  padding: 0 clamp(1rem, 3vw, 1.75rem);
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(12px);
+  flex-shrink: 0;
 }
 
-.mock-auth-tabs {
+.cbt-auth-brand {
   display: flex;
-  background: #f1f5f9;
-  padding: 4px;
-  border-radius: 12px;
-  margin-bottom: 22px;
-  gap: 4px;
+  align-items: center;
+  gap: 10px;
+  color: white;
+  text-decoration: none;
 }
 
-.mock-auth-tab-btn {
-  flex: 1;
-  padding: 10px 16px;
-  border: none;
-  border-radius: 9px;
+.cbt-auth-brand-logo {
+  font-size: 1.05rem;
+  font-weight: 800;
+  font-family: 'Poppins', sans-serif;
+  color: #f8fafc;
+  letter-spacing: -0.3px;
+}
+
+.cbt-auth-badge {
+  background: rgba(255, 122, 0, 0.15);
+  border: 1px solid rgba(255, 122, 0, 0.35);
+  color: #ff9933;
+  font-size: 0.72rem;
   font-weight: 700;
-  font-size: 0.88rem;
-  cursor: pointer;
+  padding: 2px 8px;
+  border-radius: 99px;
+  letter-spacing: 0.5px;
+}
+
+.cbt-auth-return-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #cbd5e1;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 6px 14px;
+  border-radius: 99px;
   transition: all 0.2s ease;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.cbt-auth-return-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.cbt-auth-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.cbt-auth-card {
+  width: 100%;
+  max-width: 410px;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: clamp(18px, 3vh, 24px) clamp(18px, 4vw, 24px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-sizing: border-box;
+}
+
+.cbt-auth-header {
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.cbt-auth-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: #eff6ff;
+  color: #0b4ca3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 8px auto;
+}
+
+.cbt-auth-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 3px 0;
   font-family: 'Poppins', sans-serif;
 }
 
-.mock-auth-tab-btn.active {
-  background: #ffffff;
-  color: #0b4ca3;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+.cbt-auth-subtitle {
+  font-size: 0.78rem;
+  color: #64748b;
+  margin: 0;
 }
 
-.mock-auth-tab-btn:not(.active) {
+.cbt-auth-tabs {
+  display: flex;
+  background: #f1f5f9;
+  padding: 3px;
+  border-radius: 10px;
+  margin-bottom: 14px;
+  gap: 3px;
+}
+
+.cbt-auth-tab {
+  flex: 1;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 7px;
+  font-weight: 700;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+.cbt-auth-tab.active {
+  background: #ffffff;
+  color: #0b4ca3;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.cbt-auth-tab:not(.active) {
   background: transparent;
   color: #64748b;
 }
 
-.mock-input-group {
-  margin-bottom: 16px;
+.cbt-auth-field {
+  margin-bottom: 11px;
 }
 
-.mock-input-label {
+.cbt-auth-label {
   display: block;
-  font-size: 0.82rem;
+  font-size: 0.76rem;
   font-weight: 700;
   color: #334155;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
-.mock-input-wrapper {
+.cbt-auth-input-wrap {
   position: relative;
   display: flex;
   align-items: center;
 }
 
-.mock-input-icon {
+.cbt-auth-input-icon {
   position: absolute;
-  left: 14px;
-  width: 17px;
-  height: 17px;
+  left: 12px;
+  width: 15px;
+  height: 15px;
   color: #94a3b8;
   pointer-events: none;
 }
 
-.mock-input {
+.cbt-auth-input {
   width: 100%;
-  padding: 11px 14px 11px 40px;
+  padding: 8px 12px 8px 35px;
   border: 1.5px solid #cbd5e1;
-  border-radius: 10px;
-  font-size: 0.9rem;
+  border-radius: 8px;
+  font-size: 0.86rem;
   color: #0f172a;
   outline: none;
   font-family: inherit;
   transition: all 0.15s ease;
   background: #f8fafc;
+  box-sizing: border-box;
 }
 
-.mock-input:focus {
+.cbt-auth-input:focus {
   background: #ffffff;
   border-color: #0b4ca3;
   box-shadow: 0 0 0 3px rgba(11, 76, 163, 0.12);
 }
 
-.mock-input-toggle {
+.cbt-auth-toggle {
   position: absolute;
-  right: 12px;
+  right: 10px;
   background: none;
   border: none;
   color: #94a3b8;
   cursor: pointer;
-  padding: 4px;
+  padding: 3px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.mock-submit-btn {
+.cbt-auth-btn {
   width: 100%;
   background: #0b4ca3;
   color: #ffffff;
-  padding: 13px 20px;
+  padding: 10px 16px;
   border: none;
-  border-radius: 10px;
-  font-weight: 700;
-  font-size: 0.95rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition: background 0.15s ease, transform 0.1s ease;
-  font-family: 'Poppins', sans-serif;
-  margin-top: 6px;
-}
-
-.mock-submit-btn:hover {
-  background: #093c82;
-}
-
-.mock-quick-demo-btn {
-  width: 100%;
-  background: #eff6ff;
-  color: #1d4ed8;
-  border: 1.5px dashed #93c5fd;
-  padding: 11px 16px;
-  border-radius: 10px;
+  border-radius: 8px;
   font-weight: 700;
   font-size: 0.88rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  margin-top: 12px;
+  gap: 6px;
+  transition: background 0.15s ease;
+  font-family: 'Poppins', sans-serif;
+  margin-top: 4px;
+}
+
+.cbt-auth-btn:hover {
+  background: #093c82;
+}
+
+.cbt-auth-demo-btn {
+  width: 100%;
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1.5px dashed #93c5fd;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 10px;
   transition: all 0.15s ease;
 }
 
-.mock-quick-demo-btn:hover {
+.cbt-auth-demo-btn:hover {
   background: #dbeafe;
   border-color: #3b82f6;
 }
 
-@media (max-width: 900px) {
-  .mock-auth-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
+.cbt-auth-guest-btn {
+  background: none;
+  border: none;
+  color: #64748b;
+  font-size: 0.78rem;
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: underline;
+  display: block;
+  margin: 10px auto 0 auto;
+}
+
+.cbt-auth-guest-btn:hover {
+  color: #0b4ca3;
 }
 
 /* 3. Contact & Legal Page Grids */
