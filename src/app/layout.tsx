@@ -52,9 +52,15 @@ export const metadata: Metadata = {
       'Explore latest Odisha government job vacancies (OSSSC, OPSC, OSSC, Railway), download admit cards, answer keys, results, and practice online CBT tests.',
     images: [
       {
-        url: '/icon.svg',
-        width: 512,
-        height: 512,
+        url: 'https://upload.odishaaspirants.com/oalogo.png',
+        width: 1254,
+        height: 1254,
+        alt: 'Odisha Aspirants Logo',
+      },
+      {
+        url: '/oalogo.png',
+        width: 1254,
+        height: 1254,
         alt: 'Odisha Aspirants Logo',
       },
     ],
@@ -64,14 +70,18 @@ export const metadata: Metadata = {
     title: 'Odisha Aspirants - Government Recruitment & CBT Mock Test Portal',
     description:
       'Explore latest Odisha government job vacancies, download admit cards, answer keys, results, and practice online CBT tests.',
-    images: ['/icon.svg'],
+    images: ['https://upload.odishaaspirants.com/oalogo.png'],
   },
   icons: {
     icon: [
+      { url: 'https://upload.odishaaspirants.com/oalogo.png', type: 'image/png' },
+      { url: '/oalogo.png', type: 'image/png' },
       { url: '/icon.svg', type: 'image/svg+xml' },
       { url: '/favicon.svg', type: 'image/svg+xml' },
     ],
     apple: [
+      { url: 'https://upload.odishaaspirants.com/oalogo.png', type: 'image/png' },
+      { url: '/oalogo.png', type: 'image/png' },
       { url: '/icon.svg', type: 'image/svg+xml' },
     ],
   },
@@ -85,8 +95,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/icon.svg" />
+        <link rel="icon" href="https://upload.odishaaspirants.com/oalogo.png" type="image/png" />
+        <link rel="icon" href="/oalogo.png" type="image/png" />
+        <link rel="apple-touch-icon" href="https://upload.odishaaspirants.com/oalogo.png" />
+        <link rel="apple-touch-icon" href="/oalogo.png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link

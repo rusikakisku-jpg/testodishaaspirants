@@ -723,7 +723,23 @@ export default function CandidateDashboardPage() {
       {/* Dashboard Top Header Bar */}
       <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '16px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px', boxShadow: '0 4px 16px rgba(0,0,0,0.03)', marginBottom: '25px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <Link href="/" style={{ textDecoration: 'none' }}>
+          <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <img
+              src="https://upload.odishaaspirants.com/oalogo.png"
+              alt="Odisha Aspirants Logo"
+              width={34}
+              height={34}
+              onError={(e) => {
+                (e.currentTarget as HTMLImageElement).src = '/oalogo.png';
+              }}
+              style={{
+                width: '34px',
+                height: '34px',
+                objectFit: 'contain',
+                borderRadius: '50%',
+                flexShrink: 0,
+              }}
+            />
             <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0b4ca3', letterSpacing: '-0.3px' }}>
               Odisha Aspirants
             </span>

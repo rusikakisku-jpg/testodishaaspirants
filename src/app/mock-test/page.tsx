@@ -159,7 +159,23 @@ export default function MockTestLoginPage() {
       <div className="cbt-auth-main">
         <div className="cbt-auth-card animate-fade-in">
           <div className="cbt-auth-header">
-            <Link href="/" style={{ textDecoration: 'none', display: 'inline-block' }}>
+            <Link href="/" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px', justifyContent: 'center' }}>
+              <img
+                src="https://upload.odishaaspirants.com/oalogo.png"
+                alt="Odisha Aspirants Logo"
+                width={36}
+                height={36}
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).src = '/oalogo.png';
+                }}
+                style={{
+                  width: '36px',
+                  height: '36px',
+                  objectFit: 'contain',
+                  borderRadius: '50%',
+                  flexShrink: 0,
+                }}
+              />
               <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0b4ca3', fontFamily: 'Poppins', letterSpacing: '-0.3px', marginBottom: '4px' }}>
                 Odisha Aspirants
               </div>

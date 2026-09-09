@@ -12,6 +12,24 @@ export default function Footer() {
         {/* Left Brand & Description Block */}
         <div className="footer-left-block">
           <Link href="/" className="footer-logo-group">
+            <img
+              src="https://upload.odishaaspirants.com/oalogo.png"
+              alt="Odisha Aspirants Logo"
+              width={42}
+              height={42}
+              onError={(e) => {
+                (e.currentTarget as HTMLImageElement).src = '/oalogo.png';
+              }}
+              style={{
+                width: '42px',
+                height: '42px',
+                objectFit: 'contain',
+                borderRadius: '50%',
+                flexShrink: 0,
+                background: '#ffffff',
+                padding: '1px',
+              }}
+            />
             <span className="footer-logo-text">Odisha Aspirants</span>
           </Link>
           <p className="footer-description">

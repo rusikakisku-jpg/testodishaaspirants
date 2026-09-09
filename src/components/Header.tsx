@@ -79,6 +79,22 @@ export default function Header() {
         <div className="nav-container">
           {/* Brand Logotype */}
           <Link href="/" className="nav-brand">
+            <img
+              src="https://upload.odishaaspirants.com/oalogo.png"
+              alt="Odisha Aspirants Logo"
+              width={42}
+              height={42}
+              onError={(e) => {
+                (e.currentTarget as HTMLImageElement).src = '/oalogo.png';
+              }}
+              style={{
+                width: '42px',
+                height: '42px',
+                objectFit: 'contain',
+                borderRadius: '50%',
+                flexShrink: 0,
+              }}
+            />
             <span className="nav-brand-title">Odisha Aspirants</span>
           </Link>
 
@@ -131,7 +147,23 @@ export default function Header() {
       <div className={`drawer-overlay ${drawerOpen ? 'open' : ''}`} onClick={() => handleDrawerToggle(false)}>
         <aside className="drawer-aside" onClick={(e) => e.stopPropagation()}>
           <div className="drawer-header">
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <img
+                src="https://upload.odishaaspirants.com/oalogo.png"
+                alt="Odisha Aspirants Logo"
+                width={34}
+                height={34}
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).src = '/oalogo.png';
+                }}
+                style={{
+                  width: '34px',
+                  height: '34px',
+                  objectFit: 'contain',
+                  borderRadius: '50%',
+                  flexShrink: 0,
+                }}
+              />
               <span style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800, fontSize: '1.25rem', color: '#0b4ca3' }}>
                 Odisha Aspirants
               </span>

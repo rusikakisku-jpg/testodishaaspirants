@@ -43,7 +43,7 @@ export default async function HomePage() {
         'url': 'https://odishaaspirants.com/',
         'logo': {
           '@type': 'ImageObject',
-          'url': 'https://odishaaspirants.com/icon.svg',
+          'url': 'https://upload.odishaaspirants.com/oalogo.png',
         },
       },
     ],

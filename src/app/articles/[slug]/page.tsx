@@ -67,9 +67,9 @@ export async function generateMetadata({
       siteName: 'Odisha Aspirants',
       images: [
         {
-          url: '/icon.svg',
-          width: 512,
-          height: 512,
+          url: 'https://upload.odishaaspirants.com/oalogo.png',
+          width: 1254,
+          height: 1254,
           alt: job.title,
         },
       ],
@@ -78,7 +78,7 @@ export async function generateMetadata({
       card: 'summary_large_image',
       title: `${job.title} | Odisha Aspirants`,
       description: cleanDescription,
-      images: ['/icon.svg'],
+      images: ['https://upload.odishaaspirants.com/oalogo.png'],
     },
   };
 }
@@ -192,7 +192,7 @@ export default async function ArticleDetailsPage({
                     'name': 'Odisha Aspirants',
                     'logo': {
                       '@type': 'ImageObject',
-                      'url': 'https://odishaaspirants.com/icon.svg',
+                      'url': 'https://upload.odishaaspirants.com/oalogo.png',
                     },
                   },
                   'mainEntityOfPage': `https://odishaaspirants.com/articles/${slug}`,
