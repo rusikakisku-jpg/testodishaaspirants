@@ -22,12 +22,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/jobs`,
-      lastModified: now,
-      changeFrequency: 'daily',
-      priority: 0.9,
-    },
-    {
       url: `${baseUrl}/admit-card`,
       lastModified: now,
       changeFrequency: 'daily',
@@ -98,14 +92,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     }));
 
-    const dynamicJobRoutes: MetadataRoute.Sitemap = jobs.map((job) => ({
-      url: `${baseUrl}/jobs/${job.id}`,
-      lastModified: now,
-      changeFrequency: 'daily',
-      priority: 0.7,
-    }));
-
-    return [...staticRoutes, ...dynamicArticleRoutes, ...dynamicJobRoutes];
+    return [...staticRoutes, ...dynamicArticleRoutes];
   } catch (error) {
     return staticRoutes;
   }

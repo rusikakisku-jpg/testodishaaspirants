@@ -30,7 +30,7 @@ export default async function HomePage() {
           '@type': 'SearchAction',
           'target': {
             '@type': 'EntryPoint',
-            'urlTemplate': 'https://odishaaspirants.com/jobs?q={search_term_string}',
+            'urlTemplate': 'https://odishaaspirants.com/latest-jobs?q={search_term_string}',
           },
           'query-input': 'required name=search_term_string',
         },
