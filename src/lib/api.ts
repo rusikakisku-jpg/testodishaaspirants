@@ -1,6 +1,6 @@
 import { JobItem, PYQItem, NoteItem, SyllabusItem } from './data';
 
-const API_BASE = 'https://odisha-aspirants-api.rusikakisku.workers.dev/api';
+const API_BASE = 'https://api.odishaaspirants.com/api';
 
 const getFetchOptions = (): RequestInit => {
   if (typeof window === 'undefined') {
