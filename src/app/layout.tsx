@@ -5,8 +5,67 @@ import Footer from '@/components/Footer';
 import ScrollToTop from '@/components/ScrollToTop';
 
 export const metadata: Metadata = {
-  title: 'Odisha Aspirants - Government Recruitment & CBT Mock Test Portal',
-  description: 'Explore latest Odisha government job vacancies (OSSSC, OPSC, OSSC, RRB), download admit cards, answer keys, results, previous year question papers, and practice online CBT tests.',
+  metadataBase: new URL('https://odishaaspirants.com'),
+  title: {
+    default: 'Odisha Aspirants - Odisha Government Recruitment, Syllabus, Admit Card & CBT Mock Test Portal',
+    template: '%s | Odisha Aspirants',
+  },
+  description:
+    'Explore latest Odisha government job vacancies (OSSSC, OPSC, OSSC, Police, Railway), download admit cards, answer keys, results, previous year question papers, and practice real-time online CBT mock tests.',
+  keywords: [
+    'Odisha Aspirants',
+    'Odisha Govt Jobs 2026',
+    'OSSSC Recruitment 2026',
+    'OPSC Notification 2026',
+    'OSSC CGL Exam',
+    'Odisha Police Recruitment',
+    'Odisha CBT Mock Test',
+    'Odisha Admit Card 2026',
+    'Odisha Exam Results',
+    'Odisha Question Papers PYQ',
+    'Odisha Syllabus',
+  ],
+  authors: [{ name: 'Odisha Aspirants Team', url: 'https://odishaaspirants.com' }],
+  creator: 'Odisha Aspirants',
+  publisher: 'Odisha Aspirants',
+  alternates: {
+    canonical: '/',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_IN',
+    url: 'https://odishaaspirants.com',
+    siteName: 'Odisha Aspirants',
+    title: 'Odisha Aspirants - Government Recruitment & CBT Mock Test Portal',
+    description:
+      'Explore latest Odisha government job vacancies (OSSSC, OPSC, OSSC, Railway), download admit cards, answer keys, results, and practice online CBT tests.',
+    images: [
+      {
+        url: '/icon.svg',
+        width: 512,
+        height: 512,
+        alt: 'Odisha Aspirants Logo',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Odisha Aspirants - Government Recruitment & CBT Mock Test Portal',
+    description:
+      'Explore latest Odisha government job vacancies, download admit cards, answer keys, results, and practice online CBT tests.',
+    images: ['/icon.svg'],
+  },
   icons: {
     icon: [
       { url: '/icon.svg', type: 'image/svg+xml' },

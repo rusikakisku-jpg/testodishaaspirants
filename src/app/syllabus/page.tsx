@@ -1,6 +1,22 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import { fetchSyllabusApi, fetchJobsApi, getJobSlug } from '@/lib/api';
 import SyllabusClient, { SyllabusDisplayItem, PatternApiItem } from './SyllabusClient';
+
+export const metadata: Metadata = {
+  title: 'Odisha Exam Syllabus 2026 - OSSSC, OPSC, OSSC Scheme & Selection Process',
+  description:
+    'Comprehensive exam syllabus, mark distribution, and selection scheme for Odisha competitive examinations including OSSSC, OPSC, OSSC, and Police.',
+  alternates: {
+    canonical: 'https://odishaaspirants.com/syllabus',
+  },
+  openGraph: {
+    title: 'Odisha Exam Syllabus 2026 - Odisha Aspirants',
+    description:
+      'Detailed syllabus and exam pattern for Odisha recruitment tests.',
+    url: 'https://odishaaspirants.com/syllabus',
+  },
+};
 
 export default async function SyllabusPage() {
   const [patterns, jobs] = await Promise.all([

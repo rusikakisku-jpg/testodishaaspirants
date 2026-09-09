@@ -63,6 +63,9 @@ export default function HomePageClient({
 
   return (
     <>
+      <h1 className="sr-only">
+        Odisha Aspirants - Odisha Government Recruitment, Job Notifications, Syllabus, Admit Cards &amp; Online CBT Mock Test Portal 2026
+      </h1>
 
       {/* 6-Card Grid Section matching odishaaspirants.com */}
       <section className="cards-matrix-section">

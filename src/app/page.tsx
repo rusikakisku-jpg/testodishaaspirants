@@ -16,14 +16,53 @@ export default async function HomePage() {
   const initialPyqs = pyqData.slice(0, 10);
   const initialSyllabusList = sylData.slice(0, 10);
 
+  const websiteJsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebSite',
+        '@id': 'https://odishaaspirants.com/#website',
+        'url': 'https://odishaaspirants.com/',
+        'name': 'Odisha Aspirants',
+        'description':
+          'Odisha\'s dedicated portal for OSSSC, OPSC, OSSC government recruitment updates, syllabus, answer keys, admit cards, and online CBT mock tests.',
+        'potentialAction': {
+          '@type': 'SearchAction',
+          'target': {
+            '@type': 'EntryPoint',
+            'urlTemplate': 'https://odishaaspirants.com/jobs?q={search_term_string}',
+          },
+          'query-input': 'required name=search_term_string',
+        },
+        'inLanguage': 'en',
+      },
+      {
+        '@type': 'Organization',
+        '@id': 'https://odishaaspirants.com/#organization',
+        'name': 'Odisha Aspirants',
+        'url': 'https://odishaaspirants.com/',
+        'logo': {
+          '@type': 'ImageObject',
+          'url': 'https://odishaaspirants.com/icon.svg',
+        },
+      },
+    ],
+  };
+
   return (
-    <HomePageClient
-      initialVacancies={initialVacancies}
-      initialAdmitCards={initialAdmitCards}
-      initialAnswerKeys={initialAnswerKeys}
-      initialResults={initialResults}
-      initialPyqs={initialPyqs}
-      initialSyllabusList={initialSyllabusList}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+      />
+      <HomePageClient
+        initialVacancies={initialVacancies}
+        initialAdmitCards={initialAdmitCards}
+        initialAnswerKeys={initialAnswerKeys}
+        initialResults={initialResults}
+        initialPyqs={initialPyqs}
+        initialSyllabusList={initialSyllabusList}
+      />
+    </>
   );
 }
