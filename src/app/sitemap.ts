@@ -46,12 +46,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/mock-test`,
-      lastModified: now,
-      changeFrequency: 'daily',
-      priority: 0.85,
-    },
-    {
       url: `${baseUrl}/syllabus`,
       lastModified: now,
       changeFrequency: 'weekly',
@@ -59,12 +53,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${baseUrl}/pyq`,
-      lastModified: now,
-      changeFrequency: 'weekly',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/notes`,
       lastModified: now,
       changeFrequency: 'weekly',
       priority: 0.7,
