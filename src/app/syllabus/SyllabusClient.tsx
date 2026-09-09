@@ -38,18 +38,40 @@ export default function SyllabusClient({ initialList }: { initialList: SyllabusD
   useEffect(() => {
     async function refreshData() {
       try {
-        const [patterns, jobs] = await Promise.all([
+        const [apiPatterns, jobs] = await Promise.all([
           fetchSyllabusApi(),
           fetchJobsApi(),
         ]);
 
-        const formatted: SyllabusDisplayItem[] = patterns.map((p: PatternApiItem) => {
+        let patterns = apiPatterns || [];
+        if (typeof window !== 'undefined') {
+          try {
+            const localData = localStorage.getItem('oa_admin_syllabus_list');
+            if (localData) {
+              const parsed = JSON.parse(localData);
+              if (Array.isArray(parsed) && parsed.length > 0) {
+                const published = parsed.filter((item: any) => item.is_published !== 0);
+                const localIds = new Set(published.map((p: any) => String(p.id)));
+                patterns = [...published, ...patterns.filter((p: any) => !localIds.has(String(p.id)))];
+              }
+            }
+          } catch (err) {
+            console.error('Error reading oa_admin_syllabus_list:', err);
+          }
+        }
+
+        const formatted: SyllabusDisplayItem[] = patterns.map((p: PatternApiItem & { downloadUrl?: string }) => {
           const matchedJob = jobs.find(
             (j) => String(j.id) === String(p.id) || j.title.toLowerCase() === p.title.toLowerCase()
           );
           const slug = matchedJob
             ? getJobSlug(matchedJob)
             : getJobSlug({ id: Number(p.id) || 0, board: p.board, title: p.title, slug: p.slug });
+
+          let linkUrl = `/articles/${slug}`;
+          if (p.downloadUrl && p.downloadUrl !== '#' && p.downloadUrl.trim() !== '') {
+            linkUrl = p.downloadUrl;
+          }
 
           return {
             id: p.id,
@@ -58,7 +80,7 @@ export default function SyllabusClient({ initialList }: { initialList: SyllabusD
             year: p.update_year || '2026',
             pattern: p.pattern,
             description: p.description,
-            link: `/articles/${slug}`,
+            link: linkUrl,
           };
         });
 
