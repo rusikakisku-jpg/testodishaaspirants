@@ -21,6 +21,8 @@ export function transformDbJob(row: any): JobItem {
   return {
     id: row.id,
     title: row.title,
+    subtitle: row.subtitle || row.overview || '',
+    author: row.author || 'Odisha Aspirants',
     slug: row.slug || '',
     board: row.board,
     boardFull: row.board_full || row.board,
@@ -40,6 +42,7 @@ export function transformDbJob(row: any): JobItem {
     ctaText: row.cta_text || 'Apply Online',
     ctaUrl: row.cta_url || '#',
     notificationUrl: row.notification_url || '#',
+    officialUrl: row.official_url || row.officialUrl || '',
   };
 }
 
