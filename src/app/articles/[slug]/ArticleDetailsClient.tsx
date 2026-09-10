@@ -94,7 +94,26 @@ function resolveCategory(fromParam: string, category?: string) {
 }
 
 export default function ArticleDetailsClient({ slug, initialJob, initialAllJobs }: ArticleDetailsClientProps) {
-  const [job, setJob] = useState<JobItem | null>(initialJob);
+  const [job, setJob] = useState<JobItem | null>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const stored = localStorage.getItem('oa_admin_jobs_list');
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed)) {
+            const found = parsed.find(
+              (j: any) =>
+                getJobSlug(j) === slug ||
+                (j.slug && j.slug.toLowerCase() === slug.toLowerCase()) ||
+                String(j.id) === slug
+            );
+            if (found) return found;
+          }
+        }
+      } catch {}
+    }
+    return initialJob;
+  });
   const [allJobs, setAllJobs] = useState<JobItem[]>(initialAllJobs || []);
   const [copied, setCopied] = useState(false);
 
@@ -102,6 +121,26 @@ export default function ArticleDetailsClient({ slug, initialJob, initialAllJobs 
   const parentCategory = resolveCategory(fromParam, job?.category);
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const stored = localStorage.getItem('oa_admin_jobs_list');
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed)) {
+            const found = parsed.find(
+              (j: any) =>
+                getJobSlug(j) === slug ||
+                (j.slug && j.slug.toLowerCase() === slug.toLowerCase()) ||
+                String(j.id) === slug
+            );
+            if (found) {
+              setJob(found);
+            }
+          }
+        }
+      } catch {}
+    }
+
     if (!job && slug) {
       fetchJobDetailsApi(slug).then((res) => {
         if (res) setJob(res);
@@ -112,7 +151,19 @@ export default function ArticleDetailsClient({ slug, initialJob, initialAllJobs 
         if (res && res.length > 0) setAllJobs(res);
       });
     }
-  }, [slug, job, allJobs]);
+  }, [slug]);
+
+  useEffect(() => {
+    if (fromParam === 'syllabus') {
+      const timer = setTimeout(() => {
+        const el = document.getElementById('syllabus');
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+  }, [fromParam]);
 
   if (!job) {
     return (
@@ -373,16 +424,28 @@ export default function ArticleDetailsClient({ slug, initialJob, initialAllJobs 
               )}
             </div>
 
-            {/* Syllabus & Exam Pattern Box (if available) */}
-            {job.syllabusHtml && job.syllabusHtml !== '<p>Syllabus details.</p>' && (
-              <div className="sarkari-spec-box syllabus-box">
-                <div className="spec-box-header">
-                  <GraduationCap size={18} />
-                  <h4>Exam Syllabus &amp; Selection Process</h4>
-                </div>
-                <div className="spec-html-content" dangerouslySetInnerHTML={{ __html: job.syllabusHtml }} />
+            {/* Syllabus & Exam Pattern Box */}
+            <div className="sarkari-spec-box syllabus-box" id="syllabus">
+              <div className="spec-box-header">
+                <GraduationCap size={18} />
+                <h4>Exam Syllabus &amp; Selection Process</h4>
               </div>
-            )}
+              {job.syllabusHtml && job.syllabusHtml !== '<p>Syllabus details.</p>' ? (
+                <div className="spec-html-content" dangerouslySetInnerHTML={{ __html: job.syllabusHtml }} />
+              ) : (
+                <div className="spec-html-content">
+                  <p><strong>Official Selection Process &amp; Pattern for {job.board} {job.title}:</strong></p>
+                  <ul className="spec-list" style={{ marginTop: '8px', marginBottom: '12px' }}>
+                    <li><strong>Stage 1 (Written Exam / CBT):</strong> Multiple Choice Questions (MCQs) covering General Awareness, Current Affairs, Odia Language, English, Reasoning, Arithmetic, and Post-specific Subject Knowledge.</li>
+                    <li><strong>Stage 2 (Skill / Practical Test):</strong> Practical test / Computer Skill Test as prescribed for the post.</li>
+                    <li><strong>Stage 3 (Certificate Verification):</strong> Verification of original educational marksheets, caste category, and identity certificates.</li>
+                  </ul>
+                  <p style={{ fontSize: '0.86rem', color: '#64748b', margin: '6px 0 0 0' }}>
+                    <em>Negative Marking: Standard 0.25 marks deduction for wrong answers (where applicable). Refer to the official notification PDF link below for topic-wise mark breakdown.</em>
+                  </p>
+                </div>
+              )}
+            </div>
 
             {/* How to Apply Guide Box */}
             <div className="sarkari-spec-box apply-guide-box">

@@ -45,21 +45,57 @@ export function transformDbJob(row: any): JobItem {
 
 // Fetch all jobs or filter by category from Cloudflare Workers API + D1 Database
 export async function fetchJobsApi(category?: string): Promise<JobItem[]> {
+  let jobs: JobItem[] = [];
   try {
     const url = category ? `${API_BASE}/jobs?category=${category}` : `${API_BASE}/jobs`;
     const res = await fetch(url, getFetchOptions());
     const json = await res.json();
     if (json.success && Array.isArray(json.data)) {
-      return json.data.map(transformDbJob);
+      jobs = json.data.map(transformDbJob);
     }
   } catch (err) {
     console.error('Error fetching jobs from Cloudflare D1 API:', err);
   }
-  return [];
+
+  if (typeof window !== 'undefined') {
+    try {
+      const stored = localStorage.getItem('oa_admin_jobs_list');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          const storedIds = new Set(parsed.map((p: any) => String(p.id)));
+          jobs = [...parsed, ...jobs.filter((j) => !storedIds.has(String(j.id)))];
+        }
+      }
+    } catch {}
+  }
+
+  if (category) {
+    return jobs.filter((j) => j.category === category);
+  }
+  return jobs;
 }
 
 // Fetch single job details by ID or Slug
 export async function fetchJobDetailsApi(idOrSlug: string): Promise<JobItem | null> {
+  if (typeof window !== 'undefined') {
+    try {
+      const stored = localStorage.getItem('oa_admin_jobs_list');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed)) {
+          const found = parsed.find(
+            (j: any) =>
+              String(j.id) === idOrSlug ||
+              getJobSlug(j) === idOrSlug ||
+              (j.slug && j.slug.toLowerCase() === idOrSlug.toLowerCase())
+          );
+          if (found) return found;
+        }
+      }
+    } catch {}
+  }
+
   try {
     const res = await fetch(`${API_BASE}/jobs/${idOrSlug}`, getFetchOptions());
     const json = await res.json();
