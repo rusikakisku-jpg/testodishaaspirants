@@ -19,6 +19,7 @@ export interface PatternApiItem {
   update_year?: string;
   pattern?: string;
   description?: string;
+  link?: string;
 }
 
 export interface SyllabusDisplayItem {
@@ -68,10 +69,7 @@ export default function SyllabusClient({ initialList }: { initialList: SyllabusD
             ? getJobSlug(matchedJob)
             : getJobSlug({ id: Number(p.id) || 0, board: p.board, title: p.title, slug: p.slug });
 
-          let linkUrl = `/articles/${slug}`;
-          if (p.downloadUrl && p.downloadUrl !== '#' && p.downloadUrl.trim() !== '') {
-            linkUrl = p.downloadUrl;
-          }
+          let linkUrl = (p.link && p.link.startsWith('/articles/')) ? p.link : `/articles/${slug}`;
 
           return {
             id: p.id,

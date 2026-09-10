@@ -20,6 +20,9 @@ export interface JobItem {
   ctaText: string;
   ctaUrl: string;
   notificationUrl: string;
+  subtitle?: string;
+  author?: string;
+  officialUrl?: string;
 }
 
 export interface PYQItem {

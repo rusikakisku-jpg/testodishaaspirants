@@ -213,14 +213,17 @@ export default function ArticleDetailsClient({ slug, initialJob, initialAllJobs 
         <main className="sarkari-main-content">
           <div className="sarkari-master-table-card">
             {/* Post Title & Quick Meta Row */}
+            {/* Post Title & Quick Meta Row */}
             <div className="sarkari-title-section">
               <h1 className="sarkari-post-title">
-                {job.board} {job.title} Recruitment 2026 – Apply Online for {job.vacancies} Posts
+                {job.vacancies && job.vacancies !== '--'
+                  ? `${job.board} ${job.title} Recruitment 2026 – Apply Online for ${job.vacancies} Posts`
+                  : job.title}
               </h1>
               <div className="sarkari-post-date-row">
                 <span><strong>Post Update:</strong> {job.publishDate}</span>
                 <span className="date-sep">|</span>
-                <span><strong>By:</strong> Odisha Aspirants</span>
+                <span><strong>By:</strong> {job.author || 'Odisha Aspirants'}</span>
               </div>
             </div>
 
@@ -228,8 +231,14 @@ export default function ArticleDetailsClient({ slug, initialJob, initialAllJobs 
             <div className="sarkari-short-info-section">
               <strong>Short Information: </strong>
               <span>
-                <strong>{job.boardFull} ({job.board})</strong> has published the official recruitment advertisement for{' '}
-                <strong>{job.title}</strong>. Candidates holding <strong>{job.qualification}</strong> eligibility can read the detailed recruitment advertisement and submit their application before the closing date <strong>{job.lastDate}</strong>.
+                {job.subtitle || (job.overview && job.overview !== 'Overview details to be added.') ? (
+                  job.subtitle || job.overview
+                ) : (
+                  <>
+                    <strong>{job.boardFull || job.board}</strong> has published the official notification for{' '}
+                    <strong>{job.title}</strong>. Candidates can check complete examination scheme, syllabus pattern, and download official PDF guidelines.
+                  </>
+                )}
               </span>
             </div>
 
@@ -499,7 +508,7 @@ export default function ArticleDetailsClient({ slug, initialJob, initialAllJobs 
                       <strong>{job.board} Official Website</strong>
                     </td>
                     <td className="link-action-col">
-                      <a href={job.ctaUrl || '#'} target="_blank" rel="noopener noreferrer" className="sarkari-btn btn-link-gray">
+                      <a href={job.officialUrl || job.ctaUrl || '#'} target="_blank" rel="noopener noreferrer" className="sarkari-btn btn-link-gray">
                         Official Site <ExternalLink size={14} />
                       </a>
                     </td>
